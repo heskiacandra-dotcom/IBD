@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RuangWarga - Portal Layanan Mandiri & Transparansi Lingkungan RT/RW</title>
+  <meta name="description" content="Satu wadah digital untuk kemudahan warga: Pengajuan surat pengantar online, pembayaran iuran kas RT, peminjaman aset, agenda kegiatan, transparansi keuangan, dan kotak aspirasi terbuka.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       STICKY TOP NAVBAR
+       ========================================================================== -->
+  <header class="navbar" id="topNavbar">
+    <div class="container nav-container">
+      <!-- Brand Logo -->
+      <a href="#beranda" class="brand-logo" id="brandLogo">
+        <div class="brand-icon">
+          <!-- Geometric House / Community SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">Ruang<span>Warga</span></div>
+          <div class="brand-subtitle">RT 05 / RW 08 • Graha Harmoni</div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#beranda" class="nav-link active">Beranda</a></li>
+          <li><a href="#layanan" class="nav-link">Layanan Mandiri</a></li>
+          <li><a href="#kegiatan" class="nav-link">Kalender Kegiatan</a></li>
+          <li><a href="#transparansi" class="nav-link">Transparansi Kas</a></li>
+          <li><a href="#aspirasi" class="nav-link">Suara Warga</a></li>
+        </ul>
+      </nav>
+
+      <!-- CTA Action Buttons -->
+      <div class="nav-actions">
+        <button class="btn btn-outline-primary btn-sm" id="btnOpenLoginWarga" data-modal="modalLoginWarga">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Masuk Akun Warga
+        </button>
+
+        <a href="#cms-login" class="btn-cms-link" id="btnOpenCmsModal" data-modal="modalCmsNotice">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          Portal Pengurus RT
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Toggle -->
+      <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Buka Menu Navigasi">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" x2="20" y1="12" y2="12"/>
+          <line x1="4" x2="20" y1="6" y2="6"/>
+          <line x1="4" x2="20" y1="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       URGENT ANNOUNCEMENT TICKER
+       ========================================================================== -->
+  <aside class="alert-ticker-bar" aria-label="Pengumuman Lingkungan">
+    <div class="container ticker-inner">
+      <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+        <span class="ticker-label">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          Pengumuman RT
+        </span>
+        <div class="ticker-content">
+          <strong>Kerja Bakti & Fogging Nyamuk DBD:</strong> Pelaksanaan Sabtu, 26 September 2026 pukul 07.00 WIB. Mohon warga menutup penampungan air dan mendampingi petugas.
+        </div>
+      </div>
+      <a href="#kegiatan" class="ticker-action">
+        Rincian Jadwal
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       HERO SECTION & QUICK SERVICE HUB
+       ========================================================================== -->
+  <main>
+    <section class="section hero-section" id="beranda">
+      <div class="container">
+        <!-- Hero Text Content -->
+        <div class="hero-content">
+          <div class="hero-pill">
+            <span class="hero-pill-dot"></span>
+            <span>Portal Pelayanan Mandiri Resmi Warga RT 05 / RW 08</span>
+          </div>
+
+          <h1 class="hero-title">
+            Satu Wadah Digital untuk <br>
+            <span class="highlight">Kemudahan Warga</span> & Kebaikan Bersama
+          </h1>
+
+          <p class="hero-subtitle">
+            Ajukan surat pengantar, bayar iuran bulanan, pinjam perlengkapan warga, dan pantau kegiatan lingkungan secara transparan tanpa perlu antre di rumah pengurus.
+          </p>
+
+          <div class="hero-trust-chips">
+            <div class="trust-chip">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span>100% Bebas Antre & Mandiri</span>
+            </div>
+            <div class="trust-chip">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span>Transparan & Akuntabel</span>
+            </div>
+            <div class="trust-chip">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 14 14"/>
+              </svg>
+              <span>Respon Cepat Pengurus RT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Quick Action Feature Cards -->
+        <div class="quick-action-grid" id="layanan">
+          <!-- Card 1: Pengajuan Surat -->
+          <div class="action-card">
+            <div class="action-icon-wrapper action-icon-blue">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" x2="8" y1="13" y2="13"/>
+                <line x1="16" x2="8" y1="17" y2="17"/>
+                <line x1="10" x2="8" y1="9" y2="9"/>
+              </svg>
+            </div>
+            <h2 class="action-title">Pengajuan Surat Pengantar</h2>
+            <p class="action-desc">
+              Surat pengantar Domisili, pembuatan KTP/KK, SKCK, hingga keterangan usaha siap dalam hitungan jam.
+            </p>
+            <button class="btn btn-primary action-cta" data-modal="modalSurat">
+              <span>Buat Surat</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Card 2: Bayar Iuran Bulanan -->
+          <div class="action-card card-green">
+            <div class="action-icon-wrapper action-icon-green">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="14" x="2" y="5" rx="2"/>
+                <line x1="2" x2="22" y1="10" y2="10"/>
+              </svg>
+            </div>
+            <h2 class="action-title">Bayar Iuran Bulanan</h2>
+            <p class="action-desc">
+              Cek tagihan kas kebersihan & keamanan warga per nomor rumah. Pembayaran via QRIS & transfer langsung terkonfirmasi.
+            </p>
+            <button class="btn btn-success action-cta" data-modal="modalIuran">
+              <span>Bayar Iuran</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Card 3: Peminjaman Aset/Alat -->
+          <div class="action-card card-purple">
+            <div class="action-icon-wrapper action-icon-purple">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                <line x1="12" x2="12" y1="22.08" y2="12"/>
+              </svg>
+            </div>
+            <h2 class="action-title">Peminjaman Aset / Alat</h2>
+            <p class="action-desc">
+              Gunakan fasilitas bersama secara tertib: tenda serbaguna, kursi lipat, sound system, terpal, hingga proyektor warga.
+            </p>
+            <button class="btn btn-primary action-cta" style="background-color: var(--purple-600);" data-modal="modalPinjam">
+              <span>Pinjam Alat</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Card 4: Sampaikan Aspirasi -->
+          <div class="action-card card-amber">
+            <div class="action-icon-wrapper action-icon-amber">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <h2 class="action-title">Sampaikan Aspirasi</h2>
+            <p class="action-desc">
+              Kotak saran, laporan penerangan jalan mati, atau ide perbaikan lingkungan. Dapat dikirim anonim dan ditanggapi terbuka.
+            </p>
+            <button class="btn btn-primary action-cta" style="background-color: var(--amber-600);" data-modal="modalAspirasi">
+              <span>Kirim Aspirasi</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         LIVE ANNOUNCEMENT & AGENDA BANNER
+         ========================================================================== -->
+    <section class="section agenda-section" id="kegiatan">
+      <div class="container">
+        <div class="agenda-header-row">
+          <div>
+            <span class="section-badge">Agenda & Guyub Warga</span>
+            <h2 class="section-title">Kegiatan Mendatang Lingkungan</h2>
+            <p class="section-description">
+              Jangan lewatkan agenda gotong royong, posyandu, dan pertemuan silaturahmi RT bulan ini.
+            </p>
+          </div>
+          <button class="btn btn-outline-primary" data-modal="modalUsulanKegiatan">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="16"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+            Ajukan Usulan Kegiatan Warga
+          </button>
+        </div>
+
+        <div class="agenda-grid">
+          <!-- Event 1 -->
+          <article class="event-card">
+            <div class="event-top">
+              <div class="event-date-box">
+                <div class="event-day">26</div>
+                <div class="event-month">Sep</div>
+              </div>
+              <span class="badge badge-emerald">Wajib Seluruh KK</span>
+            </div>
+            <h3 class="event-title">Kerja Bakti Lingkungan & Fogging Nyamuk DBD</h3>
+            <div class="event-meta">
+              <div class="event-meta-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                <span>07.00 - 10.30 WIB</span>
+              </div>
+              <div class="event-meta-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Fasum Blok A & Selokan Utama RT</span>
+              </div>
+            </div>
+            <div class="event-footer">
+              <div class="event-organizer">Penyelenggara: <strong>Seksi Kebersihan RT</strong></div>
+              <button class="btn btn-subtle btn-sm btn-action-detail" data-event="Kerja Bakti & Fogging DBD">Rincian</button>
+            </div>
+          </article>
+
+          <!-- Event 2 -->
+          <article class="event-card">
+            <div class="event-top">
+              <div class="event-date-box">
+                <div class="event-day">27</div>
+                <div class="event-month">Sep</div>
+              </div>
+              <span class="badge badge-blue">Terbuka untuk Umum</span>
+            </div>
+            <h3 class="event-title">Senam Sehat Minggu Pagi & Cek Gula Darah</h3>
+            <div class="event-meta">
+              <div class="event-meta-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                <span>06.30 - 08.30 WIB</span>
+              </div>
+              <div class="event-meta-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Lapangan Balai Warga RT 05</span>
+              </div>
+            </div>
+            <div class="event-footer">
+              <div class="event-organizer">Penyelenggara: <strong>Kader PKK RT 05</strong></div>
+              <button class="btn btn-subtle btn-sm btn-action-detail" data-event="Senam Sehat Minggu Pagi">Rincian</button>
+            </div>
+          </article>
+
+          <!-- Event 3 -->
+          <article class="event-card">
+            <div class="event-top">
+              <div class="event-date-box">
+                <div class="event-day">03</div>
+                <div class="event-month">Okt</div>
+              </div>
+              <span class="badge badge-amber">Perwakilan KK</span>
+            </div>
+            <h3 class="event-title">Rapat Koordinasi RT & Evaluasi Keamanan Ronda</h3>
+            <div class="event-meta">
+              <div class="event-meta-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                <span>19.30 - 21.30 WIB</span>
+              </div>
+              <div class="event-meta-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Pendopo Balai Pertemuan Warga</span>
+              </div>
+            </div>
+            <div class="event-footer">
+              <div class="event-organizer">Penyelenggara: <strong>Ketua RT & Pengurus</strong></div>
+              <button class="btn btn-subtle btn-sm btn-action-detail" data-event="Rapat Koordinasi RT">Rincian</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         TRANSPARANSI KAS & FINANSIAL RT
+         ========================================================================== -->
+    <section class="section transparency-section" id="transparansi">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Akuntabilitas Finansial Publik</span>
+          <h2 class="section-title">Transparansi Kas Lingkungan</h2>
+          <p class="section-description">
+            Semua pemasukan iuran warga dan pengeluaran operasional dicatat secara terbuka demi menjaga amanah serta kepercayaan warga.
+          </p>
+        </div>
+
+        <!-- 3 Financial Metric Cards -->
+        <div class="stats-grid">
+          <!-- Total Saldo Kas -->
+          <div class="stat-card">
+            <span class="badge badge-emerald stat-card-badge">Terverifikasi</span>
+            <div class="stat-icon" style="background-color: var(--primary-50); color: var(--primary-600);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+            </div>
+            <div class="stat-label">Total Saldo Kas Terkini</div>
+            <div class="stat-value">Rp 28.450.000</div>
+            <div class="stat-subtext positive">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+              <span>Saldo sehat per 20 September 2026</span>
+            </div>
+          </div>
+
+          <!-- Pemasukan Bulan Berjalan -->
+          <div class="stat-card">
+            <span class="badge badge-emerald stat-card-badge">Bulan September</span>
+            <div class="stat-icon" style="background-color: var(--emerald-50); color: var(--emerald-600);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="19" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </div>
+            <div class="stat-label">Pemasukan Bulan Berjalan</div>
+            <div class="stat-value" style="color: var(--emerald-700);">+Rp 9.250.000</div>
+            <div class="stat-subtext">
+              <span>92 dari 110 KK telah menyelesaikan iuran</span>
+            </div>
+          </div>
+
+          <!-- Pengeluaran Operasional -->
+          <div class="stat-card">
+            <span class="badge badge-amber stat-card-badge">Bulan September</span>
+            <div class="stat-icon" style="background-color: var(--rose-50); color: var(--rose-600);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+            </div>
+            <div class="stat-label">Pengeluaran Operasional</div>
+            <div class="stat-value" style="color: var(--rose-600);">-Rp 6.120.000</div>
+            <div class="stat-subtext">
+              <span>Gaji sekuriti, sampah & perawatan taman</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 Columns: Pos Alokasi & 5 Mutasi Terakhir -->
+        <div class="transparency-layout">
+          <!-- Alokasi Anggaran Bulanan -->
+          <div class="box-container">
+            <div class="box-title-row">
+              <h3 class="box-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-600);"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+                Alokasi Pos Iuran Kas
+              </h3>
+              <span class="badge badge-slate">Persentase</span>
+            </div>
+
+            <!-- Pos 1 -->
+            <div class="allocation-item">
+              <div class="allocation-label-row">
+                <span>Honor Petugas Keamanan (Pos Ronda)</span>
+                <span class="allocation-amount">45% (Rp 4.162.500)</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 45%; background-color: var(--primary-600);"></div>
+              </div>
+            </div>
+
+            <!-- Pos 2 -->
+            <div class="allocation-item">
+              <div class="allocation-label-row">
+                <span>Retribusi Sampah & Kebersihan Selokan</span>
+                <span class="allocation-amount">30% (Rp 2.775.000)</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 30%; background-color: var(--emerald-500);"></div>
+              </div>
+            </div>
+
+            <!-- Pos 3 -->
+            <div class="allocation-item">
+              <div class="allocation-label-row">
+                <span>Perawatan Lampu Jalan & Balai Warga</span>
+                <span class="allocation-amount">15% (Rp 1.387.500)</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 15%; background-color: var(--amber-500);"></div>
+              </div>
+            </div>
+
+            <!-- Pos 4 -->
+            <div class="allocation-item">
+              <div class="allocation-label-row">
+                <span>Dana Sosial, Duka & Kas Darurat</span>
+                <span class="allocation-amount">10% (Rp 925.000)</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 10%; background-color: var(--purple-600);"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mutasi Kas Terbaru -->
+          <div class="box-container">
+            <div class="box-title-row">
+              <h3 class="box-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--emerald-600);"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                Mutasi Kas Terakhir Diverifikasi
+              </h3>
+              <button class="btn btn-subtle btn-sm" id="btnDownloadLaporan">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unduh Rekap PDF
+              </button>
+            </div>
+
+            <div class="ledger-list">
+              <!-- Item 1 -->
+              <div class="ledger-item">
+                <div class="ledger-info">
+                  <div class="ledger-icon" style="background-color: var(--emerald-50); color: var(--emerald-600);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="ledger-details">
+                    <div class="ledger-title">Penerimaan Iuran Warga (15 KK via QRIS)</div>
+                    <div class="ledger-meta">19 Sep 2026 • Batch Tagihan September • Ref: #TX-9021</div>
+                  </div>
+                </div>
+                <div class="ledger-amount income">+Rp 1.125.000</div>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="ledger-item">
+                <div class="ledger-info">
+                  <div class="ledger-icon" style="background-color: var(--rose-50); color: var(--rose-600);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </div>
+                  <div class="ledger-details">
+                    <div class="ledger-title">Penggantian 4 Unit Lampu PJU Blok C</div>
+                    <div class="ledger-meta">17 Sep 2026 • Kwitansi Toko Listrik Terang • Ref: #TX-9018</div>
+                  </div>
+                </div>
+                <div class="ledger-amount expense">-Rp 380.000</div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="ledger-item">
+                <div class="ledger-info">
+                  <div class="ledger-icon" style="background-color: var(--rose-50); color: var(--rose-600);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </div>
+                  <div class="ledger-details">
+                    <div class="ledger-title">Honor 3 Petugas Keamanan Periode I</div>
+                    <div class="ledger-meta">15 Sep 2026 • Transfer Bank Mandiri • Ref: #TX-9014</div>
+                  </div>
+                </div>
+                <div class="ledger-amount expense">-Rp 3.000.000</div>
+              </div>
+
+              <!-- Item 4 -->
+              <div class="ledger-item">
+                <div class="ledger-info">
+                  <div class="ledger-icon" style="background-color: var(--emerald-50); color: var(--emerald-600);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div class="ledger-details">
+                    <div class="ledger-title">Sumbangan Swadaya Warga untuk Sound System</div>
+                    <div class="ledger-meta">12 Sep 2026 • Donatur Blok A & D • Ref: #TX-9008</div>
+                  </div>
+                </div>
+                <div class="ledger-amount income">+Rp 1.500.000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="transparency-footer-note">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--emerald-600);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Dikelola dan diverifikasi oleh <strong>Bpk. Rahmat Hendrawan (Bendahara RT 05)</strong> dan diawasi oleh Dewan Pengawas Warga.</span>
+          </div>
+          <div>Status Buku Kas: <strong style="color: var(--emerald-600);">Cocok & Seimbang</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         ASPIRASI WARGA & TANGGAPAN TERBUKA KETUA RT
+         ========================================================================== -->
+    <section class="section aspirasi-section" id="aspirasi">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Demokrasi & Keterbukaan</span>
+          <h2 class="section-title">Suara Warga & Tanggapan Pengurus</h2>
+          <p class="section-description">
+            Aduan fasilitas umum, saran, dan kritik konstruktif warga yang telah direspon dan ditindaklanjuti secara nyata oleh Ketua RT.
+          </p>
+        </div>
+
+        <!-- Controls: Filter & Write Aspirasi Button -->
+        <div class="aspirasi-controls">
+          <div class="filter-pills" id="aspirasiFilters">
+            <button class="filter-btn active" data-filter="all">Semua Aspirasi (4)</button>
+            <button class="filter-btn" data-filter="fasilitas">Fasilitas Umum</button>
+            <button class="filter-btn" data-filter="keamanan">Keamanan & Ronda</button>
+            <button class="filter-btn" data-filter="kebersihan">Kebersihan</button>
+          </div>
+
+          <button class="btn btn-primary" data-modal="modalAspirasi">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Tulis Aspirasi Baru
+          </button>
+        </div>
+
+        <!-- Aspirasi Cards Feed -->
+        <div class="aspirasi-feed" id="aspirasiFeedContainer">
+          <!-- Card 1: Fasilitas -->
+          <article class="aspirasi-card" data-category="fasilitas">
+            <div class="aspirasi-header">
+              <div class="aspirasi-user-info">
+                <div class="user-avatar-circle" style="background-color: var(--primary-100); color: var(--primary-700);">BS</div>
+                <div class="user-name-wrapper">
+                  <div class="user-display-name">Bambang S. (Warga Blok B-08)</div>
+                  <div class="aspirasi-timestamp">18 September 2026 • Kategori: Fasilitas Umum</div>
+                </div>
+              </div>
+              <span class="badge badge-emerald">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Selesai Ditindaklanjuti
+              </span>
+            </div>
+
+            <h4 class="aspirasi-title">Lampu Penerangan Jalan Tikungan Blok B Mati Sudah 3 Hari</h4>
+            <p class="aspirasi-body">
+              Mohon izin menginfokan Pak RT, lampu tiang nomor 04 di pertigaan gang Blok B padam total. Kondisinya cukup gelap saat malam dan riskan untuk ibu-ibu yang melintas setelah salat Isya. Terima kasih.
+            </p>
+
+            <!-- Tanggapan Resmi RT -->
+            <div class="official-response-box">
+              <div class="response-header">
+                <div class="responder-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  Tanggapan Resmi Bpk. H. Sukardi (Ketua RT 05)
+                </div>
+                <div class="responder-time">Direspons 19 September 2026, 09.15 WIB</div>
+              </div>
+              <p class="response-content">
+                "Terima kasih atas laporannya Pak Bambang. Seksi Perlengkapan RT sudah mengganti bohlam LED 50 watt pada Kamis sore kemarin bersama tim teknisi warga. Sekarang penerangan jalan di lokasi sudah normal kembali. Mohon pantauan warga bersama."
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 2: Keamanan -->
+          <article class="aspirasi-card" data-category="keamanan">
+            <div class="aspirasi-header">
+              <div class="aspirasi-user-info">
+                <div class="user-avatar-circle" style="background-color: var(--amber-100); color: var(--amber-700);">AW</div>
+                <div class="user-name-wrapper">
+                  <div class="user-display-name">Warga Anonim (Penghuni Blok C)</div>
+                  <div class="aspirasi-timestamp">16 September 2026 • Kategori: Keamanan Lingkungan</div>
+                </div>
+              </div>
+              <span class="badge badge-blue">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                Sedang Diproses
+              </span>
+            </div>
+
+            <h4 class="aspirasi-title">Usulan Penambahan Jadwal Patroli Malam Menjelang Jam 03.00 Dini Hari</h4>
+            <p class="aspirasi-body">
+              Akhir-akhir ini sering terlihat orang tidak dikenal mondar-mandir menggunakan sepeda motor tanpa pelat di batas gang samping. Apakah petugas ronda bisa lebih aktif berpatroli keliling di jam-jam rawan 02.00 - 04.00 WIB?
+            </p>
+
+            <div class="official-response-box">
+              <div class="response-header">
+                <div class="responder-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  Tanggapan Resmi Bpk. H. Sukardi (Ketua RT 05)
+                </div>
+                <div class="responder-time">Direspons 17 September 2026, 14.30 WIB</div>
+              </div>
+              <p class="response-content">
+                "Terima kasih atas masukannya yang sangat penting. Kami telah menginstruksikan Komandan Regu Sekuriti untuk menerapkan sistem check-point barcode di 4 sudut gang per 1 jam sekali mulai pukul 01.00 sampai subuh. Hal ini juga akan kami evaluasi pada Rapat Warga 3 Oktober mendatang."
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 3: Kebersihan -->
+          <article class="aspirasi-card" data-category="kebersihan">
+            <div class="aspirasi-header">
+              <div class="aspirasi-user-info">
+                <div class="user-avatar-circle" style="background-color: var(--emerald-100); color: var(--emerald-700);">NR</div>
+                <div class="user-name-wrapper">
+                  <div class="user-display-name">Ibu Nurul R. (Warga Blok D-02)</div>
+                  <div class="aspirasi-timestamp">14 September 2026 • Kategori: Kebersihan Lingkungan</div>
+                </div>
+              </div>
+              <span class="badge badge-emerald">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Selesai Ditindaklanjuti
+              </span>
+            </div>
+
+            <h4 class="aspirasi-title">Permintaan Jadwal Pengangkutan Sampah Taman / Daun Kering</h4>
+            <p class="aspirasi-body">
+              Selamat pagi pengurus RT. Banyak warga yang sedang merapikan dahan pohon karena musim hujan mulai tiba. Apakah ada pengangkutan sampah organik terpisah dari truk sampah kelurahan?
+            </p>
+
+            <div class="official-response-box">
+              <div class="response-header">
+                <div class="responder-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  Tanggapan Resmi Bpk. H. Sukardi (Ketua RT 05)
+                </div>
+                <div class="responder-time">Direspons 14 September 2026, 16.00 WIB</div>
+              </div>
+              <p class="response-content">
+                "Sudah kami koordinasikan dengan armada gerobak motor kelurahan. Pengangkutan khusus dahan/daun kering disediakan setiap hari Selasa & Sabtu sore. Mohon diikat rapi di depan pagar masing-masing."
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER & EMERGENCY CONTACTS
+       ========================================================================== -->
+  <footer class="site-footer" id="kontak">
+    <div class="container">
+      <!-- Emergency Hotlines Box -->
+      <div class="emergency-banner">
+        <div class="emergency-header">
+          <div class="emergency-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+          <div class="emergency-title-box">
+            <h3>Pusat Kontak Cepat & Darurat Lingkungan (24 Jam)</h3>
+            <p>Simpan nomor ini untuk situasi mendesak keamanan, medis, atau bencana lingkungan sekitar.</p>
+          </div>
+        </div>
+
+        <div class="emergency-grid">
+          <!-- Card 1: Ketua RT -->
+          <div class="emergency-card">
+            <div>
+              <div class="emergency-role">Ketua RT 05</div>
+              <div class="emergency-name">Bpk. H. Sukardi</div>
+            </div>
+            <button class="emergency-btn-call btn-copy-phone" data-phone="0812-3456-7890">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              0812-3456-7890
+            </button>
+          </div>
+
+          <!-- Card 2: Pos Ronda / Sekuriti -->
+          <div class="emergency-card">
+            <div>
+              <div class="emergency-role">Pos Ronda & Keamanan</div>
+              <div class="emergency-name">Piket Regu Sekuriti</div>
+            </div>
+            <button class="emergency-btn-call btn-copy-phone" data-phone="0821-9876-5432">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              0821-9876-5432
+            </button>
+          </div>
+
+          <!-- Card 3: Bhabinkamtibmas / Babinsa -->
+          <div class="emergency-card">
+            <div>
+              <div class="emergency-role">Bhabinkamtibmas Polsek</div>
+              <div class="emergency-name">Aiptu Hendro Wibowo</div>
+            </div>
+            <button class="emergency-btn-call btn-copy-phone" data-phone="0813-8822-1100">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+              0813-8822-1100
+            </button>
+          </div>
+
+          <!-- Card 4: Ambulans & Damkar -->
+          <div class="emergency-card">
+            <div>
+              <div class="emergency-role">Ambulans & Damkar</div>
+              <div class="emergency-name">Posko Siaga Darurat</div>
+            </div>
+            <button class="emergency-btn-call btn-copy-phone" data-phone="112">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Hubungi 112 (Bebas Pulsa)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Footer Columns -->
+      <div class="footer-main-grid">
+        <div class="footer-about">
+          <div class="brand-logo" style="margin-bottom: 12px;">
+            <div class="brand-icon" style="width: 36px; height: 36px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              </svg>
+            </div>
+            <div class="brand-title" style="font-size: 1.15rem;">Ruang<span>Warga</span></div>
+          </div>
+          <p>
+            Platform pelayanan mandiri warga lingkungan RT 05 / RW 08. Mewujudkan komunitas yang rukun, transparan, guyub, dan serba mudah melalui teknologi ramah warga.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Layanan Warga</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" data-modal="modalSurat">Pengajuan Surat Domisili</a></li>
+            <li><a href="javascript:void(0)" data-modal="modalSurat">Surat Pengantar SKCK & KTP</a></li>
+            <li><a href="javascript:void(0)" data-modal="modalIuran">Bayar Iuran Bulanan</a></li>
+            <li><a href="javascript:void(0)" data-modal="modalPinjam">Peminjaman Tenda & Kursi</a></li>
+            <li><a href="javascript:void(0)" data-modal="modalPinjam">Peminjaman Sound System</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Informasi & Transparansi</h4>
+          <ul class="footer-links">
+            <li><a href="#kegiatan">Jadwal Ronda & Gotong Royong</a></li>
+            <li><a href="#transparansi">Rekap Pembukuan Kas RT</a></li>
+            <li><a href="#aspirasi">Suara & Aspirasi Warga</a></li>
+            <li><a href="javascript:void(0)" data-modal="modalUsulanKegiatan">Ajukan Ide Kegiatan</a></li>
+            <li><a href="javascript:void(0)" data-modal="modalCmsNotice">Akses CMS Pengurus RT</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Sekretariat Lingkungan</h4>
+          <div class="sekretariat-box">
+            <strong>Balai Warga RT 05 / RW 08</strong>
+            Jl. Graha Harmoni No. 01, Kelurahan Asri Mulya, Kec. Suka Rukun.<br>
+            <div style="margin-top: 10px; font-size: 0.8125rem; color: var(--slate-500);">
+              ⏰ <strong>Piket Pengurus:</strong><br>
+              Senin - Jumat: 19.00 - 21.00 WIB<br>
+              Sabtu - Minggu: 09.00 - 12.00 WIB
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom Copyright -->
+      <div class="footer-bottom">
+        <div>&copy; 2026 <strong>RuangWarga</strong> — Sistem Informasi Manajemen Lingkungan Guyub Rukun. Seluruh hak cipta dilindungi.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="javascript:void(0)" style="color: var(--slate-500); font-size: 0.8125rem;">Kebijakan Privasi</a>
+          <a href="javascript:void(0)" style="color: var(--slate-500); font-size: 0.8125rem;">Pedoman Kerukunan Warga</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODAL: PENGAJUAN SURAT PENGANTAR
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalSurat" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-title-icon" style="background-color: var(--primary-50); color: var(--primary-600);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div>
+            <h3 class="modal-title">Pengajuan Surat Pengantar</h3>
+            <div class="modal-subtitle">Proses cepat dan verifikasi digital oleh Pengurus RT</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Tutup Modal">&times;</button>
+      </div>
+
+      <form id="formSuratPengantar">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Jenis Surat Pengantar <span class="req">*</span></label>
+            <select class="form-select" id="jenisSurat" required>
+              <option value="">-- Pilih Jenis Surat Pengantar --</option>
+              <option value="Surat Keterangan Domisili Warga">Surat Keterangan Domisili Warga</option>
+              <option value="Surat Pengantar Pembuatan / Perubahan KTP & KK">Surat Pengantar Pembuatan / Perubahan KTP & KK</option>
+              <option value="Surat Pengantar SKCK Kepolisian">Surat Pengantar SKCK Kepolisian</option>
+              <option value="Surat Keterangan Usaha / UMKM Warga">Surat Keterangan Usaha / UMKM Warga</option>
+              <option value="Surat Keterangan Belum Menikah / Menikah">Surat Keterangan Belum Menikah / Menikah</option>
+              <option value="Surat Keterangan Kurang Mampu (Beasiswa/Bansos)">Surat Keterangan Kurang Mampu (Beasiswa/Bansos)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap Pemohon (Sesuai KTP) <span class="req">*</span></label>
+            <input type="text" class="form-input" id="namaPemohon" placeholder="Contoh: Hendra Wijaya" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label">Nomor Induk Kependudukan (NIK) <span class="req">*</span></label>
+              <input type="text" class="form-input" id="nikPemohon" placeholder="16 digit NIK" maxlength="16" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nomor Rumah / Blok <span class="req">*</span></label>
+              <input type="text" class="form-input" id="blokPemohon" placeholder="Misal: Blok B-12" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nomor WhatsApp Aktif <span class="req">*</span></label>
+            <input type="tel" class="form-input" id="waPemohon" placeholder="08xxxxxxxxxx (untuk kirim PDF surat)" required>
+            <div class="form-hint">Surat yang selesai ditandatangani akan dikirim via WhatsApp & tersimpan di akun Anda.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Keperluan Pengajuan Surat <span class="req">*</span></label>
+            <textarea class="form-textarea" id="keperluanSurat" placeholder="Jelaskan secara singkat keperluan Anda, misal: Persyaratan melamar pekerjaan / Perpanjangan paspor..." required></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-subtle" data-close-modal>Batal</button>
+          <button type="submit" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            Kirim Pengajuan Surat
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: CEK & BAYAR IURAN BULANAN
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalIuran" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-title-icon" style="background-color: var(--emerald-50); color: var(--emerald-600);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          </div>
+          <div>
+            <h3 class="modal-title">Cek & Bayar Iuran Bulanan</h3>
+            <div class="modal-subtitle">Iuran Kas Keamanan & Kebersihan Lingkungan RT 05</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Tutup Modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Cari Nomor Rumah / Blok KK</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" class="form-input" id="searchHouseNumber" placeholder="Ketik nomor rumah, contoh: B-12 atau A-05">
+            <button type="button" class="btn btn-primary" id="btnCekIuran">Cek Tagihan</button>
+          </div>
+          <div class="form-hint">Tip: Coba ketik "B-12" (belum lunas) atau "A-05" (sudah lunas) untuk simulasi.</div>
+        </div>
+
+        <!-- Result Box (Hidden by default, shown upon search) -->
+        <div class="iuran-result-box" id="iuranResultBox">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div>
+              <strong id="iuranOwnerName" style="font-size: 1rem; color: var(--slate-900);">Bpk. Agus Santoso</strong>
+              <div id="iuranHouseAddress" style="font-size: 0.8125rem; color: var(--slate-500);">Rumah Blok B No. 12</div>
+            </div>
+            <div id="iuranStatusBadge"></div>
+          </div>
+
+          <table class="iuran-details-table">
+            <tbody>
+              <tr>
+                <td>Iuran Keamanan & Ronda (Sep 2026)</td>
+                <td>Rp 45.000</td>
+              </tr>
+              <tr>
+                <td>Iuran Kebersihan & Sampah (Sep 2026)</td>
+                <td>Rp 30.000</td>
+              </tr>
+              <tr style="font-weight: 700; color: var(--slate-900); font-size: 0.9375rem;">
+                <td>Total Tagihan Berjalan</td>
+                <td id="iuranTotalAmount" style="color: var(--primary-600);">Rp 75.000</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- QRIS & Transfer Simulator if unpaid -->
+          <div id="paymentActionSection">
+            <div class="qris-demo-area">
+              <span class="badge badge-emerald" style="margin-bottom: 8px;">QRIS Standar Nasional (NMID: ID1029384756)</span>
+              <!-- Mock QR Code SVG -->
+              <div class="qris-mock-code">
+                <svg viewBox="0 0 100 100" width="120" height="120">
+                  <rect x="0" y="0" width="30" height="30" fill="#1E293B"/>
+                  <rect x="5" y="5" width="20" height="20" fill="#FFFFFF"/>
+                  <rect x="10" y="10" width="10" height="10" fill="#1E293B"/>
+                  <rect x="70" y="0" width="30" height="30" fill="#1E293B"/>
+                  <rect x="75" y="5" width="20" height="20" fill="#FFFFFF"/>
+                  <rect x="80" y="10" width="10" height="10" fill="#1E293B"/>
+                  <rect x="0" y="70" width="30" height="30" fill="#1E293B"/>
+                  <rect x="5" y="75" width="20" height="20" fill="#FFFFFF"/>
+                  <rect x="10" y="80" width="10" height="10" fill="#1E293B"/>
+                  <rect x="40" y="10" width="15" height="15" fill="#1E293B"/>
+                  <rect x="45" y="35" width="25" height="25" fill="#2563EB"/>
+                  <rect x="15" y="45" width="15" height="15" fill="#1E293B"/>
+                  <rect x="70" y="45" width="20" height="15" fill="#1E293B"/>
+                  <rect x="40" y="75" width="20" height="15" fill="#1E293B"/>
+                  <rect x="75" y="75" width="15" height="15" fill="#1E293B"/>
+                </svg>
+              </div>
+              <div style="font-size: 0.8125rem; color: var(--slate-600); margin-top: 6px;">
+                Bisa di-scan menggunakan BCA, Mandiri, BRI, GoPay, OVO, Dana, ShopeePay.
+              </div>
+            </div>
+
+            <!-- Upload Bukti Bayar Simulator -->
+            <div style="margin-top: 14px;">
+              <label class="form-label">Konfirmasi Bukti Transfer (Opsional)</label>
+              <input type="file" class="form-input" id="fileBuktiBayar" accept="image/*">
+              <button type="button" class="btn btn-success" id="btnKonfirmasiBayar" style="width: 100%; margin-top: 10px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Konfirmasi Pembayaran Saya
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-subtle" data-close-modal>Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: PEMINJAMAN ASET / ALAT RT
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalPinjam" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-title-icon" style="background-color: var(--purple-50); color: var(--purple-600);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <div>
+            <h3 class="modal-title">Peminjaman Aset & Fasilitas RT</h3>
+            <div class="modal-subtitle">Inventaris bersama untuk hajatan, acara keluarga, atau duka</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Tutup Modal">&times;</button>
+      </div>
+
+      <form id="formPinjamAset">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Pilih Aset / Peralatan Yang Dipinjam <span class="req">*</span></label>
+            <div class="radio-cards-grid">
+              <label class="radio-card-label">
+                <input type="radio" name="pilihanAset" value="Tenda Lipat Ukuran 3x6 Meter" checked>
+                <div class="radio-card-text">🎪 Tenda Lipat (3x6m)</div>
+              </label>
+              <label class="radio-card-label">
+                <input type="radio" name="pilihanAset" value="Set Kursi Lipat Warga (50 Unit)">
+                <div class="radio-card-text">🪑 Kursi Lipat (50 pcs)</div>
+              </label>
+              <label class="radio-card-label">
+                <input type="radio" name="pilihanAset" value="Wireless Portable Sound System + Mic">
+                <div class="radio-card-text">🔊 Sound System Portable</div>
+              </label>
+              <label class="radio-card-label">
+                <input type="radio" name="pilihanAset" value="Proyektor & Layar Tripod 84 Inch">
+                <div class="radio-card-text">📽️ Proyektor + Layar</div>
+              </label>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label">Tanggal Mulai Pakai <span class="req">*</span></label>
+              <input type="date" class="form-input" id="tglMulaiPinjam" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tanggal Pengembalian <span class="req">*</span></label>
+              <input type="date" class="form-input" id="tglSelesaiPinjam" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label">Nama Peminjam <span class="req">*</span></label>
+              <input type="text" class="form-input" id="namaPeminjam" placeholder="Nama Warga" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nomor Rumah / Blok <span class="req">*</span></label>
+              <input type="text" class="form-input" id="blokPeminjam" placeholder="Contoh: A-03" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tujuan Pemakaian <span class="req">*</span></label>
+            <input type="text" class="form-input" id="tujuanPinjam" placeholder="Misal: Acara syukuran aqiqah / Arisan keluarga..." required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-subtle" data-close-modal>Batal</button>
+          <button type="submit" class="btn btn-primary" style="background-color: var(--purple-600);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Ajukan Jadwal Peminjaman
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: KIRIM ASPIRASI WARGA
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalAspirasi" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-title-icon" style="background-color: var(--amber-50); color: var(--amber-600);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <h3 class="modal-title">Kotak Aspirasi & Suara Warga</h3>
+            <div class="modal-subtitle">Sampaikan saran, perbaikan lingkungan, atau kritik dengan santun</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Tutup Modal">&times;</button>
+      </div>
+
+      <form id="formKirimAspirasi">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Kategori Masukan / Aduan <span class="req">*</span></label>
+            <select class="form-select" id="kategoriAspirasi" required>
+              <option value="fasilitas">Fasilitas Umum (Jalan, Lampu, Selokan)</option>
+              <option value="keamanan">Keamanan & Ronda Lingkungan</option>
+              <option value="kebersihan">Kebersihan & Pengangkutan Sampah</option>
+              <option value="kegiatan">Kegiatan Sosial & Keakraban Warga</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Judul Aspirasi / Pokok Bahasan <span class="req">*</span></label>
+            <input type="text" class="form-input" id="judulAspirasi" placeholder="Misal: Penambahan Tong Sampah di Taman Bermain" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Detail Aspirasi / Uraian Masalah <span class="req">*</span></label>
+            <textarea class="form-textarea" id="isiAspirasi" placeholder="Jelaskan lokasi detail, kronologi, atau usulan solusi Anda..." required style="min-height: 110px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="radio-card-label" style="display: flex; align-items: center; justify-content: flex-start; cursor: pointer;">
+              <input type="checkbox" id="anonimCheckbox" style="width: 18px; height: 18px;">
+              <span class="radio-card-text" style="font-weight: 600; margin-left: 8px;">Kirim Secara Anonim (Nama & No Rumah tidak dipublikasikan ke feed umum)</span>
+            </label>
+          </div>
+
+          <div id="identitasAspirasiGroup" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label">Nama Pengirim</label>
+              <input type="text" class="form-input" id="namaAspirasi" placeholder="Nama Lengkap">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nomor Rumah / Blok</label>
+              <input type="text" class="form-input" id="blokAspirasi" placeholder="Misal: Blok C-10">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-subtle" data-close-modal>Batal</button>
+          <button type="submit" class="btn btn-primary" style="background-color: var(--amber-600);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            Kirim Suara Warga
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: USULAN KEGIATAN WARGA
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalUsulanKegiatan" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-title-icon" style="background-color: var(--primary-50); color: var(--primary-600);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </div>
+          <div>
+            <h3 class="modal-title">Ajukan Usulan Kegiatan Warga</h3>
+            <div class="modal-subtitle">Gagas kegiatan positif untuk mempererat tali silaturahmi</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Tutup Modal">&times;</button>
+      </div>
+
+      <form id="formUsulKegiatan">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Nama Kegiatan yang Diusulkan <span class="req">*</span></label>
+            <input type="text" class="form-input" id="namaKegiatanUsul" placeholder="Contoh: Turnamen Bulutangkis Antar Gang HUT RI" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label">Perkiraan Waktu Pelaksanaan <span class="req">*</span></label>
+              <input type="text" class="form-input" id="waktuKegiatanUsul" placeholder="Misal: Minggu pagi pertengahan bulan depan" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Perkiraan Lokasi <span class="req">*</span></label>
+              <input type="text" class="form-input" id="lokasiKegiatanUsul" placeholder="Balai Warga / Lapangan Blok A" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Deskripsi & Rencana Partisipan <span class="req">*</span></label>
+            <textarea class="form-textarea" id="deskripsiKegiatanUsul" placeholder="Jelaskan tujuan kegiatan, siapa saja yang dilibatkan, dan kebutuhan pendukung..." required></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label">Nama Pengusul <span class="req">*</span></label>
+              <input type="text" class="form-input" id="pengusulKegiatan" placeholder="Nama Warga" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nomor WhatsApp Pengusul <span class="req">*</span></label>
+              <input type="tel" class="form-input" id="waPengusul" placeholder="08xxxxxxxxxx" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-subtle" data-close-modal>Batal</button>
+          <button type="submit" class="btn btn-primary">Kirim Usulan ke Pengurus RT</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: MASUK AKUN WARGA
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalLoginWarga" role="dialog" aria-modal="true">
+    <div class="modal-container" style="max-width: 440px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-title-icon" style="background-color: var(--primary-50); color: var(--primary-600);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <h3 class="modal-title">Masuk Akun Warga</h3>
+            <div class="modal-subtitle">Akses riwayat pengajuan surat & bukti iuran</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Tutup Modal">&times;</button>
+      </div>
+
+      <form id="formLoginWarga">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Nomor NIK atau No. WhatsApp Terdaftar</label>
+            <input type="text" class="form-input" id="loginIdentifier" placeholder="Contoh: 3201xxxxxxxxxxxx atau 0812345678" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">PIN Akun Warga (6 Digit)</label>
+            <input type="password" class="form-input" id="loginPin" placeholder="******" maxlength="6" required>
+            <div class="form-hint">PIN diberikan saat pendataan warga oleh Sekretariat RT.</div>
+          </div>
+
+          <div style="font-size: 0.8125rem; color: var(--slate-500); line-height: 1.5;">
+            💡 <em>Belum memiliki PIN atau baru pindah ke lingkungan RT 05? Hubungi Sekretaris RT melalui tombol kontak di bagian bawah halaman.</em>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-subtle" data-close-modal>Batal</button>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Masuk ke Profil Warga</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: NOTICE AKSES CMS PENGURUS RT
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalCmsNotice" role="dialog" aria-modal="true">
+    <div class="modal-container" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-title-icon" style="background-color: var(--slate-100); color: var(--slate-700);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div>
+            <h3 class="modal-title">Portal CMS Pengurus RT</h3>
+            <div class="modal-subtitle">Khusus Ketua RT, Sekretaris, & Bendahara Terdaftar</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Tutup Modal">&times;</button>
+      </div>
+
+      <div class="modal-body" style="text-align: center; padding: 32px 24px;">
+        <div style="width: 64px; height: 64px; background-color: var(--primary-50); color: var(--primary-600); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/></svg>
+        </div>
+        <h4 style="font-size: 1.125rem; font-weight: 700; color: var(--slate-900); margin-bottom: 8px;">Area Terbatas Pengurus RT 05</h4>
+        <p style="font-size: 0.875rem; color: var(--slate-600); line-height: 1.6; margin-bottom: 20px;">
+          Portal CMS digunakan untuk memverifikasi surat pengantar resmi ber-barcode tanda tangan digital, mencatat pembukuan kas masuk/keluar, dan merespons kotak aspirasi warga.
+        </p>
+
+        <div style="background-color: var(--slate-50); border: 1px dashed var(--slate-300); border-radius: var(--radius-md); padding: 14px; font-size: 0.8125rem; color: var(--slate-600); text-align: left; margin-bottom: 20px;">
+          <strong>Demo Akun Pengurus:</strong><br>
+          Gunakan kredensial pengurus RT untuk beralih ke panel dashboard CMS internal.
+        </div>
+
+        <button class="btn btn-primary" id="btnSimulasiMasukCms" style="width: 100%;">
+          Buka Panel Admin CMS (Simulasi Pengurus)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       TOAST NOTIFICATION CONTAINER
+       ========================================================================== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- SCRIPT -->
+  <script src="app.js"></script>
+</body>
+</html>

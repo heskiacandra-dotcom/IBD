@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800" fill="none">
+  <rect width="600" height="800" rx="16" fill="#FFFFFF"/>
+  <rect x="24" y="24" width="552" height="752" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2"/>
+  
+  <!-- Header Toko / Nota -->
+  <circle cx="300" cy="80" r="32" fill="#2563EB" fill-opacity="0.1"/>
+  <path d="M300 62V98M282 80H318" stroke="#2563EB" stroke-width="4" stroke-linecap="round"/>
+  <text x="300" y="140" font-family="Inter, sans-serif" font-size="20" font-weight="bold" fill="#0F172A" text-anchor="middle">TOKO LISTRIK &amp; ELEKTRONIK JAYA</text>
+  <text x="300" y="165" font-family="Inter, sans-serif" font-size="12" fill="#64748B" text-anchor="middle">Jl. Raya Sukamaju No. 45, Cilodong, Depok • Telp: 021-7788990</text>
+  <line x1="60" y1="190" x2="540" y2="190" stroke="#CBD5E1" stroke-dasharray="6 6"/>
+
+  <!-- Info Transaksi -->
+  <text x="60" y="225" font-family="Inter, sans-serif" font-size="13" font-weight="bold" fill="#334155">NO. KWITANSI: <tspan fill="#2563EB">KW-2026/09/LP-088</tspan></text>
+  <text x="540" y="225" font-family="Inter, sans-serif" font-size="13" fill="#64748B" text-anchor="end">Tanggal: 20 Sep 2026</text>
+  <text x="60" y="250" font-family="Inter, sans-serif" font-size="13" fill="#334155">Pelanggan: Pengurus RT 05 / RW 01 Sukamaju</text>
+  <text x="60" y="275" font-family="Inter, sans-serif" font-size="13" fill="#334155">Kasir: Hendra Setiawan</text>
+
+  <!-- Tabel Barang -->
+  <rect x="60" y="300" width="480" height="36" rx="6" fill="#E2E8F0"/>
+  <text x="80" y="323" font-family="Inter, sans-serif" font-size="12" font-weight="bold" fill="#1E293B">NAMA ITEM</text>
+  <text x="320" y="323" font-family="Inter, sans-serif" font-size="12" font-weight="bold" fill="#1E293B">QTY</text>
+  <text x="520" y="323" font-family="Inter, sans-serif" font-size="12" font-weight="bold" fill="#1E293B" text-anchor="end">SUBTOTAL</text>
+
+  <text x="80" y="365" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#0F172A">Lampu Sorot LED Outdoor 100W IP66</text>
+  <text x="80" y="385" font-family="Inter, sans-serif" font-size="11" fill="#64748B">Merk: Philips Essential Floodlight Putih</text>
+  <text x="330" y="365" font-family="Inter, sans-serif" font-size="13" fill="#0F172A">2 pcs</text>
+  <text x="520" y="365" font-family="Inter, sans-serif" font-size="13" font-weight="bold" fill="#0F172A" text-anchor="end">Rp 350.000</text>
+
+  <text x="80" y="420" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#0F172A">Kabel Ekstensi Roll Outdoor 25 Meter</text>
+  <text x="80" y="440" font-family="Inter, sans-serif" font-size="11" fill="#64748B">Merk: Supreme NYYHY 2x1.5mm</text>
+  <text x="330" y="420" font-family="Inter, sans-serif" font-size="13" fill="#0F172A">1 roll</text>
+  <text x="520" y="420" font-family="Inter, sans-serif" font-size="13" font-weight="bold" fill="#0F172A" text-anchor="end">Rp 100.000</text>
+
+  <line x1="60" y1="475" x2="540" y2="475" stroke="#CBD5E1"/>
+
+  <!-- Total -->
+  <text x="320" y="515" font-family="Inter, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">TOTAL BAYAR:</text>
+  <text x="520" y="515" font-family="Inter, sans-serif" font-size="18" font-weight="extrabold" fill="#2563EB" text-anchor="end">Rp 450.000</text>
+  <text x="320" y="540" font-family="Inter, sans-serif" font-size="12" fill="#64748B">Metode Pembayaran: Tunai (Lunas)</text>
+
+  <!-- Stempel Cap Lunas -->
+  <rect x="80" y="580" width="160" height="60" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4"/>
+  <text x="160" y="615" font-family="Inter, sans-serif" font-size="16" font-weight="extrabold" fill="#059669" text-anchor="middle">LUNAS / SAH</text>
+  <text x="160" y="632" font-family="Inter, sans-serif" font-size="10" fill="#10B981" text-anchor="middle">20 SEP 2026</text>
+
+  <!-- Footer -->
+  <text x="300" y="720" font-family="Inter, sans-serif" font-size="11" fill="#94A3B8" text-anchor="middle">Terima kasih atas pembelian Anda. Nota ini adalah bukti pembayaran yang sah.</text>
+</svg>
