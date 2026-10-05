@@ -15,21 +15,26 @@ class ListAspirasis extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Catat Aspirasi Baru')
+                ->icon('heroicon-m-plus'),
         ];
     }
 
     public function getTabs(): array
     {
         return [
-            'all' => Tab::make('Semua Aspirasi'),
+            'all' => Tab::make('Semua Aspirasi')
+                ->badge(fn () => $this->getModel()::count() ?: null),
             'pending' => Tab::make('Menunggu Tanggapan')
                 ->badge(fn () => $this->getModel()::whereDoesntHave('responAspirasi')->count() ?: null)
                 ->badgeColor('warning')
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereDoesntHave('responAspirasi')),
-            'answered' => Tab::make('Sudah Dijawab')
+            'answered' => Tab::make('Sudah Ditanggapi')
+                ->badge(fn () => $this->getModel()::whereHas('responAspirasi')->count() ?: null)
                 ->badgeColor('success')
                 ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('responAspirasi')),
         ];
     }
+
 }

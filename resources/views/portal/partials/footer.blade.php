@@ -20,24 +20,85 @@
         </div>
       </div>
 
+@php
+    $kontakDaruratList = \App\Models\KontakRt::where('is_aktif', true)
+        ->where('lokasi_tampilan', 'footer_darurat')
+        ->orderBy('urutan')
+        ->get();
+
+    if ($kontakDaruratList->isEmpty()) {
+        $kontakDaruratList = collect([
+            new \App\Models\KontakRt([
+                'role' => 'Ketua RT 05',
+                'nama_kontak' => 'Bpk. Sukardi Hartono',
+                'nomor_telepon' => '0812-3456-7890',
+                'is_whatsapp' => true,
+                'pesan_wa' => 'Halo Ketua RT 05, saya warga Harmoni Residence',
+            ]),
+            new \App\Models\KontakRt([
+                'role' => 'Pos Ronda & Keamanan',
+                'nama_kontak' => 'Piket Regu Sekuriti',
+                'nomor_telepon' => '0821-9876-5432',
+                'is_whatsapp' => true,
+                'pesan_wa' => 'Halo Pos Ronda RT 05, saya warga ingin melapor keadaan keamanan',
+            ]),
+            new \App\Models\KontakRt([
+                'role' => 'Bhabinkamtibmas Polsek',
+                'nama_kontak' => 'Aiptu Hendro Wibowo',
+                'nomor_telepon' => '0813-8822-1100',
+                'is_whatsapp' => true,
+                'pesan_wa' => 'Halo Bhabinkamtibmas Polsek, saya warga RT 05 Harmoni Residence',
+            ]),
+            new \App\Models\KontakRt([
+                'role' => 'Ambulans & Damkar',
+                'nama_kontak' => 'Posko Siaga Darurat',
+                'nomor_telepon' => '112',
+                'is_whatsapp' => false,
+            ]),
+        ]);
+    }
+
+    $kontakSekretariat = \App\Models\KontakRt::where('is_aktif', true)
+        ->where('lokasi_tampilan', 'sekretariat')
+        ->first() ?? new \App\Models\KontakRt([
+            'role' => 'Sekretariat Lingkungan',
+            'nama_kontak' => 'Balai Warga RT 05 / RW 01',
+            'nomor_telepon' => '0812-3456-7890',
+            'is_whatsapp' => true,
+            'pesan_wa' => 'Halo Pengurus RT 05, saya warga Harmoni Residence',
+        ]);
+@endphp
+
       <div class="emergency-grid">
-        @foreach($kontakDarurat ?? [
-            ['role' => 'Ketua RT 05', 'name' => 'Bpk. Sukardi Hartono', 'phone' => '0812-3456-7890', 'display' => '0812-3456-7890'],
-            ['role' => 'Pos Ronda & Keamanan', 'name' => 'Piket Regu Sekuriti', 'phone' => '0821-9876-5432', 'display' => '0821-9876-5432'],
-            ['role' => 'Bhabinkamtibmas Polsek', 'name' => 'Aiptu Hendro Wibowo', 'phone' => '0813-8822-1100', 'display' => '0813-8822-1100'],
-            ['role' => 'Ambulans & Damkar', 'name' => 'Posko Siaga Darurat', 'phone' => '112', 'display' => 'Hubungi 112 (Bebas Pulsa)']
-        ] as $kontak)
+        @foreach($kontakDaruratList as $kontak)
           <div class="emergency-card">
             <div>
-              <div class="emergency-role">{{ $kontak['role'] }}</div>
-              <div class="emergency-name">{{ $kontak['name'] }}</div>
+              <div class="emergency-role">{{ $kontak->role }}</div>
+              <div class="emergency-name">{{ $kontak->nama_kontak }}</div>
             </div>
-            <button type="button" class="emergency-btn-call btn-copy-phone" data-phone="{{ $kontak['phone'] }}" title="Klik untuk menyalin nomor">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
-              <span>{{ $kontak['display'] }}</span>
-            </button>
+            <div style="display: flex; gap: 6px; align-items: center; width: 100%;">
+              @if($kontak->is_whatsapp && $kontak->whatsapp_url)
+                <a href="{{ $kontak->whatsapp_url }}" target="_blank" rel="noopener" class="emergency-btn-call emergency-btn-wa" title="Hubungi langsung via WhatsApp" style="flex: 1; text-decoration: none;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: #059669;">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                  </svg>
+                  <span>{{ $kontak->nomor_telepon }}</span>
+                </a>
+              @else
+                <a href="{{ $kontak->tel_url }}" class="emergency-btn-call" title="Panggil Nomor Telepon Darurat" style="flex: 1; text-decoration: none;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  <span>{{ $kontak->nomor_telepon == '112' ? 'Hubungi 112 (Bebas Pulsa)' : $kontak->nomor_telepon }}</span>
+                </a>
+              @endif
+              <button type="button" class="emergency-copy-btn btn-copy-phone" data-phone="{{ $kontak->nomor_telepon }}" title="Salin nomor telepon" style="padding: 6px 8px; border-radius: 8px; border: 1px solid #FECDD3; background: #FFFFFF; color: #BE123C; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                </svg>
+              </button>
+            </div>
           </div>
         @endforeach
       </div>
@@ -72,10 +133,9 @@
           Platform digital terpadu pelayanan mandiri dan transparansi keuangan lingkungan. Mewujudkan warga yang rukun, transparan, guyub, dan serba mudah melalui teknologi modern berbasis Laravel.
         </p>
 
-        <!-- WhatsApp Gateway Status Pill -->
-        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px; font-size: 0.75rem; color: #065F46; font-weight: 600;">
-          <span style="width: 8px; height: 8px; border-radius: 50%; background: #10B981; display: inline-block;"></span>
-          <span>Bot WhatsApp RT: <strong>0812-3456-7890</strong></span>
+        <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; background: #EFF6FF; border: 1px solid #DBEAFE; border-radius: 8px; font-size: 0.75rem; color: #1E40AF; font-weight: 600;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #2563EB; display: inline-block;"></span>
+          <span>Layanan Mandiri Warga RT 05</span>
         </div>
       </div>
 
@@ -157,9 +217,9 @@
             </a>
           </li>
           <li>
-            <a href="javascript:void(0)" data-modal="modalCmsNotice">
+            <a href="javascript:void(0)" data-modal="modalStatusWarga">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-              <span>Akses CMS Pengurus RT</span>
+              <span>Status Surat & Mutasi Iuran</span>
             </a>
           </li>
         </ul>
@@ -196,11 +256,11 @@
             </div>
           </div>
 
-          <a href="https://wa.me/6281234567890?text=Halo%20Pengurus%20RT%2005,%20saya%20warga%20Harmoni%20Residence" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; background: #059669; color: #FFFFFF; font-weight: 700; font-size: 0.75rem; padding: 8px 12px; border-radius: 8px; text-decoration: none; transition: background 0.2s;">
+          <a href="{{ $kontakSekretariat->whatsapp_url ?? 'https://wa.me/6281234567890' }}" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; background: #059669; color: #FFFFFF; font-weight: 700; font-size: 0.75rem; padding: 8px 12px; border-radius: 8px; text-decoration: none; transition: background 0.2s;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
             </svg>
-            <span>Hubungi Sekretariat RT</span>
+            <span>Hubungi Sekretariat RT ({{ $kontakSekretariat->nomor_telepon ?? '0812-3456-7890' }})</span>
           </a>
         </div>
       </div>

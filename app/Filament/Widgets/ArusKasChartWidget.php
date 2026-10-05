@@ -12,11 +12,17 @@ class ArusKasChartWidget extends ChartWidget
 {
     protected static ?int $sort = 2;
 
-    protected ?string $heading = 'Arus Kas Masuk vs Kas Keluar (Tahun Berjalan)';
+    protected ?string $heading = 'Arus Kas';
 
-    protected int | string | array $columnSpan = 'full';
+    protected ?string $description = 'Pemasukan vs Pengeluaran';
 
-    protected ?string $maxHeight = '320px';
+    protected int | string | array $columnSpan = [
+        'default' => 'full',
+        'md' => 4,
+        'xl' => 6,
+    ];
+
+    protected ?string $maxHeight = '180px';
 
     protected function getData(): array
     {
@@ -63,19 +69,9 @@ class ArusKasChartWidget extends ChartWidget
         $inflowData = [];
         $outflowData = [];
 
-        // Realistic baseline if database has no records yet (in Rupiah)
-        $baselineInflow = [22500000, 24100000, 26000000, 23800000, 28500000, 27200000, 25000000, 26800000, 25400000, 27500000, 26000000, 29500000];
-        $baselineOutflow = [14200000, 16500000, 18000000, 15200000, 19800000, 17500000, 16000000, 18200000, 16100000, 17000000, 15800000, 20200000];
-
-        $hasRealInflow = count(array_filter($pemasukanMonthly)) > 0;
-        $hasRealOutflow = count(array_filter($pengeluaranMonthly)) > 0;
-
         for ($m = 1; $m <= 12; $m++) {
-            $inVal = (float) ($pemasukanMonthly[$m] ?? 0);
-            $outVal = (float) ($pengeluaranMonthly[$m] ?? 0);
-
-            $inflowData[] = $hasRealInflow ? $inVal : $baselineInflow[$m - 1];
-            $outflowData[] = $hasRealOutflow ? $outVal : $baselineOutflow[$m - 1];
+            $inflowData[] = (float) ($pemasukanMonthly[$m] ?? 0);
+            $outflowData[] = (float) ($pengeluaranMonthly[$m] ?? 0);
         }
 
         return [
@@ -83,20 +79,24 @@ class ArusKasChartWidget extends ChartWidget
                 [
                     'label' => 'Kas Masuk (Iuran Lunas)',
                     'data' => $inflowData,
-                    'backgroundColor' => 'rgba(16, 185, 129, 0.85)', // Emerald Green (#10B981)
-                    'borderColor' => '#059669',
+                    'backgroundColor' => 'rgba(16, 185, 129, 0.85)',
+                    'borderColor' => '#10B981',
                     'borderWidth' => 1,
-                    'borderRadius' => 6,
+                    'borderRadius' => 4,
                     'borderSkipped' => false,
+                    'barPercentage' => 0.6,
+                    'categoryPercentage' => 0.7,
                 ],
                 [
                     'label' => 'Kas Keluar (Operasional)',
                     'data' => $outflowData,
-                    'backgroundColor' => 'rgba(244, 63, 94, 0.85)', // Rose Red (#F43F5E)
-                    'borderColor' => '#E11D48',
+                    'backgroundColor' => 'rgba(244, 63, 94, 0.85)',
+                    'borderColor' => '#F43F5E',
                     'borderWidth' => 1,
-                    'borderRadius' => 6,
+                    'borderRadius' => 4,
                     'borderSkipped' => false,
+                    'barPercentage' => 0.6,
+                    'categoryPercentage' => 0.7,
                 ],
             ],
             'labels' => $months,
@@ -112,25 +112,38 @@ class ArusKasChartWidget extends ChartWidget
     {
         return RawJs::make(<<<JS
         {
+            layout: {
+                padding: {
+                    top: 0,
+                    right: 14,
+                    bottom: 0,
+                    left: 2
+                }
+            },
             plugins: {
                 legend: {
                     display: true,
                     position: 'top',
+                    align: 'end',
                     labels: {
                         usePointStyle: true,
-                        boxWidth: 8,
+                        pointStyle: 'circle',
+                        boxWidth: 6,
+                        padding: 12,
                         font: {
                             family: 'Plus Jakarta Sans, sans-serif',
-                            size: 12
+                            size: 11
                         }
                     }
                 },
                 tooltip: {
+                    padding: 8,
+                    cornerRadius: 6,
                     callbacks: {
                         label: function(context) {
                             var label = context.dataset.label || '';
                             var value = Number(context.parsed.y || 0);
-                            return label + ': Rp ' + value.toLocaleString('id-ID');
+                            return ' ' + label + ': Rp ' + value.toLocaleString('id-ID');
                         }
                     }
                 }
@@ -142,7 +155,8 @@ class ArusKasChartWidget extends ChartWidget
                     },
                     ticks: {
                         font: {
-                            family: 'Plus Jakarta Sans, sans-serif'
+                            family: 'Plus Jakarta Sans, sans-serif',
+                            size: 10
                         }
                     }
                 },
@@ -150,10 +164,11 @@ class ArusKasChartWidget extends ChartWidget
                     beginAtZero: true,
                     grid: {
                         display: true,
-                        color: '#F1F5F9',
+                        color: 'rgba(241, 245, 249, 0.8)',
                         drawBorder: false
                     },
                     ticks: {
+                        maxTicksLimit: 4,
                         callback: function(value) {
                             if (value >= 1000000) {
                                 return 'Rp ' + (value / 1000000).toLocaleString('id-ID') + ' Jt';
@@ -164,7 +179,8 @@ class ArusKasChartWidget extends ChartWidget
                             return 'Rp ' + Number(value).toLocaleString('id-ID');
                         },
                         font: {
-                            family: 'Plus Jakarta Sans, sans-serif'
+                            family: 'Plus Jakarta Sans, sans-serif',
+                            size: 10
                         }
                     }
                 }

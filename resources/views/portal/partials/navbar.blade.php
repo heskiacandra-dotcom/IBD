@@ -128,7 +128,7 @@
           <div style="width: 32px; height: 32px; border-radius: 8px; background: #EFF6FF; color: #2563EB; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8125rem;">
             {{ strtoupper(substr(auth('warga')->user()->Nama_Lengkap, 0, 2)) }}
           </div>
-          <span style="font-size: 0.8125rem; font-weight: 600; color: #0F172A; display: none; @media(min-width: 640px){display:inline;}">
+          <span class="nav-user-name" style="font-size: 0.8125rem; font-weight: 600; color: #0F172A;">
             {{ Str::limit(auth('warga')->user()->Nama_Lengkap, 14) }}
           </span>
           <form action="{{ route('logout') }}" method="POST" style="margin: 0; display: inline;">
@@ -143,7 +143,7 @@
           <div style="width: 32px; height: 32px; border-radius: 8px; background: #EFF6FF; color: #2563EB; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8125rem;">
             {{ strtoupper(substr(auth('web')->user()->Username, 0, 2)) }}
           </div>
-          <span style="font-size: 0.8125rem; font-weight: 600; color: #0F172A; display: none; @media(min-width: 640px){display:inline;}">
+          <span class="nav-user-name" style="font-size: 0.8125rem; font-weight: 600; color: #0F172A;">
             {{ Str::limit(auth('web')->user()->Username, 14) }}
           </span>
           <form action="{{ route('logout') }}" method="POST" style="margin: 0; display: inline;">
@@ -161,7 +161,7 @@
             <polyline points="10 17 15 12 10 7"/>
             <line x1="15" y1="12" x2="3" y2="12"/>
           </svg>
-          <span>Login CTA</span>
+          <span>Masuk</span>
         </a>
       @endif
     </div>

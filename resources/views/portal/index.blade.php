@@ -120,9 +120,15 @@
                 </svg>
               </div>
               @if(count($tagihanPending) > 0)
-                <span style="font-size: 0.6875rem; font-weight: 700; background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; padding: 2px 8px; border-radius: 9999px;">
-                  {{ count($tagihanPending) }} Tagihan Baru
-                </span>
+                @if(isset($billingSummary) && ($billingSummary['is_double'] ?? false))
+                  <span style="font-size: 0.6875rem; font-weight: 700; background: #FFE4E6; color: #BE123C; border: 1px solid #FDA4AF; padding: 2px 8px; border-radius: 9999px;">
+                    ⚠️ Double ({{ count($tagihanPending) }} Bulan)
+                  </span>
+                @else
+                  <span style="font-size: 0.6875rem; font-weight: 700; background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; padding: 2px 8px; border-radius: 9999px;">
+                    {{ count($tagihanPending) }} Tagihan Baru
+                  </span>
+                @endif
               @else
                 <span style="font-size: 0.6875rem; font-weight: 700; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 9999px;">
                   ✓ Iuran Lunas
@@ -131,13 +137,17 @@
             </div>
             <h3 style="font-size: 1rem; font-weight: 800; color: #0F172A; margin: 0 0 6px 0;">Bayar Iuran RT</h3>
             <p style="font-size: 0.8125rem; color: #64748B; margin: 0 0 18px 0; line-height: 1.5; min-height: 38px;">
-              Bayar iuran kebersihan & keamanan keluarga via QRIS atau transfer bank. Upload bukti bayar instan.
+              @if(isset($billingSummary) && ($billingSummary['is_double'] ?? false))
+                <strong style="color: #E11D48;">Tagihan menumpuk {{ $billingSummary['total_nominal_formatted'] }}.</strong> Bebas dibayar di tanggal berapa saja bulan ini via QRIS.
+              @else
+                Iuran bulanan kas RT. Bebas bayar di tanggal berapa saja selama bulan berjalan sebelum berganti bulan.
+              @endif
             </p>
           </div>
           <div>
-            <button type="button" class="btn btn-primary" data-modal="modalIuran" id="btnCardBayarIuran" style="width: 100%; font-size: 0.8125rem; padding: 10px 14px; border-radius: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; background: #2563EB; color: #FFFFFF; border: none; cursor: pointer; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15); transition: background 0.2s;">
+            <button type="button" class="btn btn-primary" data-modal="modalIuran" id="btnCardBayarIuran" style="width: 100%; font-size: 0.8125rem; padding: 10px 14px; border-radius: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; background: {{ (isset($billingSummary) && ($billingSummary['is_double'] ?? false)) ? '#E11D48' : '#2563EB' }}; color: #FFFFFF; border: none; cursor: pointer; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15); transition: background 0.2s;">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-              <span>Bayar Iuran Sekarang</span>
+              <span>{{ (isset($billingSummary) && ($billingSummary['is_double'] ?? false)) ? 'Bayar Tagihan Double' : 'Bayar Iuran Sekarang' }}</span>
             </button>
           </div>
         </div>

@@ -8,6 +8,7 @@ use App\Models\KartuKeluarga;
 use BackedEnum;
 use UnitEnum;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
@@ -29,12 +30,23 @@ class KartuKeluargaResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return in_array(auth()->user()?->role, ['super_admin', 'admin_rt', 'sekretaris']);
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return in_array($role, ['super_admin', 'admin_rt', 'sekretaris']);
     }
 
     public static function shouldRegisterNavigation(): bool
     {
         return static::canViewAny();
+    }
+
+    public static function form(Schema $schema): Schema
+    {
+        return \App\Filament\Resources\KartuKeluargas\Schemas\KartuKeluargaForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return \App\Filament\Resources\KartuKeluargas\Schemas\KartuKeluargaInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table

@@ -53,6 +53,15 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url);
 
+  // Never intercept or cache Admin CMS, CMS redirect routes, or Livewire backend requests
+  if (
+    url.pathname.startsWith('/admin') ||
+    url.pathname.startsWith('/cms') ||
+    url.pathname.startsWith('/livewire')
+  ) {
+    return;
+  }
+
   // Handle page navigation (HTML)
   if (request.mode === 'navigate') {
     event.respondWith(

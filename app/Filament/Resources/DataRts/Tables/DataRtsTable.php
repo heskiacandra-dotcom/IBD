@@ -50,7 +50,7 @@ class DataRtsTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()->visible(fn () => (auth('web')->user()?->role ?? auth()->user()?->role) === 'super_admin'),
                 ]),
             ]);
     }

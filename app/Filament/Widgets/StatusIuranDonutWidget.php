@@ -9,17 +9,17 @@ class StatusIuranDonutWidget extends ChartWidget
 {
     protected static ?int $sort = 3;
 
-    protected ?string $heading = 'Tingkat Kelunasan Iuran Bulan Ini';
+    protected ?string $heading = 'Kelunasan Iuran';
+
+    protected ?string $description = 'Bulan Berjalan';
 
     protected int | string | array $columnSpan = [
-        'default' => 1,
-        'sm' => 1,
-        'md' => 1,
-        'lg' => 1,
-        'xl' => 1,
+        'default' => 'full',
+        'md' => 2,
+        'xl' => 3,
     ];
 
-    protected ?string $maxHeight = '280px';
+    protected ?string $maxHeight = '180px';
 
     protected function getData(): array
     {
@@ -54,8 +54,8 @@ class StatusIuranDonutWidget extends ChartWidget
                 ],
             ],
             'labels' => [
-                "Lunas: {$lunasCount} KK ({$pctLunas}%)",
-                "Belum Lunas: {$belumLunasCount} KK ({$pctBelum}%)",
+                "Lunas ({$pctLunas}%)",
+                "Belum ({$pctBelum}%)",
             ],
         ];
     }
@@ -69,13 +69,23 @@ class StatusIuranDonutWidget extends ChartWidget
     {
         return [
             'cutout' => '72%',
+            'maintainAspectRatio' => false,
+            'layout' => [
+                'padding' => [
+                    'top' => 2,
+                    'bottom' => 4,
+                ],
+            ],
             'plugins' => [
                 'legend' => [
                     'display' => true,
                     'position' => 'bottom',
+                    'align' => 'center',
                     'labels' => [
                         'usePointStyle' => true,
-                        'boxWidth' => 8,
+                        'pointStyle' => 'circle',
+                        'boxWidth' => 6,
+                        'padding' => 10,
                         'font' => [
                             'family' => 'Plus Jakarta Sans, sans-serif',
                             'size' => 11,

@@ -9,17 +9,17 @@ class DemografiWargaChartWidget extends ChartWidget
 {
     protected static ?int $sort = 4;
 
-    protected ?string $heading = 'Status Domisili Warga';
+    protected ?string $heading = 'Domisili Warga';
+
+    protected ?string $description = 'Status Kependudukan';
 
     protected int | string | array $columnSpan = [
-        'default' => 1,
-        'sm' => 1,
-        'md' => 1,
-        'lg' => 1,
-        'xl' => 1,
+        'default' => 'full',
+        'md' => 2,
+        'xl' => 3,
     ];
 
-    protected ?string $maxHeight = '280px';
+    protected ?string $maxHeight = '180px';
 
     protected function getData(): array
     {
@@ -45,19 +45,19 @@ class DemografiWargaChartWidget extends ChartWidget
                     'data' => [$tetapCount, $kontrakCount],
                     'backgroundColor' => [
                         '#2563EB', // Royal Blue
-                        '#0EA5E9', // Sky 500
+                        '#94A3B8', // Slate 400
                     ],
                     'hoverBackgroundColor' => [
                         '#1D4ED8',
-                        '#0284C7',
+                        '#64748B',
                     ],
                     'borderWidth' => 2,
                     'borderColor' => '#FFFFFF',
                 ],
             ],
             'labels' => [
-                "Warga Tetap: {$tetapCount} Jiwa ({$pctTetap}%)",
-                "Warga Kontrak: {$kontrakCount} Jiwa ({$pctKontrak}%)",
+                "Tetap ({$pctTetap}%)",
+                "Kontrak ({$pctKontrak}%)",
             ],
         ];
     }
@@ -71,13 +71,23 @@ class DemografiWargaChartWidget extends ChartWidget
     {
         return [
             'cutout' => '72%',
+            'maintainAspectRatio' => false,
+            'layout' => [
+                'padding' => [
+                    'top' => 2,
+                    'bottom' => 4,
+                ],
+            ],
             'plugins' => [
                 'legend' => [
                     'display' => true,
                     'position' => 'bottom',
+                    'align' => 'center',
                     'labels' => [
                         'usePointStyle' => true,
-                        'boxWidth' => 8,
+                        'pointStyle' => 'circle',
+                        'boxWidth' => 6,
+                        'padding' => 10,
                         'font' => [
                             'family' => 'Plus Jakarta Sans, sans-serif',
                             'size' => 11,

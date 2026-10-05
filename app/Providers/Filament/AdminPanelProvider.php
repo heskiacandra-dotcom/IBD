@@ -26,6 +26,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->homeUrl('/admin')
             ->brandName('Smart RT')
             ->font('Plus Jakarta Sans')
             ->darkMode(false)

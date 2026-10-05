@@ -33,22 +33,26 @@ class AdminResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return auth()->user()?->role === 'admin_rt' ? 'Pengurus RT (Sekre & Bendahara)' : 'Pengurus & Admin';
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return $role === 'admin_rt' ? 'Pengurus RT (Sekre & Bendahara)' : 'Pengurus & Admin';
     }
 
     public static function getModelLabel(): string
     {
-        return auth()->user()?->role === 'admin_rt' ? 'Pengurus RT' : 'Pengurus / Admin';
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return $role === 'admin_rt' ? 'Pengurus RT' : 'Pengurus / Admin';
     }
 
     public static function getPluralModelLabel(): string
     {
-        return auth()->user()?->role === 'admin_rt' ? 'Pengurus RT' : 'Pengurus & Admin';
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return $role === 'admin_rt' ? 'Pengurus RT' : 'Pengurus & Admin';
     }
 
     public static function canViewAny(): bool
     {
-        return in_array(auth()->user()?->role, ['super_admin', 'admin_rt']);
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return in_array($role, ['super_admin', 'admin_rt']);
     }
 
     public static function shouldRegisterNavigation(): bool
@@ -58,18 +62,19 @@ class AdminResource extends Resource
 
     public static function canCreate(): bool
     {
-        return in_array(auth()->user()?->role, ['super_admin', 'admin_rt']);
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return in_array($role, ['super_admin', 'admin_rt']);
     }
 
     public static function canEdit(Model $record): bool
     {
-        $user = auth()->user();
+        $user = auth('web')->user() ?? auth()->user();
         if ($user?->role === 'super_admin') {
             return true;
         }
 
         if ($user?->role === 'admin_rt') {
-            return $record->ID_RT == $user->ID_RT;
+            return $record->ID_RT == $user->ID_RT && $record->role !== 'super_admin';
         }
 
         return false;
@@ -77,7 +82,7 @@ class AdminResource extends Resource
 
     public static function canDelete(Model $record): bool
     {
-        $user = auth()->user();
+        $user = auth('web')->user() ?? auth()->user();
         if ($user?->role === 'super_admin') {
             return $record->Admin_ID !== $user->Admin_ID;
         }
@@ -94,10 +99,11 @@ class AdminResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();
-        $user = auth()->user();
+        $user = auth('web')->user() ?? auth()->user();
 
         if ($user?->role === 'admin_rt') {
-            return $query->where('ID_RT', $user->ID_RT);
+            return $query->where('ID_RT', $user->ID_RT)
+                ->where('role', '!=', 'super_admin');
         }
 
         return $query;

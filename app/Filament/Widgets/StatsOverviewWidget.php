@@ -56,30 +56,25 @@ class StatsOverviewWidget extends BaseStatsOverviewWidget
 
         return [
             Stat::make('Total Warga Aktif', $totalWarga . ' Jiwa')
-                ->description("Kepala Keluarga: {$totalKk} KK")
+                ->description("{$totalKk} KK Terdaftar")
                 ->descriptionIcon('heroicon-m-user-group')
-                ->color('info')
-                ->chart([$totalWarga - 3, $totalWarga - 2, $totalWarga - 1, $totalWarga]),
+                ->color('info'),
 
             Stat::make('Tiket Menunggu Approval', $pendingApprovals . ' Berkas')
-                ->description('Perlu Tindakan')
+                ->description($pendingApprovals > 0 ? 'Perlu Tindakan' : 'Semua Berkas Selesai')
                 ->descriptionIcon('heroicon-m-clock')
-                ->color($pendingApprovals > 0 ? 'warning' : 'success')
-                ->extraAttributes([
-                    'class' => $pendingApprovals > 0 ? 'border-amber-200 bg-amber-50/30' : '',
-                ]),
+                ->color($pendingApprovals > 0 ? 'warning' : 'success'),
 
             Stat::make('Iuran Kas Terkumpul (Bulan Berjalan)', 'Rp ' . number_format($totalPemasukan, 0, ',', '.'))
-                ->description('+12.4% vs bulan lalu')
-                ->descriptionIcon('heroicon-m-arrow-trending-up')
-                ->color('success')
-                ->chart([15, 18, 22, 19, 24, 25, 28]),
+                ->description('Bulan Berjalan (+12.4%)')
+                ->descriptionIcon('heroicon-m-banknotes')
+                ->color('success'),
 
             Stat::make('Estimasi Saldo Kas RT', 'Rp ' . number_format($estimasiSaldo, 0, ',', '.'))
-                ->description('Kas operasional RT aktif')
+                ->description('Kas Operasional Aktif')
                 ->descriptionIcon('heroicon-m-wallet')
-                ->color('primary')
-                ->chart([20, 22, 21, 25, 27, 26, 29]),
+                ->color('primary'),
         ];
+
     }
 }

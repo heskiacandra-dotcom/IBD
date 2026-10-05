@@ -8,8 +8,11 @@ use App\Models\DataRt;
 use BackedEnum;
 use UnitEnum;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class DataRtResource extends Resource
 {
@@ -29,12 +32,46 @@ class DataRtResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()?->role === 'super_admin';
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return $role === 'super_admin';
+    }
+
+    public static function canCreate(): bool
+    {
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return $role === 'super_admin';
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return $role === 'super_admin';
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return $role === 'super_admin';
     }
 
     public static function shouldRegisterNavigation(): bool
     {
         return static::canViewAny();
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery();
+    }
+
+    public static function form(Schema $schema): Schema
+    {
+        return \App\Filament\Resources\DataRts\Schemas\DataRtForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return \App\Filament\Resources\DataRts\Schemas\DataRtInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table

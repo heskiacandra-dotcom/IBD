@@ -43,7 +43,7 @@ class CitizenPortalController extends Controller
 
         $suratSaya = $this->getSuratSaya($warga);
         $aspirasiSaya = $this->getAspirasiSaya($warga);
-        [$tagihanSaya, $tagihanPending, $totalTerbayarTahunIni, $isLunasBulanIni] = $this->getTagihanData($warga, $rtId);
+        [$tagihanSaya, $tagihanPending, $totalTerbayarTahunIni, $isLunasBulanIni, $billingSummary] = $this->getTagihanData($warga, $rtId);
         $transparansiKas = $this->getTransparansiKas($rtId);
         $inventarisCatalog = $this->getInventarisCatalog($rtId);
         $agendaList = $this->getAgendaList($rtId);
@@ -56,6 +56,9 @@ class CitizenPortalController extends Controller
             'is_lunas_bulan_ini' => $isLunasBulanIni,
             'total_terbayar_tahun_ini' => 'Rp ' . number_format($totalTerbayarTahunIni, 0, ',', '.'),
             'total_aspirasi' => $aspirasiSaya->count(),
+            'is_double_tagihan' => $billingSummary['is_double'] ?? false,
+            'total_tagihan_nominal' => $billingSummary['total_nominal'] ?? 0,
+            'total_tagihan_formatted' => $billingSummary['total_nominal_formatted'] ?? 'Rp 0',
         ];
 
         $kontakDarurat = [
@@ -79,6 +82,7 @@ class CitizenPortalController extends Controller
             'aspirasiSaya',
             'tagihanSaya',
             'tagihanPending',
+            'billingSummary',
             'transparansiKas',
             'inventarisCatalog',
             'agendaList',
@@ -169,10 +173,13 @@ class CitizenPortalController extends Controller
     /**
      * Get tagihan data and summary metrics for warga
      *
-     * @return array{0: \Illuminate\Support\Collection, 1: \Illuminate\Support\Collection, 2: float, 3: bool}
+     * @return array{0: \Illuminate\Support\Collection, 1: \Illuminate\Support\Collection, 2: float, 3: bool, 4: array}
      */
     protected function getTagihanData(Warga $warga, int|string $rtId): array
     {
+        $billingService = app(\App\Services\MonthlyDuesBillingService::class);
+        $billingSummary = $billingService->getHouseholdBillingSummary($warga->ID_KK, $rtId);
+
         $tagihanSemua = Pemasukan::withoutGlobalScope('tenant')
             ->where('ID_KK', $warga->ID_KK)
             ->where('ID_RT', $rtId)
@@ -225,7 +232,7 @@ class CitizenPortalController extends Controller
                 'kategori' => $t->Kategori,
                 'nominal' => (float) $t->nominal,
                 'nominal_formatted' => 'Rp ' . number_format((float) ($t->nominal ?? 0), 0, ',', '.'),
-                'tanggal' => Carbon::parse($t->tgl_jatuh_tmp)->translatedFormat('d M Y'),
+                'tanggal' => Carbon::parse($t->tgl_jatuh_tmp)->locale('id')->translatedFormat('d M Y'),
                 'status' => $t->status_tagihan,
                 'bukti_bayar' => $t->bukti_bayar,
                 'is_lunas' => $isLunas,
@@ -237,7 +244,7 @@ class CitizenPortalController extends Controller
             ];
         });
 
-        return [$tagihanSaya, $tagihanPending, $totalTerbayarTahunIni, $isLunasBulanIni];
+        return [$tagihanSaya, $tagihanPending, $totalTerbayarTahunIni, $isLunasBulanIni, $billingSummary];
     }
 
     /**
@@ -365,6 +372,8 @@ class CitizenPortalController extends Controller
             ->get()
             ->map(function ($inv) {
                 $stok = (int) $inv->Jumlah;
+                $peminjamSummary = $inv->getActiveBorrowersSummary();
+
                 return [
                     'id' => $inv->Inventaris_ID,
                     'nama' => $inv->Nama_Barang,
@@ -374,6 +383,7 @@ class CitizenPortalController extends Controller
                     'is_tersedia' => $stok > 0,
                     'status_label' => $stok > 0 ? "Tersedia ({$stok} Unit)" : 'Stok Kosong (0 Unit)',
                     'status_badge' => $stok > 0 ? 'badge-emerald' : 'badge-rose',
+                    'peminjam_summary' => $peminjamSummary,
                 ];
             });
     }
@@ -425,43 +435,36 @@ class CitizenPortalController extends Controller
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
         }
 
-        $pendingBills = Pemasukan::withoutGlobalScope('tenant')
-            ->where('ID_KK', $warga->ID_KK)
-            ->where('ID_RT', $warga->ID_RT)
-            ->whereRaw('LOWER(status_tagihan) != ?', ['lunas'])
-            ->get();
+        $billingService = app(\App\Services\MonthlyDuesBillingService::class);
+        $summary = $billingService->getHouseholdBillingSummary($warga->ID_KK, $warga->ID_RT);
 
-        $billsData = $pendingBills->map(function ($bill) {
-            return [
-                'tagihan_id' => $bill->Tagihan_Id,
-                'id_kk' => $bill->ID_KK,
-                'nama_tagihan' => $bill->nama_tagihan,
-                'kategori' => $bill->Kategori,
-                'nominal' => (float) $bill->nominal,
-                'nominal_formatted' => 'Rp ' . number_format($bill->nominal, 0, ',', '.'),
-                'tgl_jatuh_tmp' => Carbon::parse($bill->tgl_jatuh_tmp)->translatedFormat('d M Y'),
-                'status_tagihan' => $bill->status_tagihan,
-                'kepala_keluarga' => optional(optional($bill->kartuKeluarga)->kepalaKeluarga)->Nama_Lengkap ?? 'Keluarga KK ' . $bill->ID_KK,
-            ];
-        });
-
+        $billsData = collect($summary['bills'] ?? []);
         $firstBill = $billsData->first();
-        $isPaid = $billsData->isEmpty();
+        $isPaid = ($summary['unpaid_count'] === 0);
 
         $data = [
             'name' => $warga->Nama_Lengkap,
             'address' => optional($warga->kartuKeluarga)->Alamat ?? ('RT ' . $warga->ID_RT),
             'status' => $isPaid ? 'paid' : 'unpaid',
-            'amount' => $isPaid ? 'Rp 0 (Lunas)' : ($firstBill['nominal_formatted'] ?? 'Rp 75.000'),
-            'period' => $firstBill['nama_tagihan'] ?? Carbon::now()->translatedFormat('F Y'),
+            'amount' => $isPaid ? 'Rp 0 (Lunas)' : $summary['total_nominal_formatted'],
+            'period' => $firstBill['nama_tagihan'] ?? Carbon::now()->locale('id')->translatedFormat('F Y'),
+            'unpaid_count' => $summary['unpaid_count'],
+            'is_double' => $summary['is_double'],
+            'multiplier' => $summary['multiplier'],
+            'status_label' => $summary['status_label'],
+            'status_badge' => $summary['status_badge'],
+            'due_date_text' => $summary['due_date_text'],
+            'notice_text' => $summary['notice_text'],
             'bills' => $billsData->values()->all(),
             'tagihan_id' => $firstBill['tagihan_id'] ?? null,
+            'tagihan_ids' => $billsData->pluck('tagihan_id')->all(),
         ];
 
         return response()->json([
             'success' => true,
             'data' => $data,
             'bills' => $billsData->values()->all(),
+            'summary' => $summary,
         ]);
     }
 
@@ -847,6 +850,25 @@ class CitizenPortalController extends Controller
             'tgl_approval' => null,
         ]);
 
+        // Rekam ke tabel asset_loans agar pengurus dapat melihat siapa yang meminjam di menu Inventaris
+        try {
+            \App\Models\AssetLoan::create([
+                'kode_pinjam' => $bookingCode,
+                'ticket_code' => '#APP-PINJAM-' . $approval->id_approval,
+                'nama_alat' => $inventaris->Nama_Barang,
+                'kode_aset' => $inventaris->Kode_Barang,
+                'jumlah' => 1,
+                'nama_peminjam' => $warga->Nama_Lengkap,
+                'blok_rumah' => optional($warga->kartuKeluarga)->Alamat ?? ('RT ' . $warga->ID_RT),
+                'kontak' => $warga->no_telp,
+                'tgl_mulai' => $validated['tgl_mulai'],
+                'tgl_selesai' => $validated['tgl_selesai'],
+                'tujuan' => $validated['tujuan'],
+                'status' => 'pending',
+                'kondisi_keluar' => 'Baik & Lengkap',
+            ]);
+        } catch (\Throwable $e) {}
+
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
@@ -1062,64 +1084,7 @@ class CitizenPortalController extends Controller
         });
 
         // 2. Tagihan Iuran Kas RT (PEMASUKAN where ID_KK = $warga->ID_KK and ID_RT = $rtId)
-        $tagihanSemua = Pemasukan::withoutGlobalScope('tenant')
-            ->where('ID_KK', $warga->ID_KK)
-            ->where('ID_RT', $rtId)
-            ->latest('tgl_jatuh_tmp')
-            ->get();
-
-        $tagihanPending = $tagihanSemua->filter(function ($t) {
-            return strtolower($t->status_tagihan) !== 'lunas';
-        });
-
-        $tagihanLunas = $tagihanSemua->filter(function ($t) {
-            return strtolower($t->status_tagihan) === 'lunas';
-        });
-
-        $tagihanSaya = $tagihanSemua->map(function ($t) {
-            $statusLower = strtolower($t->status_tagihan);
-            $isLunas = $statusLower === 'lunas';
-            $isPendingVerif = in_array($statusLower, ['pending_approval', 'menunggu verifikasi', 'menunggu', 'pending']);
-
-            $approval = Approval::where('tabel_sumber', 'PEMASUKAN')
-                ->where('id_referensi', (string) $t->Tagihan_Id)
-                ->latest('id_approval')
-                ->first();
-
-            $isRejectedApproval = ($approval && in_array(strtolower($approval->status), ['rejected', 'ditolak']));
-
-            $statusLabel = 'Belum Dibayar';
-            $statusBadge = 'badge-slate';
-
-            if ($isLunas) {
-                $statusLabel = 'Lunas Terverifikasi';
-                $statusBadge = 'badge-emerald';
-            } elseif ($isPendingVerif) {
-                $statusLabel = 'Menunggu Verifikasi Bendahara';
-                $statusBadge = 'badge-amber';
-            } elseif ($isRejectedApproval) {
-                $statusLabel = 'Pembayaran Ditolak';
-                $statusBadge = 'badge-rose';
-            }
-
-            return [
-                'tagihan_id' => $t->Tagihan_Id,
-                'ref_code' => '#TAG-' . str_pad($t->Tagihan_Id, 4, '0', STR_PAD_LEFT),
-                'nama_tagihan' => $t->nama_tagihan,
-                'kategori' => $t->Kategori,
-                'nominal' => (float) $t->nominal,
-                'nominal_formatted' => 'Rp ' . number_format((float) ($t->nominal ?? 0), 0, ',', '.'),
-                'tanggal' => Carbon::parse($t->tgl_jatuh_tmp)->translatedFormat('d M Y'),
-                'status' => $t->status_tagihan,
-                'bukti_bayar' => $t->bukti_bayar,
-                'is_lunas' => $isLunas,
-                'is_pending_verif' => $isPendingVerif,
-                'is_rejected' => $isRejectedApproval,
-                'catatan_penolakan' => $isRejectedApproval ? $approval->catatan : null,
-                'status_label' => $statusLabel,
-                'status_badge' => $statusBadge,
-            ];
-        });
+        [$tagihanSaya, $tagihanPending, $totalTerbayarTahunIni, $isLunasBulanIni, $billingSummary] = $this->getTagihanData($warga, $rtId);
 
         // 3. Inventaris Balai RT
         $inventarisCatalog = Inventaris::withoutGlobalScope('tenant')
@@ -1146,8 +1111,9 @@ class CitizenPortalController extends Controller
             'surat_disetujui' => $suratSaya->where('is_acc', true)->count(),
             'surat_pending' => $suratSaya->where('is_pending', true)->count(),
             'tagihan_pending' => $tagihanPending->count(),
-            'total_terbayar' => 'Rp ' . number_format($tagihanLunas->sum('nominal'), 0, ',', '.'),
+            'total_terbayar' => 'Rp ' . number_format($totalTerbayarTahunIni, 0, ',', '.'),
             'total_aset_tersedia' => $inventarisCatalog->where('is_tersedia', true)->count(),
+            'is_double_tagihan' => $billingSummary['is_double'] ?? false,
         ];
 
         return view('portal.layanan', compact(
@@ -1157,6 +1123,7 @@ class CitizenPortalController extends Controller
             'suratSaya',
             'tagihanSaya',
             'tagihanPending',
+            'billingSummary',
             'inventarisCatalog',
             'statsLayanan'
         ));
@@ -1345,12 +1312,16 @@ class CitizenPortalController extends Controller
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:150',
             'no_telp' => 'nullable|string|max:25',
+            'email' => 'nullable|email|max:150|unique:WARGA,email,' . $warga->NIK . ',NIK',
             'password' => 'nullable|string|min:6|confirmed',
         ]);
 
         $warga->Nama_Lengkap = $validated['nama_lengkap'];
         if (isset($validated['no_telp'])) {
             $warga->no_telp = $validated['no_telp'];
+        }
+        if (array_key_exists('email', $validated)) {
+            $warga->email = $validated['email'];
         }
         if (!empty($validated['password'])) {
             $warga->Password_hash = Hash::make($validated['password']);

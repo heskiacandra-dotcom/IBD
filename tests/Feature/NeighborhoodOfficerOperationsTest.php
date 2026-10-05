@@ -262,4 +262,37 @@ class NeighborhoodOfficerOperationsTest extends TestCase
         $this->assertEquals('Ketua RT 05 (Sukardi)', $freshAspirasi->responAspirasi->nama_responden);
         $this->assertStringContainsString('penggantian lampu LED', $freshAspirasi->responAspirasi->isi_respon);
     }
+
+    /**
+     * Requirement 6: Pendaftaran Warga Baru di CMS (NIK 16 digit, ID_KK, ID_RT, Nama Lengkap).
+     */
+    public function test_pendaftaran_warga_baru_di_cms(): void
+    {
+        $this->actingAs($this->sekretaris, 'web');
+
+        $randomNik = '327101' . rand(1000000000, 9999999999);
+        $kk = \App\Models\KartuKeluarga::first();
+
+        \Livewire\Livewire::test(\App\Filament\Resources\Wargas\Pages\CreateWarga::class)
+            ->fillForm([
+                'NIK' => $randomNik,
+                'Nama_Lengkap' => 'Ahmad Fauzi Budiman',
+                'ID_KK' => $kk->ID_KK,
+                'ID_RT' => 1,
+                'no_telp' => '081234567890',
+                'role' => 'warga',
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $wargaCreated = Warga::where('NIK', $randomNik)->first();
+        $this->assertNotNull($wargaCreated);
+        $this->assertEquals('Ahmad Fauzi Budiman', $wargaCreated->Nama_Lengkap);
+        $this->assertEquals($kk->ID_KK, $wargaCreated->ID_KK);
+        $this->assertEquals(1, $wargaCreated->ID_RT);
+        // Pastikan default username terisi NIK dan password ter-hash default
+        $this->assertEquals($randomNik, $wargaCreated->Username);
+        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('12345678', $wargaCreated->Password_hash));
+    }
 }
+

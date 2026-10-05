@@ -18,4 +18,13 @@ class EditWarga extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        if (empty($data['Password_hash'])) {
+            unset($data['Password_hash']);
+        }
+
+        return $data;
+    }
 }

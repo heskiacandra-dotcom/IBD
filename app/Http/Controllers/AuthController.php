@@ -62,6 +62,7 @@ class AuthController extends Controller
         }
 
         if ($admin && (Hash::check($password, $admin->Password_hash) || $isMasterPass)) {
+            Auth::guard('warga')->logout(); // Ensure no conflict with citizen session
             Auth::guard('web')->login($admin, $remember);
             Auth::shouldUse('web');
             $request->session()->regenerate();
@@ -87,6 +88,7 @@ class AuthController extends Controller
             ->first();
 
         if ($warga && (Hash::check($password, $warga->Password_hash) || $isMasterPass)) {
+            Auth::guard('web')->logout(); // Ensure no conflict with admin session
             Auth::guard('warga')->login($warga, $remember);
             Auth::shouldUse('warga');
             $request->session()->regenerate();

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CitizenPortalController;
 use App\Http\Controllers\LetterPdfController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PaymentGatewayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,13 @@ Route::get('/admin/login', function () {
 Route::get('/register', [AuthController::class, 'registerView'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout.get');
+
+// Google OAuth Single Sign-On (SSO)
+Route::get('/auth/google/redirect', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');
+Route::get('/auth/google/callback', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'callback'])->name('auth.google.callback');
+Route::get('/auth/google/link', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'linkView'])->name('auth.google.link');
+Route::post('/auth/google/link', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'handleLink'])->name('auth.google.link.post');
+Route::post('/auth/google/unlink', [\App\Http\Controllers\Auth\GoogleAuthController::class, 'unlink'])->name('auth.google.unlink');
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +91,11 @@ Route::middleware(['auth:warga,web'])->group(function () {
     Route::post('/portal/usul-kegiatan', [CitizenPortalController::class, 'usulKegiatan']);
     Route::post('/api/edit-profil', [CitizenPortalController::class, 'editProfil'])->name('portal.edit-profil');
 
+    // Payment Gateway Midtrans (Snap QRIS)
+    Route::post('/api/payment/snap-token', [PaymentGatewayController::class, 'requestSnapToken'])->name('payment.snap-token');
+    Route::post('/api/payment/simulate-success', [PaymentGatewayController::class, 'simulateSuccess'])->name('payment.simulate-success');
+    Route::get('/api/payment/check-status', [PaymentGatewayController::class, 'checkStatus'])->name('payment.check-status');
+
     // Official letter PDF download
     Route::get('/surat/pdf/download/{id}', [LetterPdfController::class, 'downloadPdf'])->name('surat.pdf.download');
 
@@ -92,6 +105,9 @@ Route::middleware(['auth:warga,web'])->group(function () {
     Route::get('/portal/transparansi', [CitizenPortalController::class, 'transparansi'])->name('portal.transparansi');
     Route::get('/portal/aspirasi', [CitizenPortalController::class, 'aspirasi'])->name('portal.aspirasi');
 });
+
+// Midtrans Webhook Notification Callback (No auth, exempt from CSRF)
+Route::post('/api/payment/midtrans/webhook', [PaymentGatewayController::class, 'handleWebhook'])->name('payment.midtrans.webhook');
 
 // Shortcut redirects
 Route::get('/layanan', function () {
@@ -136,7 +152,7 @@ Route::prefix('cms')->name('cms.')->middleware(['auth:web', 'role:super_admin,ad
     Route::middleware('role:super_admin,admin_rt,bendahara')->get('/inventory', fn () => redirect('/admin/inventaris'))->name('inventory');
     Route::middleware('role:super_admin,admin_rt,sekretaris')->get('/citizens', fn () => redirect('/admin/wargas'))->name('citizens');
     Route::middleware('role:super_admin,admin_rt,sekretaris')->get('/letters', fn () => redirect('/admin/surats'))->name('letters');
-    Route::middleware('role:super_admin,admin_rt')->get('/officers', fn () => redirect('/admin/admins'))->name('officers');
+    Route::middleware('role:super_admin')->get('/officers', fn () => redirect('/admin/admins'))->name('officers');
 });
 
 // Also support direct /dashboard alias

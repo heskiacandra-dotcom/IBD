@@ -29,7 +29,8 @@ class ApprovalResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return in_array(auth()->user()?->role, ['super_admin', 'admin_rt', 'bendahara', 'sekretaris']);
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return in_array($role, ['super_admin', 'admin_rt', 'bendahara', 'sekretaris']);
     }
 
     public static function shouldRegisterNavigation(): bool
@@ -39,7 +40,7 @@ class ApprovalResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $user = auth()->user();
+        $user = auth('web')->user() ?? auth()->user();
         $query = Approval::query()->whereIn('status', ['Menunggu', 'Pending', 'menunggu', 'pending']);
         if ($user && $user->role !== 'super_admin' && $user->ID_RT) {
             $rtId = $user->ID_RT;

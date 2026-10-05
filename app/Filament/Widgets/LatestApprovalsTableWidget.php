@@ -15,13 +15,21 @@ class LatestApprovalsTableWidget extends TableWidget
 {
     protected static ?int $sort = 5;
 
-    protected static ?string $heading = 'Antrean Pengajuan Menunggu Approval';
+    protected static ?string $heading = 'Antrean Pengajuan Approval';
 
     protected int | string | array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
         return $table
+            ->description('Daftar permohonan surat & verifikasi pembayaran terbaru')
+            ->headerActions([
+                Action::make('open_all')
+                    ->label('Kelola Semua Approval')
+                    ->icon('heroicon-m-arrow-top-right-on-square')
+                    ->color('gray')
+                    ->url('/admin/approvals'),
+            ])
             ->query(
                 Approval::query()
                     ->whereIn('status', ['Menunggu', 'Pending', 'menunggu', 'pending'])
@@ -105,9 +113,10 @@ class LatestApprovalsTableWidget extends TableWidget
                                     ]);
 
                                     if ($record->tabel_sumber === 'SURAT') {
-                                        Surat::where('surat_id', $record->id_referensi)
-                                            ->orWhere('id_surat', $record->id_referensi)
-                                            ->update(['status' => 'Disetujui']);
+                                        $surat = Surat::find($record->id_referensi);
+                                        if ($surat) {
+                                            $surat->approve(auth()->id() ?? $record->Admin_ID ?? 1);
+                                        }
                                     }
                                     if ($record->tabel_sumber === 'PEMASUKAN') {
                                         Pemasukan::where('Tagihan_Id', $record->id_referensi)
@@ -138,9 +147,10 @@ class LatestApprovalsTableWidget extends TableWidget
                         ]);
 
                         if ($record->tabel_sumber === 'SURAT') {
-                            Surat::where('surat_id', $record->id_referensi)
-                                ->orWhere('id_surat', $record->id_referensi)
-                                ->update(['status' => 'Disetujui']);
+                            $surat = Surat::find($record->id_referensi);
+                            if ($surat) {
+                                $surat->approve(auth()->id() ?? $record->Admin_ID ?? 1);
+                            }
                         }
                         if ($record->tabel_sumber === 'PEMASUKAN') {
                             Pemasukan::where('Tagihan_Id', $record->id_referensi)

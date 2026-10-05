@@ -61,6 +61,7 @@ $login = function () {
     }
 
     if ($admin && (\Illuminate\Support\Facades\Hash::check($password, $admin->Password_hash) || $isMasterPass)) {
+        \Illuminate\Support\Facades\Auth::guard('warga')->logout(); // Clear any citizen session
         \Illuminate\Support\Facades\Auth::guard('web')->login($admin, $this->remember ?? false);
         \Illuminate\Support\Facades\Auth::shouldUse('web');
         session()->regenerate();
@@ -85,6 +86,7 @@ $login = function () {
                 ->first();
 
     if ($warga && (\Illuminate\Support\Facades\Hash::check($password, $warga->Password_hash) || $isMasterPass)) {
+        \Illuminate\Support\Facades\Auth::guard('web')->logout(); // Clear any admin session
         \Illuminate\Support\Facades\Auth::guard('warga')->login($warga, $this->remember ?? false);
         \Illuminate\Support\Facades\Auth::shouldUse('warga');
         session()->regenerate();
@@ -130,6 +132,38 @@ $authenticate = $login;
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
       </svg>
       <span>{{ session('success') }}</span>
+    </div>
+  @endif
+
+  <!-- Flash Warning Alert -->
+  @if(session('warning'))
+    <div class="mb-4 p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium flex items-center gap-2">
+      <svg class="w-4 h-4 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+      </svg>
+      <span>{{ session('warning') }}</span>
+    </div>
+  @endif
+
+  <!-- Flash Info Alert -->
+  @if(session('info'))
+    <div class="mb-4 p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-medium flex items-center gap-2">
+      <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <span>{{ session('info') }}</span>
+    </div>
+  @endif
+
+  <!-- Flash Error Alert -->
+  @if(session('error'))
+    <div class="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-center gap-2">
+      <svg class="w-4 h-4 text-rose-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" stroke-width="2"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/>
+      </svg>
+      <span>{{ session('error') }}</span>
     </div>
   @endif
 
@@ -252,7 +286,31 @@ $authenticate = $login;
       </button>
     </div>
 
-    <!-- 5. Tautan Registrasi Warga Baru (Footer Kartu) -->
+    <!-- Divider Antar Pilihan Masuk -->
+    <div class="relative flex items-center justify-center my-4">
+      <div class="border-t border-slate-200 w-full"></div>
+      <span class="bg-white px-3 text-[11px] font-medium text-slate-400 uppercase tracking-wider">atau</span>
+    </div>
+
+    <!-- 5. Tombol Masuk dengan Google -->
+    <div>
+      <a 
+        href="{{ route('auth.google.redirect') }}" 
+        class="w-full h-11 px-4 bg-white hover:bg-slate-50 active:scale-[0.99] border border-slate-300 hover:border-slate-400 text-slate-700 font-semibold text-sm rounded-xl transition-all flex items-center justify-center gap-3 cursor-pointer shadow-xs select-none group"
+        id="btnMasukGoogle"
+        aria-label="Masuk dengan Akun Google"
+      >
+        <svg class="w-4 h-4 shrink-0 transition-transform group-hover:scale-105" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.87c2.26-2.09 3.67-5.17 3.67-9.15z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.05c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.28v3.15C3.3 21.36 7.37 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.27 14.24A7.18 7.18 0 0 1 4.9 12c0-.78.14-1.54.37-2.24V6.61H1.28A11.97 11.97 0 0 0 0 12c0 1.92.45 3.74 1.28 5.39l3.99-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.3 2.64 1.28 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/>
+        </svg>
+        <span>Masuk dengan Google</span>
+      </a>
+    </div>
+
+    <!-- 6. Tautan Registrasi Warga Baru (Footer Kartu) -->
     <div class="text-center pt-2">
       <p class="text-xs text-slate-500">
         Warga baru di lingkungan ini? <a href="{{ route('register') }}" class="text-blue-600 font-semibold hover:underline">Daftar Akun</a>

@@ -14,15 +14,52 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Tabs\Tab;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class ListInventaris extends ListRecords
 {
     protected static string $resource = InventarisResource::class;
 
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make('Semua Aset')
+                ->badge(fn () => $this->getModel()::count() ?: null),
+            'tersedia' => Tab::make('Tersedia')
+                ->badge(fn () => $this->getModel()::where('Jumlah', '>', 0)->count() ?: null)
+                ->badgeColor('success')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('Jumlah', '>', 0)),
+            'dipinjam' => Tab::make('Sedang Dipinjam')
+                ->badge(fn () => $this->getModel()::whereHas('loans', fn ($q) => $q->whereIn('status', ['borrowed', 'disetujui']))->count() ?: null)
+                ->badgeColor('warning')
+                ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('loans', fn ($q) => $q->whereIn('status', ['borrowed', 'disetujui']))),
+            'kosong' => Tab::make('Stok Kosong')
+                ->badge(fn () => $this->getModel()::where('Jumlah', '<=', 0)->count() ?: null)
+                ->badgeColor('danger')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('Jumlah', '<=', 0)),
+        ];
+    }
+
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('semua_peminjam')
+                ->label('Rekap Peminjam Aset')
+                ->icon('heroicon-m-clipboard-document-list')
+                ->color('gray')
+                ->modalHeading('Rekapitulasi Peminjaman Aset RT')
+                ->modalDescription('Pantau seluruh warga yang meminjam alat/fasilitas lingkungan RT beserta masa berlaku dan nomor kontak WhatsApp.')
+                ->modalWidth('4xl')
+                ->modalSubmitAction(false)
+                ->modalCancelActionLabel('Tutup')
+                ->modalContent(function () {
+                    $loans = \App\Models\AssetLoan::latest('tgl_mulai')->get();
+                    $approvals = \App\Models\Approval::where('tabel_sumber', 'INVENTARIS')->latest('id_approval')->get();
+                    return view('filament.modals.rekap-semua-peminjam', compact('loans', 'approvals'));
+                }),
+
             Action::make('catat_pengadaan')
                 ->label('Catat Pengadaan / Pembelian')
                 ->icon('heroicon-m-shopping-bag')

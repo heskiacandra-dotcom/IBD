@@ -14,7 +14,8 @@ class Admin extends Authenticatable implements FilamentUser, HasName
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return in_array($this->role, ['super_admin', 'admin_rt', 'bendahara', 'sekretaris', 'admin']);
+        $role = str_replace('-', '_', strtolower(trim($this->role ?? '')));
+        return in_array($role, ['super_admin', 'admin_rt', 'bendahara', 'sekretaris', 'admin']);
     }
 
     public function getFilamentName(): string

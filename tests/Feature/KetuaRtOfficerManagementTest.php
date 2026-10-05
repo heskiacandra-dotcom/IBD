@@ -118,11 +118,11 @@ class KetuaRtOfficerManagementTest extends TestCase
             'ID_RT' => $rtLain->ID_RT,
         ]);
 
-        // When ketuaRt views the list, officer from RT 08 should NOT be visible
+        // When ketuaRt views the list, officer from RT 08 and Super Admin should NOT be visible
         Livewire::actingAs($this->ketuaRt, 'web')
             ->test(ListAdmins::class)
             ->assertCanSeeTableRecords([$this->ketuaRt, $this->bendahara, $this->sekretaris])
-            ->assertCanNotSeeTableRecords([$officerRtLain]);
+            ->assertCanNotSeeTableRecords([$officerRtLain, $this->superAdmin]);
     }
 
     /**
@@ -154,5 +154,25 @@ class KetuaRtOfficerManagementTest extends TestCase
     {
         $this->actingAs($this->bendahara, 'web')->get('/admin/admins')->assertStatus(403);
         $this->actingAs($this->sekretaris, 'web')->get('/admin/admins')->assertStatus(403);
+    }
+
+    /**
+     * Test 7: Ketua RT cannot manage Data RT (only super admin can), and Ketua RT cannot edit super admin.
+     */
+    public function test_ketua_rt_cannot_manage_data_rt_only_super_admin_can(): void
+    {
+        // 1. Ketua RT access Data RT -> 403 Forbidden
+        $this->actingAs($this->ketuaRt, 'web');
+        $this->assertFalse(\App\Filament\Resources\DataRts\DataRtResource::canViewAny());
+        $this->assertFalse(\App\Filament\Resources\DataRts\DataRtResource::canCreate());
+        $this->assertFalse(\App\Filament\Resources\Admins\AdminResource::canEdit($this->superAdmin));
+        $this->assertFalse(\App\Filament\Resources\Admins\AdminResource::canDelete($this->superAdmin));
+        $this->get('/admin/data-rts')->assertStatus(403);
+
+        // 2. Super Admin access Data RT -> 200 OK
+        $this->actingAs($this->superAdmin, 'web');
+        $this->assertTrue(\App\Filament\Resources\DataRts\DataRtResource::canViewAny());
+        $this->assertTrue(\App\Filament\Resources\DataRts\DataRtResource::canCreate());
+        $this->get('/admin/data-rts')->assertStatus(200);
     }
 }

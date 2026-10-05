@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\WhatsAppGatewayService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +29,56 @@ class Surat extends Model
     {
         return $this->hasOne(Approval::class, 'id_referensi', 'surat_id')
             ->where('tabel_sumber', 'SURAT');
+    }
+
+    public function approve(?int $adminId = null): string
+    {
+        $nomorSurat = $this->nomor_surat ?: self::generateNomorSurat($this->surat_id, $this->warga?->ID_RT);
+
+        $this->update([
+            'status' => 'approved',
+            'nomor_surat' => $nomorSurat,
+        ]);
+
+        Approval::where('tabel_sumber', 'SURAT')
+            ->where('id_referensi', (string) $this->surat_id)
+            ->update([
+                'status' => 'approved',
+                'tgl_approval' => now(),
+                'Admin_ID' => $adminId ?? auth()->id() ?? 1,
+            ]);
+
+        try {
+            if ($this->warga) {
+                app(WhatsAppGatewayService::class)->notifySuratDisetujui($this->warga, $this);
+            }
+        } catch (\Throwable $e) {}
+
+        return $nomorSurat;
+    }
+
+    public function reject(string $alasan, ?int $adminId = null): void
+    {
+        $this->update([
+            'status' => 'rejected',
+        ]);
+
+        $approvals = Approval::where('tabel_sumber', 'SURAT')
+            ->where(function ($q) {
+                $q->where('id_referensi', (string) $this->surat_id)
+                  ->orWhere('id_referensi', $this->surat_id);
+            })
+            ->get();
+
+        foreach ($approvals as $approval) {
+            $catatan = trim(($approval->catatan ? $approval->catatan . ' | ' : '') . 'Alasan Penolakan: ' . $alasan);
+            $approval->update([
+                'status' => 'rejected',
+                'catatan' => $catatan,
+                'tgl_approval' => now(),
+                'Admin_ID' => $adminId ?? auth()->id() ?? 1,
+            ]);
+        }
     }
 
     public static function generateNomorSurat(int $suratId, ?int $idRt = null): string

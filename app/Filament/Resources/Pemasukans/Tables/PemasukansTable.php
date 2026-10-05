@@ -5,8 +5,10 @@ namespace App\Filament\Resources\Pemasukans\Tables;
 use App\Models\Approval;
 use App\Models\Pemasukan;
 use App\Models\Warga;
+use App\Services\MidtransService;
 use App\Services\WhatsAppGatewayService;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -25,42 +27,30 @@ class PemasukansTable
         return $table
             ->columns([
                 TextColumn::make('Tagihan_Id')
-                    ->label('ID Tagihan')
-                    ->formatStateUsing(fn ($state) => '#TAG-' . str_pad($state, 4, '0', STR_PAD_LEFT))
-                    ->sortable(),
+                    ->label('ID')
+                    ->formatStateUsing(fn ($state) => '#' . str_pad($state, 4, '0', STR_PAD_LEFT))
+                    ->sortable()
+                    ->width('70px'),
 
-                ImageColumn::make('bukti_bayar')
-                    ->label('Bukti')
-                    ->state(fn (Pemasukan $record) => $record->hasValidBuktiBayar() ? $record->bukti_bayar_url : null)
-                    ->square()
-                    ->size(38)
-                    ->extraImgAttributes(['class' => 'rounded-lg border border-slate-200 shadow-2xs object-cover'])
-                    ->placeholder('Tanpa Bukti')
-                    ->tooltip('Klik "Lihat Bukti" untuk pratinjau penuh'),
+                TextColumn::make('nama_kepala_keluarga')
+                    ->label('Warga / No. KK')
+                    ->weight('bold')
+                    ->description(fn (Pemasukan $record) => 'KK: ' . ($record->ID_KK ?? '-'))
+                    ->searchable(['ID_KK', 'nama_tagihan'])
+                    ->wrap(),
 
                 TextColumn::make('nama_tagihan')
-                    ->label('Nama Tagihan')
+                    ->label('Rincian Tagihan')
+                    ->weight('semibold')
+                    ->description(fn (Pemasukan $record) => ($record->Kategori ?? 'Iuran Warga') . ($record->tgl_jatuh_tmp ? ' • Tempo: ' . \Carbon\Carbon::parse($record->tgl_jatuh_tmp)->format('d M Y') : ''))
                     ->searchable()
-                    ->weight('bold'),
-
-                TextColumn::make('ID_KK')
-                    ->label('No. KK')
-                    ->description(fn (Pemasukan $record) => $record->nama_kepala_keluarga)
-                    ->searchable(),
-
-                TextColumn::make('Kategori')
-                    ->label('Kategori')
-                    ->badge(),
+                    ->wrap(),
 
                 TextColumn::make('nominal')
                     ->label('Nominal')
                     ->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 0, ',', '.'))
-                    ->sortable()
-                    ->weight('bold'),
-
-                TextColumn::make('tgl_jatuh_tmp')
-                    ->label('Jatuh Tempo')
-                    ->date('d M Y')
+                    ->weight('bold')
+                    ->alignEnd()
                     ->sortable(),
 
                 TextColumn::make('status_tagihan')
@@ -68,7 +58,36 @@ class PemasukansTable
                     ->badge()
                     ->color(fn (string $state): string => match (strtolower($state)) {
                         'lunas' => 'success',
-                        'belum lunas', 'menunggu', 'pending', 'pending_approval', 'menunggu verifikasi' => 'warning',
+                        'pending_approval', 'menunggu verifikasi', 'menunggu', 'pending' => 'warning',
+                        default => 'danger',
+                    })
+                    ->formatStateUsing(fn (string $state) => match (strtolower($state)) {
+                        'lunas' => 'Lunas',
+                        'pending_approval', 'menunggu verifikasi', 'menunggu', 'pending' => 'Verifikasi',
+                        default => 'Belum Lunas',
+                    }),
+
+                TextColumn::make('bukti_bayar')
+                    ->label('Bukti')
+                    ->alignCenter()
+                    ->badge()
+                    ->formatStateUsing(fn ($state, Pemasukan $record) => $record->hasValidBuktiBayar() ? 'Ada' : '-')
+                    ->color(fn ($state, Pemasukan $record) => $record->hasValidBuktiBayar() ? 'info' : 'gray'),
+
+                TextColumn::make('metode_pembayaran')
+                    ->label('Metode')
+                    ->badge()
+                    ->formatStateUsing(fn ($state, Pemasukan $record) => match(strtolower($state ?? '')) {
+                        'qris', 'qris_midtrans', 'midtrans' => '⚡ QRIS',
+                        'gopay' => 'GoPay',
+                        'shopeepay' => 'ShopeePay',
+                        'bank_transfer', 'manual_transfer' => 'Transfer Bank',
+                        'tunai' => 'Kas Tunai',
+                        default => $record->hasValidBuktiBayar() ? 'Transfer' : 'Tunai',
+                    })
+                    ->color(fn ($state) => match(strtolower($state ?? '')) {
+                        'qris', 'qris_midtrans', 'midtrans', 'gopay', 'shopeepay' => 'success',
+                        'bank_transfer', 'manual_transfer' => 'info',
                         default => 'gray',
                     }),
             ])
@@ -78,7 +97,7 @@ class PemasukansTable
                     ->options([
                         'Lunas' => 'Lunas',
                         'Belum Lunas' => 'Belum Lunas',
-                        'pending_approval' => 'Menunggu Verifikasi (Pending)',
+                        'pending_approval' => 'Menunggu Verifikasi',
                     ]),
                 SelectFilter::make('Kategori')
                     ->label('Filter Kategori')
@@ -90,9 +109,10 @@ class PemasukansTable
             ])
             ->recordActions([
                 Action::make('preview_bukti')
-                    ->label('Periksa Bukti')
-                    ->icon('heroicon-o-eye')
+                    ->label('Bukti')
+                    ->icon('heroicon-m-document-magnifying-glass')
                     ->color('info')
+                    ->visible(fn (Pemasukan $record) => $record->hasValidBuktiBayar())
                     ->modalHeading('Verifikasi Bukti Transfer Warga')
                     ->modalWidth('2xl')
                     ->modalSubmitAction(false)
@@ -117,7 +137,6 @@ class PemasukansTable
                                     \Illuminate\Support\Facades\DB::transaction(function () use ($record) {
                                         $record->update(['status_tagihan' => 'lunas']);
 
-                                        // Sinkronisasi status di tabel APPROVAL
                                         Approval::where('tabel_sumber', 'PEMASUKAN')
                                             ->where('id_referensi', (string) $record->Tagihan_Id)
                                             ->update([
@@ -159,7 +178,6 @@ class PemasukansTable
                                     \Illuminate\Support\Facades\DB::transaction(function () use ($record, $data) {
                                         $record->update(['status_tagihan' => 'belum_lunas']);
 
-                                        // Sinkronisasi status di tabel APPROVAL
                                         $approval = Approval::where('tabel_sumber', 'PEMASUKAN')
                                             ->where('id_referensi', (string) $record->Tagihan_Id)
                                             ->first();
@@ -184,7 +202,7 @@ class PemasukansTable
                     }),
 
                 Action::make('mark_as_paid')
-                    ->label('Verifikasi Lunas')
+                    ->label('Lunas')
                     ->icon('heroicon-m-check')
                     ->color('success')
                     ->requiresConfirmation()
@@ -209,13 +227,41 @@ class PemasukansTable
 
                         Notification::make()
                             ->title('Pembayaran Diverifikasi')
-                            ->body("Tagihan #TAG-{$record->Tagihan_Id} berhasil disahkan.")
+                            ->body("Tagihan #TAG-{$record->Tagihan_Id} berhasil disahkan Lunas.")
                             ->success()
                             ->send();
                     }),
 
-                ViewAction::make()->slideOver(),
-                EditAction::make()->slideOver(),
+                Action::make('cancel_or_refund_midtrans')
+                    ->label('Batalkan')
+                    ->icon('heroicon-m-arrow-uturn-left')
+                    ->color('danger')
+                    ->visible(fn (Pemasukan $record) => strtolower($record->status_tagihan ?? '') === 'lunas')
+                    ->requiresConfirmation()
+                    ->modalHeading('Batalkan Pembayaran Tagihan')
+                    ->modalDescription(fn (Pemasukan $record) => "Tagihan #TAG-{$record->Tagihan_Id} ({$record->nama_tagihan}) sebesar Rp " . number_format($record->nominal, 0, ',', '.') . " akan diubah menjadi Belum Lunas" . ($record->order_id ? ", dan transaksi di server Midtrans akan otomatis dibatalkan." : "."))
+                    ->form([
+                        Textarea::make('alasan')
+                            ->label('Alasan Pembatalan')
+                            ->placeholder('Contoh: Warga salah bayar atau tagihan dibatalkan...')
+                            ->default('Pembatalan transaksi oleh pengurus RT')
+                            ->required()
+                            ->rows(3),
+                    ])
+                    ->action(function (array $data, Pemasukan $record) {
+                        $result = app(MidtransService::class)->cancelOrRefundTransaction($record, $data['alasan']);
+
+                        Notification::make()
+                            ->title('Pembayaran Dibatalkan')
+                            ->body($result['message'])
+                            ->warning()
+                            ->send();
+                    }),
+
+                ActionGroup::make([
+                    ViewAction::make()->slideOver(),
+                    EditAction::make()->slideOver(),
+                ]),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -224,3 +270,4 @@ class PemasukansTable
             ]);
     }
 }
+

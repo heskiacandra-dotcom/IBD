@@ -48,6 +48,9 @@
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
+  <!-- Midtrans Snap Payment Gateway JS -->
+  <script src="{{ config('midtrans.snap_url') }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
+
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}"></script>
 

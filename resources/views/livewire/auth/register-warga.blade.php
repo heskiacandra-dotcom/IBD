@@ -15,7 +15,7 @@ state([
     // Step 2: Data Keluarga & Identitas
     'id_kk' => '',
     'nik' => '',
-    'nama_lengkap' => '',
+    'nama_lengkap' => fn () => session('google_auth_pending')['name'] ?? '',
     'tgl_lahir' => '',
     'no_telp' => '',
     'alamat' => '',
@@ -136,7 +136,9 @@ $register = function () {
             );
 
             // b. Insert new citizen record into WARGA with role='warga' and hashed password
-            Warga::create([
+            $pendingGoogle = session('google_auth_pending');
+
+            $wargaData = [
                 'NIK' => trim($this->nik),
                 'ID_KK' => trim($this->id_kk),
                 'ID_RT' => $this->id_rt,
@@ -146,7 +148,19 @@ $register = function () {
                 'Password_hash' => Hash::make($this->password),
                 'tgl_lahir' => $this->tgl_lahir,
                 'role' => 'warga',
-            ]);
+            ];
+
+            if ($pendingGoogle) {
+                $wargaData['google_id'] = $pendingGoogle['google_id'] ?? null;
+                $wargaData['email'] = $pendingGoogle['email'] ?? null;
+                $wargaData['avatar'] = $pendingGoogle['avatar'] ?? null;
+            }
+
+            Warga::create($wargaData);
+
+            if ($pendingGoogle) {
+                session()->forget('google_auth_pending');
+            }
 
             // c. Automatically insert an entry into the APPROVAL table
             Approval::create([

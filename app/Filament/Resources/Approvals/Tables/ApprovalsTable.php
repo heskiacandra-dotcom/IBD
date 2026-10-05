@@ -128,6 +128,14 @@ class ApprovalsTable
                                             if ($inv && $inv->Jumlah > 0) {
                                                 $inv->decrement('Jumlah', 1);
                                             }
+                                            \App\Models\AssetLoan::where(function ($q) use ($inv) {
+                                                if ($inv) {
+                                                    $q->where('kode_aset', $inv->Kode_Barang)->orWhere('nama_alat', $inv->Nama_Barang);
+                                                }
+                                            })->where('status', 'pending')->latest()->first()?->update([
+                                                'status' => 'borrowed',
+                                                'approved_by' => auth()->user()?->Username ?? 'Pengurus RT',
+                                            ]);
                                         }
                                         if ($record->tabel_sumber === 'KEGIATAN') {
                                             \App\Models\Kegiatan::where('kegiatan_id', $record->id_referensi)
@@ -169,6 +177,16 @@ class ApprovalsTable
                                         }
                                         if ($record->tabel_sumber === 'PEMASUKAN') {
                                             \App\Models\Pemasukan::where('Tagihan_Id', $record->id_referensi)->update(['status_tagihan' => 'belum_lunas']);
+                                        }
+                                        if ($record->tabel_sumber === 'INVENTARIS') {
+                                            $inv = \App\Models\Inventaris::find($record->id_referensi);
+                                            \App\Models\AssetLoan::where(function ($q) use ($inv) {
+                                                if ($inv) {
+                                                    $q->where('kode_aset', $inv->Kode_Barang)->orWhere('nama_alat', $inv->Nama_Barang);
+                                                }
+                                            })->where('status', 'pending')->latest()->first()?->update([
+                                                'status' => 'rejected',
+                                            ]);
                                         }
                                         if ($record->tabel_sumber === 'KEGIATAN') {
                                             \App\Models\Kegiatan::where('kegiatan_id', $record->id_referensi)->update(['status' => 'Dibatalkan']);
@@ -218,6 +236,14 @@ class ApprovalsTable
                                 if ($inv && $inv->Jumlah > 0) {
                                     $inv->decrement('Jumlah', 1);
                                 }
+                                \App\Models\AssetLoan::where(function ($q) use ($inv) {
+                                    if ($inv) {
+                                        $q->where('kode_aset', $inv->Kode_Barang)->orWhere('nama_alat', $inv->Nama_Barang);
+                                    }
+                                })->where('status', 'pending')->latest()->first()?->update([
+                                    'status' => 'borrowed',
+                                    'approved_by' => auth()->user()?->Username ?? 'Pengurus RT',
+                                ]);
                             }
                             if ($record->tabel_sumber === 'KEGIATAN') {
                                 \App\Models\Kegiatan::where('kegiatan_id', $record->id_referensi)->update(['status' => 'Mendatang']);
@@ -259,6 +285,16 @@ class ApprovalsTable
                             }
                             if ($record->tabel_sumber === 'PEMASUKAN') {
                                 \App\Models\Pemasukan::where('Tagihan_Id', $record->id_referensi)->update(['status_tagihan' => 'belum_lunas']);
+                            }
+                            if ($record->tabel_sumber === 'INVENTARIS') {
+                                $inv = \App\Models\Inventaris::find($record->id_referensi);
+                                \App\Models\AssetLoan::where(function ($q) use ($inv) {
+                                    if ($inv) {
+                                        $q->where('kode_aset', $inv->Kode_Barang)->orWhere('nama_alat', $inv->Nama_Barang);
+                                    }
+                                })->where('status', 'pending')->latest()->first()?->update([
+                                    'status' => 'rejected',
+                                ]);
                             }
                             if ($record->tabel_sumber === 'KEGIATAN') {
                                 \App\Models\Kegiatan::where('kegiatan_id', $record->id_referensi)->update(['status' => 'Dibatalkan']);

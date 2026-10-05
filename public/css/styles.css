@@ -1616,6 +1616,28 @@ button, input, select, textarea {
   color: #FFFFFF;
 }
 
+.emergency-btn-wa {
+  color: #065F46;
+  border-color: #A7F3D0;
+  background-color: #F0FDF4;
+}
+
+.emergency-btn-wa:hover {
+  background-color: #059669;
+  border-color: #059669;
+  color: #FFFFFF;
+}
+
+.emergency-btn-wa:hover svg {
+  color: #FFFFFF !important;
+}
+
+.emergency-copy-btn:hover {
+  background-color: #FFE4E6 !important;
+  border-color: #F43F5E !important;
+  color: #9F1239 !important;
+}
+
 .footer-divider {
   border: none;
   border-top: 1px solid #E2E8F0;
@@ -2696,6 +2718,15 @@ button, input, select, textarea {
     margin: 0 !important;
     overflow-y: auto !important;
   }
+  /* Responsive Footer */
+  .footer-main-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+  }
+  .emergency-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
 }
 
 /* 4. Small Mobile Phones (< 480px) */
@@ -2715,6 +2746,36 @@ button, input, select, textarea {
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  .footer-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .emergency-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .emergency-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .footer-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+}
+
+.nav-user-name {
+  display: none;
+}
+@media (min-width: 640px) {
+  .nav-user-name {
+    display: inline !important;
   }
 }
 

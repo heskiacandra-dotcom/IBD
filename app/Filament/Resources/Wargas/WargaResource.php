@@ -35,12 +35,31 @@ class WargaResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return in_array(auth()->user()?->role, ['super_admin', 'admin_rt', 'sekretaris']);
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return in_array($role, ['super_admin', 'admin_rt', 'sekretaris']);
     }
 
     public static function shouldRegisterNavigation(): bool
     {
         return static::canViewAny();
+    }
+
+    public static function canCreate(): bool
+    {
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return in_array($role, ['super_admin', 'admin_rt', 'sekretaris']);
+    }
+
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return in_array($role, ['super_admin', 'admin_rt', 'sekretaris']);
+    }
+
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return in_array($role, ['super_admin', 'admin_rt']);
     }
 
     protected static ?string $recordTitleAttribute = 'Nama_Lengkap';

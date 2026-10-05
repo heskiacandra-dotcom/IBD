@@ -8,6 +8,7 @@ use App\Models\Inventaris;
 use BackedEnum;
 use UnitEnum;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
@@ -29,12 +30,18 @@ class InventarisResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return in_array(auth()->user()?->role, ['super_admin', 'admin_rt', 'bendahara', 'sekretaris']);
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return in_array($role, ['super_admin', 'admin_rt', 'bendahara', 'sekretaris']);
     }
 
-    public static function shouldRegisterNavigation(): bool
+    public static function form(Schema $schema): Schema
     {
-        return static::canViewAny();
+        return \App\Filament\Resources\Inventaris\Schemas\InventarisForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return \App\Filament\Resources\Inventaris\Schemas\InventarisInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table

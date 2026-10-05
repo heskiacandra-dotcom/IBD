@@ -35,7 +35,8 @@ class KegiatanResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return in_array(auth()->user()?->role, ['super_admin', 'admin_rt', 'sekretaris']);
+        $role = auth('web')->user()?->role ?? auth()->user()?->role;
+        return in_array($role, ['super_admin', 'admin_rt', 'sekretaris', 'bendahara']);
     }
 
     public static function shouldRegisterNavigation(): bool

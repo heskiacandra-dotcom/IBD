@@ -83,7 +83,7 @@
               <line x1="2" x2="22" y1="10" y2="10"/>
             </svg>
             <span id="bannerIuranText">
-              {{ ($citizenRiwayat['summary']['is_lunas_bulan_ini'] ?? false) ? 'Iuran September: Lunas (Rp 75.000)' : 'Iuran September: Belum Lunas' }}
+              {{ ($citizenRiwayat['summary']['is_lunas_bulan_ini'] ?? false) ? 'Iuran Bulan Ini: Lunas (Rp 75.000)' : 'Iuran Bulan Ini: Belum Lunas' }}
             </span>
           </a>
         </div>
@@ -158,7 +158,7 @@
         </div>
         <h2 class="action-title">Bayar Iuran Bulanan</h2>
         <p class="action-desc">
-          Cek tagihan kas kebersihan & keamanan warga dari PEMASUKAN. Pembayaran QRIS & upload bukti transfer langsung terverifikasi.
+          Cek tagihan kas kebersihan & keamanan warga secara transparan. Pembayaran QRIS & upload bukti transfer langsung terverifikasi.
         </p>
         <button class="btn btn-success action-cta" data-modal="modalIuran">
           <span>Bayar Iuran</span>
@@ -180,7 +180,7 @@
         </div>
         <h2 class="action-title">Pinjam Inventaris RT</h2>
         <p class="action-desc">
-          Katalog lengkap INVENTARIS balai RT dengan status ketersediaan stok: tenda lipat, kursi, sound system, dan proyektor.
+          Katalog lengkap inventaris balai RT dengan status ketersediaan stok: tenda lipat, kursi, sound system, dan proyektor.
         </p>
         <button class="btn btn-primary action-cta" style="background-color: var(--purple-600);" data-modal="modalPinjam">
           <span>Pinjam Inventaris</span>

@@ -343,5 +343,64 @@ class CmsAndPortalSynchronizationTest extends TestCase
         $res->assertSee('Keamanan Lingkungan & Honor Sekuriti');
         $res->assertSee('Rp 3.500.000');
     }
+
+    /**
+     * Test 8: Peminjaman Inventaris dan Tampilan Peminjam di CMS (Warga Pinjam di Portal -> Terlihat Peminjam di CMS -> Pengurus Kembalikan Aset)
+     */
+    public function test_peminjaman_inventaris_dan_tampilan_peminjam_di_cms(): void
+    {
+        $inventaris = Inventaris::first() ?? Inventaris::create([
+            'ID_RT' => 1,
+            'Nama_Barang' => 'Proyektor Epson Balai RT',
+            'Kode_Barang' => 'AST-TEST-PROJ',
+            'Jumlah' => 2,
+            'Lokasi' => 'Gudang Balai RT',
+        ]);
+
+        $stokAwal = $inventaris->Jumlah;
+
+        // 1. Warga mengajukan pinjam aset dari portal
+        $res = $this->actingAs($this->warga, 'warga')->postJson(route('portal.pinjam-aset'), [
+            'inventaris_id' => $inventaris->Inventaris_ID,
+            'tgl_mulai' => now()->toDateString(),
+            'tgl_selesai' => now()->addDays(2)->toDateString(),
+            'tujuan' => 'Rapat Karang Taruna Persiapan HUT RI',
+        ]);
+
+        $res->assertStatus(200);
+        $res->assertJson(['success' => true]);
+
+        // 2. Verifikasi model Inventaris dapat mendeteksi peminjam aktif
+        $daftarPeminjam = $inventaris->getDaftarPeminjam();
+        $this->assertNotEmpty($daftarPeminjam);
+        $this->assertTrue($daftarPeminjam->contains(function ($item) {
+            return str_contains($item['nama'], $this->warga->Nama_Lengkap);
+        }));
+
+        $summary = $inventaris->getActiveBorrowersSummary();
+        $this->assertNotNull($summary);
+        $this->assertStringContainsString($this->warga->Nama_Lengkap, $summary);
+
+        // 3. Admin RT membuka halaman Inventaris di CMS dan melihat nama peminjam aktif pada baris aset
+        $this->actingAs($this->adminRt, 'web');
+        Livewire::test(ListInventaris::class)
+            ->assertCanSeeTableRecords([$inventaris])
+            ->assertSee($this->warga->Nama_Lengkap);
+
+        // 4. Simulasi persetujuan peminjaman (status menjadi borrowed)
+        \App\Models\AssetLoan::where('nama_alat', $inventaris->Nama_Barang)
+            ->where('status', 'pending')
+            ->update(['status' => 'borrowed']);
+
+        // 5. Pengurus mengeksekusi aksi 'kembalikan_aset' di tabel CMS
+        Livewire::test(ListInventaris::class)
+            ->callAction(TestAction::make('kembalikan_aset')->table($inventaris))
+            ->assertHasNoErrors();
+
+        // 6. Verifikasi status peminjaman berubah menjadi returned dan stok aset bertambah
+        $loanUpdated = \App\Models\AssetLoan::where('nama_alat', $inventaris->Nama_Barang)->latest()->first();
+        $this->assertEquals('returned', $loanUpdated->status);
+        $this->assertEquals($stokAwal + 1, $inventaris->fresh()->Jumlah);
+    }
 }
 

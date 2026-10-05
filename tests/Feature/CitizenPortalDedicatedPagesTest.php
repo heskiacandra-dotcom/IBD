@@ -101,4 +101,18 @@ class CitizenPortalDedicatedPagesTest extends TestCase
         $this->actingAs($this->admin, 'web')->get('/portal/agenda')->assertStatus(200);
         $this->actingAs($this->admin, 'web')->get('/portal/transparansi')->assertStatus(200);
     }
+
+    public function test_portal_payment_modal_renders_dual_qris_and_bank_account_options()
+    {
+        $response = $this->actingAs($this->warga, 'warga')->get('/portal');
+
+        $response->assertStatus(200);
+        $response->assertSee('Scan QRIS');
+        $response->assertSee('No. Rekening Bank');
+        $response->assertSee('712-889-0192');
+        $response->assertSee('132-00-1928374-1');
+        $response->assertSee('0341-01-002847-50-3');
+        $response->assertSee('KAS RT 05 HARMONI RESIDENCE');
+        $response->assertSee('ID10202688991');
+    }
 }

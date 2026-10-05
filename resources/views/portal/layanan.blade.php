@@ -365,7 +365,15 @@
                   </span>
                 </div>
                 <h4 style="font-size: 0.9375rem; font-weight: 700; color: #0F172A; margin: 0 0 6px 0;">{{ $inv['nama'] }}</h4>
-                <div style="font-size: 0.75rem; color: #64748B; margin-bottom: 14px;">📍 Lokasi: {{ $inv['lokasi'] }}</div>
+                <div style="font-size: 0.75rem; color: #64748B; margin-bottom: 8px;">📍 Lokasi: {{ $inv['lokasi'] }}</div>
+                @if(!empty($inv['peminjam_summary']))
+                  <div style="font-size: 0.6875rem; color: #B45309; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 6px; padding: 4px 8px; margin-bottom: 12px; display: flex; align-items: center; gap: 4px;">
+                    <span>📌</span>
+                    <span>Dipinjam: {{ $inv['peminjam_summary'] }}</span>
+                  </div>
+                @else
+                  <div style="margin-bottom: 12px;"></div>
+                @endif
               </div>
 
               <div>
