@@ -1,7 +1,7 @@
 <header class="navbar" id="topNavbar">
   <div class="container nav-container">
     <!-- Brand Logo -->
-    <a href="{{ route('portal.home') }}" class="brand-logo" id="brandLogo" aria-label="RuangWarga RT 05">
+    <a href="{{ route('portal.home') }}" class="brand-logo" id="brandLogo" aria-label="Smart RT RT 05">
       <div class="brand-icon">
         <!-- Geometric House / Community SVG -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -11,7 +11,7 @@
       </div>
       <div class="brand-text-wrap">
         <span class="brand-name">Smart<span class="brand-highlight">RT</span></span>
-        <span class="brand-sub">RuangWarga Digital</span>
+        <span class="brand-sub">Platform Digital RT</span>
       </div>
     </a>
 
@@ -155,7 +155,7 @@
         </div>
       @else
         <!-- Prominent Login CTA Button -->
-        <a href="{{ route('login') }}" class="btn btn-primary btn-sm login-cta-btn" id="btnNavbarLoginCta" aria-label="Masuk ke Sistem SSO RuangWarga">
+        <a href="{{ route('login') }}" class="btn btn-primary btn-sm login-cta-btn" id="btnNavbarLoginCta" aria-label="Masuk ke Sistem SSO Smart RT">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
             <polyline points="10 17 15 12 10 7"/>

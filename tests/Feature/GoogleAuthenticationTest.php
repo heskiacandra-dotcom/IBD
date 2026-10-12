@@ -6,10 +6,12 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Database\Seeders\ErdRuangWargaSeeder;
 use App\Models\Admin;
+use App\Models\DataRt;
 use App\Models\Warga;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Livewire\Volt\Volt;
 use Mockery;
 
 class GoogleAuthenticationTest extends TestCase
@@ -139,7 +141,7 @@ class GoogleAuthenticationTest extends TestCase
 
         $response = $this->get(route('auth.google.callback'));
 
-        $response->assertRedirect(route('auth.google.link'));
+        $response->assertRedirect(route('register'));
         $this->assertFalse(Auth::guard('warga')->check());
         $this->assertFalse(Auth::guard('web')->check());
 
@@ -200,4 +202,53 @@ class GoogleAuthenticationTest extends TestCase
         $warga->refresh();
         $this->assertNull($warga->google_id);
     }
+
+    /**
+     * Test citizen completes registration directly with Google auth pending.
+     */
+    public function test_citizen_registers_via_google_flow(): void
+    {
+        $rt = DataRt::first();
+        $newNik = '3201059988771122';
+        $newKk = '3201059988773344';
+
+        $this->withSession([
+            'google_auth_pending' => [
+                'google_id' => 'google-reg-12345',
+                'email' => 'warga.baru.google@example.com',
+                'name' => 'Budi Santoso Google',
+                'avatar' => 'https://example.com/avatar.jpg',
+            ]
+        ]);
+
+        Volt::test('auth.register-warga')
+            ->assertSet('nama_lengkap', 'Budi Santoso Google')
+            ->set('id_rt', $rt->ID_RT)
+            ->call('nextStep')
+            ->assertSet('currentStep', 2)
+            ->set('id_kk', $newKk)
+            ->set('nik', $newNik)
+            ->set('tgl_lahir', '1992-04-15')
+            ->set('no_telp', '0812-3456-7890')
+            ->set('alamat', 'Jl. Harmoni Raya Blok B No. 12')
+            ->call('registerWithGoogle')
+            ->assertHasNoErrors()
+            ->assertRedirect('/portal');
+
+        $this->assertTrue(Auth::guard('warga')->check());
+
+        $warga = Warga::withoutTenant()->where('NIK', $newNik)->first();
+        $this->assertNotNull($warga);
+        $this->assertEquals('google-reg-12345', $warga->google_id);
+        $this->assertEquals('warga.baru.google@example.com', $warga->email);
+        $this->assertEquals('https://example.com/avatar.jpg', $warga->avatar);
+        $this->assertEquals($rt->ID_RT, $warga->ID_RT);
+
+        $this->assertDatabaseHas('APPROVAL', [
+            'tabel_sumber' => 'WARGA',
+            'id_referensi' => $newNik,
+            'status' => 'pending',
+        ]);
+    }
 }
+

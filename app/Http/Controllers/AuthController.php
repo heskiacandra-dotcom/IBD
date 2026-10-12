@@ -45,7 +45,9 @@ class AuthController extends Controller
         $isMasterPass = in_array($password, ['Rahasia123!', 'password', 'admin123', 'admin', 'WargaHarmoni2026!', '12345678', 'superadmin']);
 
         // 1. Check credentials against ADMIN table
-        $admin = Admin::whereRaw('LOWER(Username) = ?', [strtolower($identity)])->first();
+        $admin = Admin::whereRaw('LOWER(Username) = ?', [strtolower($identity)])
+            ->orWhereRaw('LOWER(email) = ?', [strtolower($identity)])
+            ->first();
         if (!$admin) {
             $aliasMap = [
                 'ketua.rt05' => 'ketua_rt05',
@@ -57,7 +59,9 @@ class AuthController extends Controller
             ];
             $lowIdentity = strtolower($identity);
             if (isset($aliasMap[$lowIdentity])) {
-                $admin = Admin::whereRaw('LOWER(Username) = ?', [$aliasMap[$lowIdentity]])->first();
+                $admin = Admin::whereRaw('LOWER(Username) = ?', [$aliasMap[$lowIdentity]])
+                    ->orWhereRaw('LOWER(email) = ?', [$aliasMap[$lowIdentity]])
+                    ->first();
             }
         }
 

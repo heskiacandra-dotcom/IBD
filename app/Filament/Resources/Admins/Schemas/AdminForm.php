@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AdminForm
 {
@@ -18,7 +19,7 @@ class AdminForm
             ->components([
                 TextInput::make('Username')
                     ->label('Username Akun')
-                    ->placeholder('Contoh: bendahara_rt05 atau siti_sekretaris')
+                    ->placeholder('Contoh: ketua_rt01 atau bendahara_rt05')
                     ->required()
                     ->unique(Admin::class, 'Username', ignoreRecord: true)
                     ->maxLength(100)
@@ -27,7 +28,16 @@ class AdminForm
                         'unique' => 'Username ini sudah digunakan oleh akun lain.',
                         'regex' => 'Username hanya boleh berisi huruf, angka, titik, dan garis bawah (_).',
                     ])
-                    ->helperText('Digunakan oleh pengurus untuk masuk ke panel RuangWarga.')
+                    ->helperText('Digunakan untuk masuk ke panel RuangWarga secara manual.')
+                    ->columnSpanFull(),
+
+                TextInput::make('email')
+                    ->label('Email Google / Kontak (Google SSO)')
+                    ->email()
+                    ->placeholder('Contoh: ketua.rt01@gmail.com')
+                    ->unique(Admin::class, 'email', ignoreRecord: true)
+                    ->maxLength(150)
+                    ->helperText('Jika diisi dengan akun Google (Gmail), pengurus dapat langsung masuk dengan satu klik melalui tombol "Masuk dengan Google".')
                     ->columnSpanFull(),
 
                 Select::make('role')
@@ -63,23 +73,27 @@ class AdminForm
 
                 Select::make('ID_RT')
                     ->label('Wilayah Domisili RT')
-                    ->options(fn () => DataRt::all()->mapWithKeys(fn ($rt) => [$rt->ID_RT => 'RT ' . str_pad($rt->nomor_rt ?? $rt->Nomor_RT ?? $rt->ID_RT, 2, '0', STR_PAD_LEFT)]))
+                    ->options(fn () => DataRt::all()->mapWithKeys(fn ($rt) => [
+                        $rt->ID_RT => 'RT ' . str_pad($rt->nomor_rt, 2, '0', STR_PAD_LEFT) . ' / RW ' . str_pad($rt->nomor_rw, 2, '0', STR_PAD_LEFT) . ' - ' . ($rt->kelurahan ?? 'Wilayah') . ' (' . ($rt->nama_ketua_rt ?? 'Ketua RT') . ')'
+                    ]))
+                    ->searchable()
                     ->visible(fn () => auth()->user()?->role === 'super_admin')
                     ->required(fn (callable $get) => $get('role') !== 'super_admin')
-                    ->placeholder('Pilih Wilayah RT...')
+                    ->placeholder('Pilih Wilayah RT yang dikelola...')
+                    ->helperText('Super Admin dapat memilih RT mana saja untuk akun pengurus ini.')
                     ->columnSpanFull(),
 
                 TextInput::make('Password_hash')
-                    ->label('Kata Sandi')
+                    ->label('Kata Sandi Akun')
                     ->password()
                     ->revealable()
-                    ->required(fn (string $operation): bool => $operation === 'create')
-                    ->dehydrated(fn (?string $state): bool => filled($state))
-                    ->dehydrateStateUsing(fn (?string $state): ?string => filled($state) ? Hash::make($state) : null)
+                    ->required(fn (string $operation, callable $get): bool => $operation === 'create' && blank($get('email')))
+                    ->dehydrated(fn (?string $state, callable $get, string $operation): bool => filled($state) || ($operation === 'create' && filled($get('email'))))
+                    ->dehydrateStateUsing(fn (?string $state, callable $get): ?string => filled($state) ? Hash::make($state) : (filled($get('email')) ? Hash::make(Str::random(32)) : null))
                     ->minLength(8)
-                    ->placeholder(fn (string $operation): string => $operation === 'create' ? 'Minimal 8 karakter...' : 'Kosongkan jika tidak ingin mengubah kata sandi')
+                    ->placeholder(fn (string $operation): string => $operation === 'create' ? 'Minimal 8 karakter (opsional jika email Google diisi)...' : 'Kosongkan jika tidak ingin mengubah kata sandi')
                     ->helperText(fn (string $operation): string => $operation === 'create'
-                        ? 'Berikan kata sandi awal kepada pengurus yang didaftarkan. Pengurus dapat menggantinya nanti.'
+                        ? 'Wajib diisi jika Email Google dikosongkan. Jika menggunakan Google SSO, kata sandi opsional dan akun dapat login langsung via Google.'
                         : 'Kosongkan kolom ini jika kata sandi tidak ingin diubah.')
                     ->columnSpanFull(),
             ]);

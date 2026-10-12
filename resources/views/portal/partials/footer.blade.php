@@ -121,7 +121,7 @@
           </div>
           <div>
             <div style="font-size: 1.1875rem; font-weight: 800; color: #0F172A; line-height: 1;">
-              Ruang<span style="color: #2563EB;">Warga</span>
+              Smart<span style="color: #2563EB;">RT</span>
             </div>
             <div style="font-size: 0.6875rem; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 3px;">
               RT 05 / RW 01 Harmoni Residence
@@ -272,7 +272,7 @@
          ==================================================================== -->
     <div class="footer-bottom">
       <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-        <div>&copy; 2026 <strong>RuangWarga</strong> — Sistem Informasi Manajemen Lingkungan Guyub Rukun.</div>
+        <div>&copy; 2026 <strong>Smart RT</strong> — Sistem Informasi Manajemen Lingkungan Guyub Rukun.</div>
         <div style="display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; background: #F1F5F9; border-radius: 9999px; font-size: 0.6875rem; color: #475569; font-weight: 600;">
           <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; display: inline-block;"></span>
           <span>Sistem Online</span>

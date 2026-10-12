@@ -16,8 +16,12 @@ class GoogleAuthController extends Controller
     /**
      * Redirect pengguna ke halaman otentikasi Google OAuth
      */
-    public function redirect()
+    public function redirect(\Illuminate\Http\Request $request)
     {
+        if ($request->has('intent')) {
+            session(['google_auth_intent' => $request->query('intent')]);
+        }
+
         $clientId = config('services.google.client_id');
         $clientSecret = config('services.google.client_secret');
 
@@ -160,7 +164,7 @@ class GoogleAuthController extends Controller
         }
 
         // 6. Jika belum ada akun yang cocok dengan Google ID atau email ini:
-        // Simpan data otentikasi Google ke sesi sementara dan arahkan ke halaman penautan akun
+        // Simpan data otentikasi Google ke sesi sementara dan arahkan ke pendaftaran warga
         session([
             'google_auth_pending' => [
                 'google_id' => $googleId,
@@ -170,9 +174,19 @@ class GoogleAuthController extends Controller
             ]
         ]);
 
-        return redirect()->route('auth.google.link')->with(
+        $intent = session('google_auth_intent');
+        session()->forget('google_auth_intent');
+
+        if ($intent === 'link') {
+            return redirect()->route('auth.google.link')->with(
+                'info',
+                "Akun Google ({$email}) terverifikasi. Silakan hubungkan dengan akun RuangWarga Anda."
+            );
+        }
+
+        return redirect()->route('register')->with(
             'info',
-            "Akun Google ({$email}) terverifikasi. Silakan hubungkan dengan akun RuangWarga Anda atau daftar sebagai warga baru."
+            "Akun Google ({$email}) terverifikasi! Silakan pilih wilayah RT dan lengkapi data kependudukan Anda untuk menyelesaikan pendaftaran."
         );
     }
 
@@ -214,7 +228,9 @@ class GoogleAuthController extends Controller
         $isMasterPass = in_array($password, ['Rahasia123!', 'password', 'admin123', 'admin', 'WargaHarmoni2026!', '12345678', 'superadmin']);
 
         // 1. Cek kredensial ke ADMIN
-        $admin = Admin::whereRaw('LOWER(Username) = ?', [strtolower($identity)])->first();
+        $admin = Admin::whereRaw('LOWER(Username) = ?', [strtolower($identity)])
+            ->orWhereRaw('LOWER(email) = ?', [strtolower($identity)])
+            ->first();
         if ($admin && (Hash::check($password, $admin->Password_hash) || $isMasterPass)) {
             $admin->google_id = $pending['google_id'];
             if (!empty($pending['email']) && empty($admin->email)) {

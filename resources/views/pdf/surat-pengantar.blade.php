@@ -257,7 +257,7 @@
 
   <!-- FOOTER AUDIT LOG -->
   <div class="footer-audit">
-    <span>Dokumen resmi diterbitkan melalui Platform <strong>RuangWarga CMS</strong></span>
+    <span>Dokumen resmi diterbitkan melalui Platform <strong>Smart RT CMS</strong></span>
     <span>Tanggal Cetak: {{ $generatedAt }}</span>
   </div>
 

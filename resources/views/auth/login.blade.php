@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-  <title>Masuk • RuangWarga</title>
+  <title>Masuk • Smart RT</title>
   
   <!-- PWA & Mobile Web App Meta Tags -->
   <meta name="theme-color" content="#2563EB">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="RuangWarga">
+  <meta name="apple-mobile-web-app-title" content="Smart RT">
   <link rel="manifest" href="{{ asset('manifest.json') }}">
   <link rel="icon" type="image/svg+xml" href="{{ asset('icons/icon-512x512.svg') }}">
   <link rel="apple-touch-icon" href="{{ asset('icons/apple-touch-icon.png') }}">

@@ -41,7 +41,10 @@ $login = function () {
     $isMasterPass = in_array($password, ['Rahasia123!', 'password', 'WargaHarmoni2026!', 'admin123', 'admin', '12345678', 'superadmin']);
 
     // 1. Cek kredensial di tabel ADMIN (Pengurus RT / Super Admin)
-    $admin = \App\Models\Admin::where('Username', $identity)->first();
+    $lowIdentity = strtolower($identity);
+    $admin = \App\Models\Admin::whereRaw('LOWER(Username) = ?', [$lowIdentity])
+        ->orWhereRaw('LOWER(email) = ?', [$lowIdentity])
+        ->first();
     if (!$admin) {
         $aliasMap = [
             'ketua.rt05' => 'ketua_rt05',
@@ -51,12 +54,10 @@ $login = function () {
             'bendahara' => 'bendahara_rt05',
             'sekretaris' => 'sekretaris_rt05',
         ];
-        $lowIdentity = strtolower($identity);
         if (isset($aliasMap[$lowIdentity])) {
-            $admin = \App\Models\Admin::where('Username', $aliasMap[$lowIdentity])->first();
-        }
-        if (!$admin) {
-            $admin = \App\Models\Admin::whereRaw('LOWER(Username) = ?', [$lowIdentity])->first();
+            $admin = \App\Models\Admin::where('Username', $aliasMap[$lowIdentity])
+                ->orWhere('email', $aliasMap[$lowIdentity])
+                ->first();
         }
     }
 
@@ -120,9 +121,9 @@ $authenticate = $login;
         <polyline points="9 22 9 12 15 12 15 22"/>
       </svg>
     </div>
-    <h1 class="font-bold text-slate-900 text-xl tracking-tight">RuangWarga</h1>
+    <h1 class="font-bold text-slate-900 text-xl tracking-tight">Smart RT</h1>
     <p class="text-xs text-slate-500 mt-1">Masuk untuk mengakses layanan warga atau panel pengurus RT</p>
-    <span class="sr-only">SINGLE SIGN-ON</span>
+    <span class="sr-only">SINGLE SIGN-ON RuangWarga</span>
   </div>
 
   <!-- Flash Success Alert -->
@@ -186,7 +187,7 @@ $authenticate = $login;
     <!-- 1. Input Identitas -->
     <div>
       <label for="identity" class="block text-xs font-semibold text-slate-700 mb-1.5">
-        NIK atau Username
+        NIK atau Username / Email Google
       </label>
       <input 
         wire:model="identity"
@@ -194,7 +195,7 @@ $authenticate = $login;
         name="identity"
         type="text" 
         autocomplete="username"
-        placeholder="Masukkan NIK atau username Anda" 
+        placeholder="Masukkan NIK, username, atau email Google Anda" 
         class="w-full border border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl px-3.5 py-2.5 text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none transition-all"
         required
       />

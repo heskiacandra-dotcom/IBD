@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrasi Akun Warga Baru • RuangWarga</title>
+  <title>Registrasi Akun Warga Baru • Smart RT</title>
   
   <!-- Modern Font: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,7 +79,7 @@
   <!-- Bottom Copyright -->
   <footer class="w-full max-w-5xl mx-auto text-center py-3 text-xs text-slate-400">
     <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-[11px]">
-      <a href="{{ url('/') }}" class="hover:underline">Beranda RuangWarga</a>
+      <a href="{{ url('/') }}" class="hover:underline">Beranda Smart RT</a>
       <span>•</span>
       <a href="{{ route('login') }}" class="hover:underline">Masuk Akun</a>
       <span>•</span>

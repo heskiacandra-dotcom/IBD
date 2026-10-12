@@ -20,6 +20,11 @@ class DataRt extends Model
         return $this->hasMany(Admin::class, 'ID_RT', 'ID_RT');
     }
 
+    public function ketuaRtAdmin()
+    {
+        return $this->hasOne(Admin::class, 'ID_RT', 'ID_RT')->where('role', 'admin_rt');
+    }
+
     public function warga()
     {
         return $this->hasMany(Warga::class, 'ID_RT', 'ID_RT');

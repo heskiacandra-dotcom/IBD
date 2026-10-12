@@ -7,6 +7,7 @@ use App\Models\Warga;
 use App\Models\Approval;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 state([
     'currentStep' => 1,
@@ -26,6 +27,14 @@ state([
     'showPassword' => false,
     'isSubmitting' => false,
 ]);
+
+$isGooglePending = computed(function () {
+    return !empty(session('google_auth_pending'));
+});
+
+$pendingGoogle = computed(function () {
+    return session('google_auth_pending');
+});
 
 $rtOptions = computed(function () {
     return DataRt::orderBy('nomor_rw')->orderBy('nomor_rt')->get();
@@ -181,6 +190,91 @@ $register = function () {
     }
 };
 
+$registerWithGoogle = function () {
+    $this->validateStep1();
+    $this->validateStep2();
+
+    $this->isSubmitting = true;
+
+    try {
+        DB::transaction(function () {
+            // a. Ensure KARTU_KELUARGA record exists for the given ID_KK; if not, create it
+            KartuKeluarga::firstOrCreate(
+                ['ID_KK' => trim($this->id_kk)],
+                ['Alamat' => trim($this->alamat)]
+            );
+
+            // b. Insert new citizen record into WARGA with role='warga'
+            $pending = session('google_auth_pending');
+
+            // Generate clean unique username
+            $baseUsername = '';
+            if (!empty($pending['email'])) {
+                $baseUsername = strtolower(explode('@', $pending['email'])[0]);
+                $baseUsername = preg_replace('/[^a-z0-9_]/', '', $baseUsername);
+            }
+            if (empty($baseUsername)) {
+                $baseUsername = 'warga_' . substr(trim($this->nik), -6);
+            }
+
+            $candidateUsername = $baseUsername;
+            $counter = 1;
+            while (Warga::withoutTenant()->where('Username', $candidateUsername)->exists() ||
+                   \App\Models\Admin::where('Username', $candidateUsername)->exists()) {
+                $candidateUsername = $baseUsername . $counter;
+                $counter++;
+            }
+
+            $warga = Warga::create([
+                'NIK' => trim($this->nik),
+                'ID_KK' => trim($this->id_kk),
+                'ID_RT' => $this->id_rt,
+                'Nama_Lengkap' => trim($this->nama_lengkap),
+                'no_telp' => trim($this->no_telp),
+                'Username' => $candidateUsername,
+                'Password_hash' => Hash::make(Str::random(32)),
+                'tgl_lahir' => $this->tgl_lahir,
+                'role' => 'warga',
+                'google_id' => $pending['google_id'] ?? null,
+                'email' => $pending['email'] ?? null,
+                'avatar' => $pending['avatar'] ?? null,
+            ]);
+
+            session()->forget('google_auth_pending');
+
+            // c. Automatically insert an entry into the APPROVAL table
+            Approval::create([
+                'Admin_ID' => null,
+                'tabel_sumber' => 'WARGA',
+                'id_referensi' => trim($this->nik),
+                'status' => 'pending',
+                'catatan' => 'Pendaftaran mandiri akun warga baru (Google SSO)',
+                'tgl_approval' => null,
+            ]);
+
+            // d. Automatically authenticate citizen session
+            \Illuminate\Support\Facades\Auth::guard('web')->logout();
+            \Illuminate\Support\Facades\Auth::guard('warga')->login($warga, true);
+            \Illuminate\Support\Facades\Auth::shouldUse('warga');
+            session()->regenerate();
+
+            session([
+                'active_role' => 'warga',
+                'citizen_nik' => $warga->NIK,
+                'citizen_name' => $warga->Nama_Lengkap,
+                'citizen_id' => $warga->NIK,
+                'citizen_house' => $warga->kartuKeluarga ? $warga->kartuKeluarga->Alamat : '',
+            ]);
+        });
+
+        session()->flash('success', 'Selamat datang! Pendaftaran akun warga Anda berhasil dan telah terhubung ke Google.');
+        return redirect()->route('portal.home');
+    } catch (\Throwable $e) {
+        $this->isSubmitting = false;
+        $this->addError('general', 'Terjadi kesalahan sistem: ' . $e->getMessage());
+    }
+};
+
 ?>
 
 <div class="w-full flex flex-col items-center justify-center">
@@ -204,7 +298,7 @@ $register = function () {
         </div>
         <div class="text-left">
           <div class="font-black text-slate-900 text-lg tracking-tight leading-none">
-            Ruang<span class="text-blue-600">Warga</span>
+            Smart<span class="text-blue-600">RT</span>
           </div>
           <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mt-0.5">REGISTRASI WARGA</span>
         </div>
@@ -216,12 +310,39 @@ $register = function () {
       </p>
     </div>
 
+    @if($this->isGooglePending)
+      <!-- Google Account Verified Banner -->
+      <div class="mb-6 p-3.5 bg-blue-50/80 border border-blue-200/90 rounded-2xl flex items-center gap-3 shadow-xs">
+        <div class="relative shrink-0">
+          @if(!empty($this->pendingGoogle['avatar']))
+            <img src="{{ $this->pendingGoogle['avatar'] }}" alt="Google Avatar" class="w-10 h-10 rounded-full border border-blue-200 object-cover shadow-xs">
+          @else
+            <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-xs">
+              {{ substr($this->pendingGoogle['name'] ?? 'G', 0, 1) }}
+            </div>
+          @endif
+          <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-white flex items-center justify-center shadow-xs">
+            <svg class="w-2.5 h-2.5" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.87c2.26-2.09 3.67-5.17 3.67-9.15z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.05c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.28v3.15C3.3 21.36 7.37 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24A7.18 7.18 0 0 1 4.9 12c0-.78.14-1.54.37-2.24V6.61H1.28A11.97 11.97 0 0 0 0 12c0 1.92.45 3.74 1.28 5.39l3.99-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.3 2.64 1.28 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
+          </span>
+        </div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-900 truncate">{{ $this->pendingGoogle['name'] ?? 'Akun Google' }}</span>
+            <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+              Google Terverifikasi
+            </span>
+          </div>
+          <div class="text-[11px] text-slate-500 truncate mt-0.5">{{ $this->pendingGoogle['email'] ?? '' }}</div>
+        </div>
+      </div>
+    @endif
+
     <!-- Step Progress Indicator -->
     <div class="mb-7">
       <div class="flex items-center justify-between relative">
         <div class="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 w-full bg-slate-200 -z-0"></div>
         <div class="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 bg-blue-600 transition-all duration-300 -z-0"
-             style="width: {{ $currentStep === 1 ? '0%' : ($currentStep === 2 ? '50%' : '100%') }}"></div>
+             style="width: {{ $this->isGooglePending ? ($currentStep === 1 ? '0%' : '100%') : ($currentStep === 1 ? '0%' : ($currentStep === 2 ? '50%' : '100%')) }}"></div>
 
         <!-- Step 1 Indicator -->
         <div class="relative z-10 flex flex-col items-center">
@@ -232,14 +353,18 @@ $register = function () {
               1
             @endif
           </div>
-          <span class="text-[10px] font-bold mt-1.5 {{ $currentStep === 1 ? 'text-blue-600 font-extrabold' : 'text-slate-500' }}">Wilayah</span>
+          <span class="text-[10px] font-bold mt-1.5 {{ $currentStep === 1 ? 'text-blue-600 font-extrabold' : 'text-slate-500' }}">Wilayah RT</span>
         </div>
 
         <!-- Step 2 Indicator -->
         <div class="relative z-10 flex flex-col items-center">
           <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-all {{ $currentStep >= 2 ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30' : 'bg-slate-100 text-slate-400 border border-slate-200' }}">
-            @if($currentStep > 2)
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            @if($currentStep > 2 || ($this->isGooglePending && $currentStep === 2))
+              @if($currentStep > 2)
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              @else
+                2
+              @endif
             @else
               2
             @endif
@@ -247,13 +372,15 @@ $register = function () {
           <span class="text-[10px] font-bold mt-1.5 {{ $currentStep === 2 ? 'text-blue-600 font-extrabold' : 'text-slate-500' }}">Data Diri</span>
         </div>
 
-        <!-- Step 3 Indicator -->
-        <div class="relative z-10 flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-all {{ $currentStep === 3 ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30' : 'bg-slate-100 text-slate-400 border border-slate-200' }}">
-            3
+        @if(!$this->isGooglePending)
+          <!-- Step 3 Indicator (Hanya untuk pendaftaran manual tanpa Google) -->
+          <div class="relative z-10 flex flex-col items-center">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-all {{ $currentStep === 3 ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30' : 'bg-slate-100 text-slate-400 border border-slate-200' }}">
+              3
+            </div>
+            <span class="text-[10px] font-bold mt-1.5 {{ $currentStep === 3 ? 'text-blue-600 font-extrabold' : 'text-slate-500' }}">Kredensial</span>
           </div>
-          <span class="text-[10px] font-bold mt-1.5 {{ $currentStep === 3 ? 'text-blue-600 font-extrabold' : 'text-slate-500' }}">Kredensial</span>
-        </div>
+        @endif
       </div>
     </div>
 
@@ -277,6 +404,27 @@ $register = function () {
            ==================================================================== -->
       @if($currentStep === 1)
         <div class="space-y-4 animate-fadeIn">
+          @if(!$this->isGooglePending)
+            <!-- Tombol Masuk / Daftar Cepat dengan Google -->
+            <a
+              href="{{ route('auth.google.redirect', ['intent' => 'register']) }}"
+              class="w-full py-2.5 px-4 bg-white hover:bg-slate-50 border border-slate-300 hover:border-slate-400 text-slate-700 font-bold text-xs rounded-xl flex items-center justify-center gap-2.5 transition-all shadow-xs cursor-pointer group"
+            >
+              <svg class="w-4 h-4 shrink-0 transition-transform group-hover:scale-105" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.87c2.26-2.09 3.67-5.17 3.67-9.15z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.05c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.28v3.15C3.3 21.36 7.37 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.27 14.24A7.18 7.18 0 0 1 4.9 12c0-.78.14-1.54.37-2.24V6.61H1.28A11.97 11.97 0 0 0 0 12c0 1.92.45 3.74 1.28 5.39l3.99-3.15z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.3 2.64 1.28 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/>
+              </svg>
+              <span>Daftar Lebih Cepat dengan Akun Google</span>
+            </a>
+
+            <div class="relative flex items-center justify-center my-3">
+              <div class="border-t border-slate-200 w-full"></div>
+              <span class="bg-white px-2.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">atau pilih wilayah di bawah</span>
+            </div>
+          @endif
+
           <div class="p-3.5 bg-blue-50/70 border border-blue-200/80 rounded-xl text-xs text-blue-900 leading-relaxed">
             <div class="font-bold flex items-center gap-1.5 mb-1">
               <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -463,15 +611,52 @@ $register = function () {
             >
               Kembali
             </button>
-            <button
-              type="button"
-              wire:click="nextStep"
-              class="flex-1 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-extrabold text-xs rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span>Lanjutkan ke Akun & Sandi</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
+            @if($this->isGooglePending)
+              <button
+                type="button"
+                wire:click="registerWithGoogle"
+                wire:loading.attr="disabled"
+                wire:target="registerWithGoogle"
+                class="flex-1 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-extrabold text-xs rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              >
+                <span wire:loading.remove wire:target="registerWithGoogle" class="flex items-center gap-2">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.87c2.26-2.09 3.67-5.17 3.67-9.15z"/>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.87-3.05c-1.08.72-2.45 1.16-4.06 1.16-3.13 0-5.78-2.11-6.73-4.96H1.28v3.15C3.3 21.36 7.37 24 12 24z"/>
+                    <path fill="#FBBC05" d="M5.27 14.24A7.18 7.18 0 0 1 4.9 12c0-.78.14-1.54.37-2.24V6.61H1.28A11.97 11.97 0 0 0 0 12c0 1.92.45 3.74 1.28 5.39l3.99-3.15z"/>
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.3 2.64 1.28 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/>
+                  </svg>
+                  <span>Selesaikan Pendaftaran (Google)</span>
+                </span>
+                <span wire:loading wire:target="registerWithGoogle" class="flex items-center gap-2">
+                  <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke-width="4" stroke="currentColor" stroke-dasharray="32" stroke-linecap="round"/>
+                  </svg>
+                  <span>Mendaftarkan Akun Google...</span>
+                </span>
+              </button>
+            @else
+              <button
+                type="button"
+                wire:click="nextStep"
+                class="flex-1 py-2.5 px-4 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-extrabold text-xs rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Lanjutkan ke Akun & Sandi</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            @endif
           </div>
+          @if($this->isGooglePending)
+            <div class="text-center pt-1">
+              <button
+                type="button"
+                wire:click="nextStep"
+                class="text-[11px] font-semibold text-slate-500 hover:text-blue-600 transition-colors cursor-pointer"
+              >
+                Ingin mengatur username & kata sandi manual juga? <span class="underline">Lanjut ke Langkah 3 &rarr;</span>
+              </button>
+            </div>
+          @endif
         </div>
       @endif
 
@@ -620,6 +805,6 @@ $register = function () {
 
   <!-- Footer Notice -->
   <div class="mt-6 text-center text-xs text-slate-400">
-    <p class="text-[11px] font-medium">© 2026 RuangWarga Platform • Pelayanan Mandiri RT</p>
+    <p class="text-[11px] font-medium">© 2026 Smart RT Platform • Pelayanan Mandiri RT</p>
   </div>
 </div>

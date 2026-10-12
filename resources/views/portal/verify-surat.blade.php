@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verifikasi Keaslian Surat Pengantar RT - RuangWarga</title>
+  <title>Verifikasi Keaslian Surat Pengantar RT - Smart RT</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -41,7 +41,7 @@
         </svg>
       </div>
       <div>
-        <div class="font-extrabold text-slate-900 leading-none text-base">Ruang<span class="text-primary-600">Warga</span></div>
+        <div class="font-extrabold text-slate-900 leading-none text-base">Smart<span class="text-primary-600">RT</span></div>
         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Validasi Dokumen Publik</span>
       </div>
     </div>
@@ -116,7 +116,7 @@
 
   <!-- Footer -->
   <div class="text-center text-xs text-slate-400">
-    Dokumen ini dilindungi tanda tangan & cap digital resmi Rukun Tetangga 05 / RW 01 Harmoni Residence. Platform RuangWarga © 2026.
+    Dokumen ini dilindungi tanda tangan & cap digital resmi Rukun Tetangga 05 / RW 01 Harmoni Residence. Platform Smart RT © 2026.
   </div>
 
 </body>

@@ -12,7 +12,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="RuangWarga">
+  <meta name="apple-mobile-web-app-title" content="Smart RT">
   <link rel="manifest" href="{{ asset('manifest.json') }}">
   <link rel="icon" type="image/svg+xml" href="{{ asset('icons/icon-512x512.svg') }}">
   <link rel="apple-touch-icon" href="{{ asset('icons/apple-touch-icon.png') }}">

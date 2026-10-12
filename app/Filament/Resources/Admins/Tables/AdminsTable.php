@@ -29,6 +29,36 @@ class AdminsTable
                     ->weight('bold')
                     ->icon('heroicon-m-user-circle'),
 
+                TextColumn::make('email')
+                    ->label('Email Google / Kontak')
+                    ->icon('heroicon-m-envelope')
+                    ->searchable()
+                    ->copyable()
+                    ->placeholder('Belum diatur'),
+
+                TextColumn::make('google_status')
+                    ->label('Login Google')
+                    ->badge()
+                    ->state(function (Admin $record) {
+                        if (filled($record->google_id)) {
+                            return 'Google Terhubung';
+                        }
+                        if (filled($record->email)) {
+                            return 'Google Siap';
+                        }
+                        return 'Sandi Saja';
+                    })
+                    ->color(fn (string $state) => match ($state) {
+                        'Google Terhubung' => 'success',
+                        'Google Siap' => 'info',
+                        default => 'gray',
+                    })
+                    ->icon(fn (string $state) => match ($state) {
+                        'Google Terhubung' => 'heroicon-m-check-badge',
+                        'Google Siap' => 'heroicon-m-arrow-right-end-on-rectangle',
+                        default => 'heroicon-m-key',
+                    }),
+
                 TextColumn::make('role')
                     ->label('Peran / Jabatan')
                     ->badge()
@@ -50,7 +80,14 @@ class AdminsTable
 
                 TextColumn::make('ID_RT')
                     ->label('Wilayah RT')
-                    ->formatStateUsing(fn ($state) => $state ? 'RT 0' . $state : 'Seluruh RW')
+                    ->formatStateUsing(function ($state, Admin $record) {
+                        if (!$state) return 'Seluruh RW';
+                        $rt = $record->dataRt;
+                        if ($rt) {
+                            return 'RT ' . str_pad($rt->nomor_rt, 2, '0', STR_PAD_LEFT) . ' / RW ' . str_pad($rt->nomor_rw, 2, '0', STR_PAD_LEFT);
+                        }
+                        return 'RT ' . str_pad($state, 2, '0', STR_PAD_LEFT);
+                    })
                     ->badge()
                     ->color('gray')
                     ->sortable(),
@@ -79,6 +116,13 @@ class AdminsTable
                             'sekretaris' => 'Sekretaris RT',
                         ];
                     }),
+
+                SelectFilter::make('ID_RT')
+                    ->label('Filter Wilayah RT')
+                    ->visible(fn () => auth()->user()?->role === 'super_admin')
+                    ->options(fn () => \App\Models\DataRt::all()->mapWithKeys(fn ($rt) => [
+                        $rt->ID_RT => 'RT ' . str_pad($rt->nomor_rt, 2, '0', STR_PAD_LEFT) . ' / RW ' . str_pad($rt->nomor_rw, 2, '0', STR_PAD_LEFT) . ' (' . ($rt->nama_ketua_rt ?? 'Ketua RT') . ')'
+                    ])),
             ])
             ->recordActions([
                 ViewAction::make()->slideOver(),

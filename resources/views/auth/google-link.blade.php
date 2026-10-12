@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-  <title>Hubungkan Akun Google • RuangWarga</title>
+  <title>Hubungkan Akun Google • Smart RT</title>
   
   <meta name="theme-color" content="#2563EB">
   <link rel="icon" type="image/svg+xml" href="{{ asset('icons/icon-512x512.svg') }}">
@@ -97,7 +97,7 @@
 
     <!-- Instruction -->
     <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-      Untuk menghubungkan akun Google ini secara permanen, masukkan <strong>NIK atau Username</strong> serta kata sandi akun RuangWarga Anda sekali saja:
+      Untuk menghubungkan akun Google ini secara permanen, masukkan <strong>NIK atau Username</strong> serta kata sandi akun Smart RT Anda sekali saja:
     </p>
 
     <!-- Verification Form -->
