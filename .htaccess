@@ -1,10 +1,22 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteBase /
 
-    # Keamanan: Blokir akses langsung ke file sensitif
-    RewriteRule ^(\.env|\.git|storage|vendor|app|bootstrap|config|database|resources|routes) - [F,L]
+    # Blokir akses ke file konfigurasi sensitif
+    <FilesMatch "^\.(env|git)">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
 
-    # Alihkan seluruh request ke folder /public Laravel
+    # Arahkan aset statis langsung dari public/ jika ada
     RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{DOCUMENT_ROOT}/public/$1 -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/public/$1 -d
     RewriteRule ^(.*)$ public/$1 [L]
+
+    # Arahkan seluruh rute ke index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
 </IfModule>
+

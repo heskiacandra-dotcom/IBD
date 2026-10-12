@@ -1,7 +1,8 @@
 <IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
-    </IfModule>
+    # 'Options' is disabled on InfinityFree to prevent 403 Forbidden
+    # <IfModule mod_negotiation.c>
+    #     Options -MultiViews -Indexes
+    # </IfModule>
 
     RewriteEngine On
 
