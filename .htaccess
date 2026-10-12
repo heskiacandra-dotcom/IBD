@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Keamanan: Blokir akses langsung ke file sensitif
+    RewriteRule ^(\.env|\.git|storage|vendor|app|bootstrap|config|database|resources|routes) - [F,L]
+
+    # Alihkan seluruh request ke folder /public Laravel
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

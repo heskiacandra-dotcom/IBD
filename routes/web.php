@@ -157,3 +157,25 @@ Route::prefix('cms')->name('cms.')->middleware(['auth:web', 'role:super_admin,ad
 
 // Also support direct /dashboard alias
 Route::get('/dashboard', fn () => redirect('/admin'));
+
+// Helper untuk inisialisasi hosting tanpa SSH (seperti InfinityFree)
+Route::get('/hosting-setup', function () {
+    $results = [];
+    try {
+        \Illuminate\Support\Facades\Artisan::call('storage:link');
+        $results[] = 'Storage link: Berhasil';
+    } catch (\Throwable $e) {
+        $results[] = 'Storage link: ' . $e->getMessage();
+    }
+
+    try {
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        $results[] = 'Cache clear: Berhasil';
+    } catch (\Throwable $e) {
+        $results[] = 'Cache clear: ' . $e->getMessage();
+    }
+
+    return response('<h2>Status Setup Hosting Smart RT</h2><ul><li>' . implode('</li><li>', $results) . '</li></ul><p>Setup selesai! Anda sekarang bisa mengakses <a href="/">Beranda</a> atau <a href="/login">Login</a>.</p>');
+});
+
