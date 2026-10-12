@@ -1,21 +1,80 @@
--- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
---
--- Host: localhost    Database: ruangwarga
--- ------------------------------------------------------
--- Server version	8.0.30
+-- ============================================================
+-- Smart RT Database Dump (Optimized for InfinityFree / cPanel)
+-- Foreign Key Checks Disabled at Top & Bottom
+-- Tables Sorted in Strict Dependency Order
+-- ============================================================
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT;
+SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS;
+SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION;
+SET NAMES utf8mb4;
+SET @OLD_TIME_ZONE=@@TIME_ZONE;
+SET TIME_ZONE='+00:00';
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
+
+-- Table structure for table `data_rt`
+--
+
+DROP TABLE IF EXISTS `data_rt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `data_rt` (
+  `ID_RT` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nomor_rt` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nomor_rw` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kelurahan` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kecamatan` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kota` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_ketua_rt` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no_telp_ketua_rt` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no_telp_sekretariat` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_RT`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `data_rt`
+--
+
+LOCK TABLES `data_rt` WRITE;
+/*!40000 ALTER TABLE `data_rt` DISABLE KEYS */;
+INSERT INTO `data_rt` VALUES (1,'05','01','Sukamaju','Cilodong','Kota Depok','Bpk. Sukardi Hartono','0812-3456-7890','0812-3456-7890','2026-09-22 00:26:48','2026-09-22 00:26:48'),(2,'01','02','Mekarjaya','Sukmajaya','Kota Depok','Bpk. Bambang Pamungkas',NULL,NULL,'2026-09-22 00:26:48','2026-09-22 00:26:48'),(3,'03','04','Baktijaya','Sukmajaya','Kota Depok','Ibu Sri Mulyani',NULL,NULL,'2026-09-22 00:26:48','2026-09-22 00:26:48'),(4,'07','01','UNTA','kuda','Kota Semarang','BUDI','0812345678','0812345678','2026-10-05 01:13:27','2026-10-05 01:13:27');
+/*!40000 ALTER TABLE `data_rt` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `kartu_keluarga`
+--
+
+DROP TABLE IF EXISTS `kartu_keluarga`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `kartu_keluarga` (
+  `ID_KK` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Alamat` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_KK`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `kartu_keluarga`
+--
+
+LOCK TABLES `kartu_keluarga` WRITE;
+/*!40000 ALTER TABLE `kartu_keluarga` DISABLE KEYS */;
+INSERT INTO `kartu_keluarga` VALUES ('1231241242144444','Jl.Trengguli no 12','2026-10-06 05:53:07','2026-10-06 05:53:07'),('2362174678268345','fdsfsdg','2026-09-22 19:32:38','2026-09-22 19:32:38'),('3201051234567890','Jl. Melati No. 12','2026-09-30 09:25:32','2026-09-30 09:25:32'),('3201051909120002','Harmoni Residence Blok C No. 04','2026-09-22 00:26:49','2026-09-22 00:26:49'),('3201051909120003','Harmoni Residence Blok C No. 08','2026-09-22 00:26:49','2026-09-22 00:26:49'),('3201051909120004','Harmoni Residence Blok A No. 02','2026-09-22 00:26:49','2026-09-22 00:26:49'),('3201051909120005','Harmoni Residence Blok B No. 05','2026-09-22 00:26:49','2026-09-22 00:26:49'),('3201051909120006','Harmoni Residence Blok D No. 07','2026-09-22 00:26:49','2026-09-22 00:26:49'),('3201051909120008','Harmoni Residence Blok B No. 12','2026-09-22 00:26:49','2026-09-22 00:26:49');
+/*!40000 ALTER TABLE `kartu_keluarga` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
 -- Table structure for table `admin`
 --
 
@@ -54,6 +113,49 @@ INSERT INTO `admin` VALUES (1,'superadmin','heskiacandra@gmail.com','10931381372
 UNLOCK TABLES;
 
 --
+
+-- Table structure for table `warga`
+--
+
+DROP TABLE IF EXISTS `warga`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `warga` (
+  `NIK` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ID_KK` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ID_RT` bigint unsigned DEFAULT NULL,
+  `Nama_Lengkap` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no_telp` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `google_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` text COLLATE utf8mb4_unicode_ci,
+  `Username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Password_hash` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tgl_lahir` date DEFAULT NULL,
+  `role` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'warga',
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`NIK`),
+  UNIQUE KEY `warga_email_unique` (`email`),
+  KEY `warga_id_kk_foreign` (`ID_KK`),
+  KEY `warga_id_rt_foreign` (`ID_RT`),
+  KEY `warga_google_id_index` (`google_id`),
+  CONSTRAINT `warga_id_kk_foreign` FOREIGN KEY (`ID_KK`) REFERENCES `kartu_keluarga` (`ID_KK`) ON DELETE SET NULL,
+  CONSTRAINT `warga_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `warga`
+--
+
+LOCK TABLES `warga` WRITE;
+/*!40000 ALTER TABLE `warga` DISABLE KEYS */;
+INSERT INTO `warga` VALUES ('3201051208940001','3201051909120008',1,'Bpk. Hendra Wijaya','0812-3456-7890',NULL,NULL,NULL,'hendra_w','$2y$12$bIQ0O5FxaojRDDzt.ZU/vO9c3Kxo0X0CB6hiL/HAr9ayLjxbwQA4.','1994-08-12','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3201051234567891','3201051234567890',1,'Budi Santoso','081234567890',NULL,NULL,NULL,'budi_santoso','$2y$12$XMzp5eZLjNMK5fVKZlxkC.4Ex7MjAzxrBld.K/ExZzIIenm2ODL4q','1990-01-01','warga',NULL,'2026-09-30 09:25:32','2026-09-30 09:25:32'),('3201223344550005','3201051909120004',1,'Bpk. Agus Santoso','0812-3344-5566',NULL,NULL,NULL,'agus_s','$2y$12$RS010C3NzzmtJ6kdy.Vsa.cmshA/FkY9YLUpmgc1Adc/nPgcvLZpW','1988-06-10','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3201556677880004','3201051909120003',1,'Bpk. Denny Pratama','0813-9988-7766',NULL,NULL,NULL,'denny_p','$2y$12$7XpCWMXFNC3ivHyyQAQ9LOBnPr8ZmVD9OcRkSAAJp1mjfuGAwhpbK','1990-11-15','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3201778899000007','3201051909120005',1,'Ibu Siti Rahma','0857-1122-3344',NULL,NULL,NULL,'siti_r','$2y$12$edS0GLGjSyMKLJs85l.gDuS2TelM4HnPfNkh9Ljdp4F1Fu/jOWD4G','1992-09-02','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3201889900110009','3201051909120006',1,'Ibu Nurhayati','0819-2233-4455',NULL,NULL,NULL,'nurhayati','$2y$12$v0neWBBOy7ibw4ZaQPqUeuUNq77wmkU72W/VXJw3Q1TAXFgzgn5Im','1985-12-19','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3201987654320001','3201051909120002',1,'Ibu Dewi Sartika','0856-1122-3344',NULL,NULL,NULL,'dewi_s','$2y$12$Wu46qwVZkJ4M/TcDTBDUde2B4iPF1BN/vWxuf5sr3U3o2Bz.NWE.S','1996-03-24','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3242342342342434','1231241242144444',1,'Heskia Candra Adinata','081225804124','heskia2007@gmail.com','113518852588396851838','https://lh3.googleusercontent.com/a/ACg8ocL7fZJ52PakFuIfg8Emp9c5cW-uD0Z5RYveV2VC37tP7rI9i7PH=s96-c','heskia2007','$2y$12$ulXYUca3tRIpGNz2shIEvun.guylG6d.HGhPxPegfB6G88qhPnHY6','2007-03-16','warga','W9UX9i3cnwASjxIMy3hWaJzhoey74lTNUUEtW8hSkylWvb5QqOr2obKGZtAw','2026-10-06 05:53:07','2026-10-06 05:53:07'),('3646372463222334','2362174678268345',1,'suie','4325353565',NULL,NULL,NULL,'kia','$2y$12$hr/VspS99s4iSeeAQLwzc.IZwoPGmtbK.tQMgeZXVuoDfZTfp9tUW','2026-08-23','warga',NULL,'2026-09-22 19:32:38','2026-09-22 19:32:38');
+/*!40000 ALTER TABLE `warga` ENABLE KEYS */;
+UNLOCK TABLES;
+
 -- Table structure for table `approval`
 --
 
@@ -87,6 +189,557 @@ INSERT INTO `approval` VALUES (1,2,'SURAT','1','Disetujui','Surat pengantar KTP 
 UNLOCK TABLES;
 
 --
+
+-- Table structure for table `surat`
+--
+
+DROP TABLE IF EXISTS `surat`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `surat` (
+  `surat_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `NIK` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Jenis_surat` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `perihal` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nomor_surat` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tgl_pengajuan` date NOT NULL,
+  `status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Menunggu',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`surat_id`),
+  KEY `surat_nik_foreign` (`NIK`),
+  CONSTRAINT `surat_nik_foreign` FOREIGN KEY (`NIK`) REFERENCES `warga` (`NIK`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `surat`
+--
+
+LOCK TABLES `surat` WRITE;
+/*!40000 ALTER TABLE `surat` DISABLE KEYS */;
+INSERT INTO `surat` VALUES (1,'3201051208940001','Surat Pengantar Pembuatan KTP & KK Baru','Permohonan surat pengantar untuk pemutakhiran kartu keluarga dan KTP-el ke Kantor Kelurahan Sukamaju.',NULL,'2026-09-20','Disetujui','2026-09-22 00:26:50','2026-09-22 00:26:50'),(2,'3201051208940001','Surat Pengantar SKCK Kepolisian','Kelengkapan administrasi perpanjangan SKCK untuk melamar pekerjaan.',NULL,'2026-09-19','Disetujui','2026-09-22 00:26:50','2026-09-22 00:26:50'),(3,'3201987654320001','Surat Keterangan Domisili Tempat Tinggal','Kelengkapan administrasi pendaftaran sekolah anak dan perbankan.',NULL,'2026-09-18','Disetujui','2026-09-22 00:26:50','2026-09-28 05:30:09'),(4,'3201556677880004','Surat Keterangan Usaha (SKU) Mikro Lingkungan','Pengajuan KUR Mikro Usaha Kuliner Rumahan.',NULL,'2026-09-15','Disetujui','2026-09-22 00:26:50','2026-09-22 00:26:50'),(5,'3201223344550005','Surat Keterangan Izin Keramaian Lingkungan','Izin mengadakan syukuran aqiqah di halaman rumah pada Sabtu mendatang.',NULL,'2026-09-21','Menunggu','2026-09-22 00:26:50','2026-09-22 00:26:50'),(6,'3201051208940001','Surat Keterangan Domisili Warga','Permohonan surat keterangan domisili untuk perbankan.',NULL,'2026-09-22','Menunggu','2026-09-22 12:12:22','2026-09-22 12:12:22'),(7,'3201051208940001','Surat Keterangan Domisili Usaha','Pengajuan untuk izin usaha mikro kuliner balai RT.',NULL,'2026-09-23','Menunggu','2026-09-23 01:59:56','2026-09-23 01:59:56'),(8,'3201051234567891','Surat Keterangan Domisili Warga','Persyaratan pembuatan rekening bank baru',NULL,'2026-09-30','Menunggu','2026-09-30 16:27:44','2026-09-30 16:27:44'),(9,'3201987654320001','Surat Keterangan Domisili Warga','SKSCK',NULL,'2026-10-02','Menunggu','2026-10-01 17:48:22','2026-10-01 10:58:11'),(10,'3201051208940001','Surat Pengantar SKCK Kepolisian','SKCK',NULL,'2026-10-02','rejected','2026-10-01 18:59:53','2026-10-05 00:40:57'),(11,'3201987654320001','Surat Pengantar Pembuatan / Perubahan KTP & KK','KTP','011/SP-RT05/RW01/X/2026','2026-10-02','approved','2026-10-02 03:08:49','2026-10-01 20:09:05'),(12,'3201987654320001','Surat Keterangan Kurang Mampu (Beasiswa/Bansos)','Buat beasiswa','012/SP-RT05/RW01/X/2026','2026-10-05','approved','2026-10-05 06:49:53','2026-10-05 00:12:32');
+/*!40000 ALTER TABLE `surat` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `aspirasi`
+--
+
+DROP TABLE IF EXISTS `aspirasi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `aspirasi` (
+  `id_aspirasi` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `NIK` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Isi_Aspirasi` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_aspirasi`),
+  KEY `aspirasi_nik_foreign` (`NIK`),
+  CONSTRAINT `aspirasi_nik_foreign` FOREIGN KEY (`NIK`) REFERENCES `warga` (`NIK`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `aspirasi`
+--
+
+LOCK TABLES `aspirasi` WRITE;
+/*!40000 ALTER TABLE `aspirasi` DISABLE KEYS */;
+INSERT INTO `aspirasi` VALUES (1,'3201556677880004','Mohon pertimbangan pengurus RT untuk menambahkan 1 lampu sorot di dekat pohon rindang taman Blok D karena jalan agak gelap saat ronda malam.','2026-09-22 00:26:50','2026-09-22 00:26:50'),(2,'3201889900110009','Saran agar di sekitar pendopo disediakan tempat sampah pilah organik dan anorganik agar warga dan anak-anak terbiasa memilah sampah sejak dini.','2026-09-22 00:26:50','2026-09-22 00:26:50'),(3,'3201051208940001','Mengingat sudah mulai masuk masa pancaroba, mohon saluran air utama dibersihkan kembali saat kerja bakti lingkungan akhir pekan ini.','2026-09-22 00:26:50','2026-09-22 00:26:50'),(4,'3201051208940001','[fasilitas] Perbaikan Lampu Jalan Blok B: Lampu penerangan jalan di depan Blok B No. 10 padam sejak kemarin malam. Mohon dapat diperbaiki.','2026-09-22 12:16:39','2026-09-22 12:16:39'),(5,'3201051234567891','[Fasilitas Umum] Perbaikan Lampu Taman Blok A: Mohon perbaikan penerangan di area taman Blok A demi keamanan warga di malam hari.','2026-09-30 09:30:32','2026-09-30 09:30:32'),(6,'3201051208940001','[keamanan] Pembanguna: fsuifiseufsiue','2026-10-01 20:13:51','2026-10-01 20:13:51'),(7,'3201987654320001','[kebersihan] Pembanguna: xzvcdszs','2026-10-02 22:00:00','2026-10-02 22:00:00'),(8,'3201889900110009','Uji coba aspirasi baru untuk respon.','2026-10-04 06:35:18','2026-10-04 06:35:18'),(9,'3201889900110009','Uji coba aspirasi baru untuk respon.','2026-10-04 06:35:46','2026-10-04 06:35:46'),(10,'3201889900110009','Uji coba aspirasi baru untuk respon.','2026-10-04 06:36:34','2026-10-04 06:36:34'),(11,'3201051208940001','[keamanan] xcxzc: dd','2026-10-06 05:54:28','2026-10-06 05:54:28');
+/*!40000 ALTER TABLE `aspirasi` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `respon_aspirasi`
+--
+
+DROP TABLE IF EXISTS `respon_aspirasi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `respon_aspirasi` (
+  `id_aspirasi` bigint unsigned NOT NULL,
+  `nama_responden` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isi_respon` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tanggal_respon` datetime NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_aspirasi`),
+  CONSTRAINT `respon_aspirasi_id_aspirasi_foreign` FOREIGN KEY (`id_aspirasi`) REFERENCES `aspirasi` (`id_aspirasi`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `respon_aspirasi`
+--
+
+LOCK TABLES `respon_aspirasi` WRITE;
+/*!40000 ALTER TABLE `respon_aspirasi` DISABLE KEYS */;
+INSERT INTO `respon_aspirasi` VALUES (1,'Pengurus RT 05','Tanggapan uji coba fitur aspirasi','2026-10-04 13:17:06','2026-09-22 00:26:50','2026-10-04 06:17:06'),(3,'Ibu Ratna Paramitha (Sekretaris)','Sudah diagendakan dalam jadwal kerja bakti serentak Sabtu pagi ini.','2026-09-21 08:45:00','2026-09-22 00:26:50','2026-09-22 00:26:50'),(7,'Pengurus RT (ketua_rt05)','oke\n','2026-10-04 13:43:43','2026-10-04 06:43:43','2026-10-04 06:43:43'),(10,'Pengurus RT (superadmin)','Terima kasih atas aspirasinya, akan segera kami tindak lanjuti.','2026-10-04 13:46:23','2026-10-04 06:46:23','2026-10-04 06:46:23');
+/*!40000 ALTER TABLE `respon_aspirasi` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `kegiatan`
+--
+
+DROP TABLE IF EXISTS `kegiatan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `kegiatan` (
+  `kegiatan_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `ID_RT` bigint unsigned DEFAULT NULL,
+  `nama_kegiatan` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tgl_kegiatan` date NOT NULL,
+  `lokasi` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deskripsi` text COLLATE utf8mb4_unicode_ci,
+  `status` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Mendatang',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`kegiatan_id`),
+  KEY `kegiatan_id_rt_foreign` (`ID_RT`),
+  CONSTRAINT `kegiatan_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `kegiatan`
+--
+
+LOCK TABLES `kegiatan` WRITE;
+/*!40000 ALTER TABLE `kegiatan` DISABLE KEYS */;
+INSERT INTO `kegiatan` VALUES (1,1,'Kerja Bakti Massal & Fogging Nyamuk DBD','2026-09-26','Balai Warga & Lingkungan RT 05','Pelaksanaan Sabtu pukul 07.00 WIB. Pembersihan saluran air dan fogging serentak.','Selesai','2026-09-22 00:26:50','2026-10-02 07:27:50'),(2,1,'Pelatihan Hidroponik PKK Mandiri Pangan','2026-10-04','Taman Samping Balai RT','Program pemberdayaan warga: budidaya sayur hidroponik pipa PVC dan nutrisi AB Mix.','Mendatang','2026-09-22 00:26:50','2026-09-22 00:26:50'),(3,1,'Senam Sehat Lansia & Cek Tensi Gratis','2026-09-27','Halaman Balai Warga','Senam kebugaran bersama dilanjutkan pemeriksaan tekanan darah dan gula darah berkala.','Mendatang','2026-09-22 00:26:50','2026-09-22 00:26:50'),(4,1,'MAKAN MAKAN','2026-10-02','GBK','dsfrsd','Mendatang','2026-10-02 07:27:24','2026-10-02 07:27:24');
+/*!40000 ALTER TABLE `kegiatan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `pemasukan`
+--
+
+DROP TABLE IF EXISTS `pemasukan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pemasukan` (
+  `Tagihan_Id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `ID_KK` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Kategori` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ID_RT` bigint unsigned DEFAULT NULL,
+  `nama_tagihan` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nominal` decimal(15,2) NOT NULL,
+  `tgl_jatuh_tmp` date NOT NULL,
+  `status_tagihan` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Belum Lunas',
+  `bukti_bayar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `snap_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `metode_pembayaran` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paid_at` datetime DEFAULT NULL,
+  `payment_payload` json DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`Tagihan_Id`),
+  KEY `pemasukan_id_kk_foreign` (`ID_KK`),
+  KEY `pemasukan_id_rt_foreign` (`ID_RT`),
+  KEY `pemasukan_order_id_index` (`order_id`),
+  CONSTRAINT `pemasukan_id_kk_foreign` FOREIGN KEY (`ID_KK`) REFERENCES `kartu_keluarga` (`ID_KK`) ON DELETE SET NULL,
+  CONSTRAINT `pemasukan_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pemasukan`
+--
+
+LOCK TABLES `pemasukan` WRITE;
+/*!40000 ALTER TABLE `pemasukan` DISABLE KEYS */;
+INSERT INTO `pemasukan` VALUES (1,'3201051909120008','Iuran Warga',1,'Iuran Keamanan & Kebersihan Juli 2026',75000.00,'2026-07-10','Belum Lunas',NULL,'snap-token-IURAN-RT1-TAG1-1791142891','IURAN-RT1-TAG1-1791142891','qris',NULL,'{\"issuer\": \"gopay\", \"acquirer\": \"gopay\", \"currency\": \"IDR\", \"order_id\": \"IURAN-RT1-TAG1-1791142891\", \"expiry_time\": \"2026-10-05 02:56:34\", \"merchant_id\": \"M350420938\", \"status_code\": \"200\", \"fraud_status\": \"accept\", \"gross_amount\": \"75000.00\", \"payment_type\": \"qris\", \"signature_key\": \"8bc05a19b5e57b63ad7274902325cdcdc29e227ec641cd2cb5155e5e0f7422e50b6a1c87c9ce8d54c50f9ba75da44daeec3a466c7d56a0bf8f56afbb8b34bab3\", \"status_message\": \"Success, transaction is found\", \"transaction_id\": \"70d38407-f97d-4529-9dca-f3cd488cbfc2\", \"settlement_time\": \"2026-10-05 02:41:45\", \"transaction_time\": \"2026-10-05 02:41:34\", \"transaction_type\": \"on-us\", \"transaction_status\": \"settlement\", \"merchant_cross_reference_id\": \"1b066ec0-c89a-425d-b1b2-59350a379d99\"}','2026-09-22 00:26:50','2026-10-06 18:24:57'),(2,'3201051909120008','Iuran Warga',1,'Iuran Keamanan & Kebersihan Agustus 2026',75000.00,'2026-08-10','Lunas','uploads/bukti/bukti_iuran_1790129399_6ab334f77bb78.jpg',NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),(3,'3201051909120008','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Lunas','uploads/bukti/bukti_iuran_1790129427_6ab335133cbfc.jpg',NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),(4,'3201051909120002','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Lunas','uploads/bukti/bukti_iuran_1790129459_6ab3353352069.jpg',NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-30 09:05:29'),(5,'3201051909120003','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Lunas',NULL,NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-22 01:41:39'),(6,'3201051909120004','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Lunas',NULL,NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-22 01:41:39'),(7,'3201051909120005','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Belum Lunas',NULL,NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-22 10:55:46'),(8,'3201051909120006','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Belum Lunas',NULL,NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-22 10:55:46'),(9,'3201051909120008','Iuran Warga',1,'Iuran Keamanan & Kebersihan Oktober 2026',75000.00,'2026-10-31','Lunas',NULL,'snap-token-demo-9-87930fd478d661c7','IURAN-RT1-TAG9-1790954659','qris','2026-10-02 15:25:21','{\"order_id\": \"IURAN-RT1-TAG9-1790954659\", \"status_code\": \"200\", \"fraud_status\": \"accept\", \"gross_amount\": \"75000\", \"payment_type\": \"qris\", \"transaction_status\": \"settlement\"}','2026-10-02 08:15:10','2026-10-02 08:25:21'),(10,'3201051909120002','Iuran Warga',1,'Iuran Keamanan & Kebersihan Oktober 2026',75000.00,'2026-10-31','Belum Lunas',NULL,'snap-token-IURAN-RT1-TAG10-1791252284','IURAN-RT1-TAG10-1791252284','qris',NULL,'{\"issuer\": \"airpay shopee\", \"acquirer\": \"gopay\", \"currency\": \"IDR\", \"order_id\": \"IURAN-RT1-TAG10-1791252284\", \"expiry_time\": \"2026-10-06 09:19:51\", \"merchant_id\": \"M350420938\", \"status_code\": \"200\", \"fraud_status\": \"accept\", \"gross_amount\": \"75000.00\", \"payment_type\": \"qris\", \"signature_key\": \"b5b23360069f05d59563a4699e1eee203432b29cc2a40c7255a956d2576d16bff05ad6f04d22e6e3130eb0ebf665adef72b6d19675c810eccfedbf9e90d62d25\", \"status_message\": \"Success, transaction is found\", \"transaction_id\": \"e2c29448-9885-42da-9fcf-4ea71535e5eb\", \"settlement_time\": \"2026-10-06 09:06:23\", \"transaction_time\": \"2026-10-06 09:04:51\", \"transaction_type\": \"off-us\", \"transaction_status\": \"settlement\"}','2026-10-02 21:59:07','2026-10-06 18:24:37'),(11,'1231241242144444','Iuran Warga',1,'Iuran Keamanan & Kebersihan Oktober 2026',75000.00,'2026-10-31','Lunas',NULL,NULL,'SIMULATE-IURAN-TAG11-1791292051','qris','2026-10-06 13:07:31','{\"order_id\": \"SIMULATE-IURAN-TAG11-1791292051\", \"status_code\": \"200\", \"fraud_status\": \"accept\", \"gross_amount\": \"75000\", \"payment_type\": \"qris\", \"transaction_status\": \"settlement\"}','2026-10-06 05:53:08','2026-10-06 06:07:31');
+/*!40000 ALTER TABLE `pemasukan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `pengeluaran`
+--
+
+DROP TABLE IF EXISTS `pengeluaran`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pengeluaran` (
+  `Pengeluaran_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `ID_RT` bigint unsigned DEFAULT '1',
+  `Kategori` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Keterangan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Jumlah_Bayar` decimal(15,2) NOT NULL,
+  `Tgl_Bayar` date NOT NULL,
+  `Metode_Bayar` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Kas Tunai',
+  `Bukti_Path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`Pengeluaran_id`),
+  KEY `pengeluaran_id_rt_foreign` (`ID_RT`),
+  CONSTRAINT `pengeluaran_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pengeluaran`
+--
+
+LOCK TABLES `pengeluaran` WRITE;
+/*!40000 ALTER TABLE `pengeluaran` DISABLE KEYS */;
+INSERT INTO `pengeluaran` VALUES (1,1,'Keamanan','Honor Petugas Keamanan (3 Sekuriti Pos Ronda)',4162500.00,'2026-09-02','Transfer Bank','bukti/nota_lampu_philips.jpg','2026-09-22 00:26:50','2026-09-30 06:21:40'),(2,1,'Kebersihan','Retribusi Angkut Sampah DLH & Kebersihan Selokan',2775000.00,'2026-09-04','Kas Tunai','bukti/nota_lampu_philips.jpg','2026-09-22 00:26:51','2026-09-30 06:21:40'),(3,1,'Fasilitas & Aset','Pembelian Lampu Sorot LED & Kabel Ekstensi Balai',450000.00,'2026-09-10','Kas Tunai','bukti/nota_lampu_philips.jpg','2026-09-22 00:26:51','2026-09-22 00:26:51');
+/*!40000 ALTER TABLE `pengeluaran` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `inventaris`
+--
+
+DROP TABLE IF EXISTS `inventaris`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inventaris` (
+  `Inventaris_ID` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `ID_RT` bigint unsigned DEFAULT NULL,
+  `Nama_Barang` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Kode_Barang` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Jumlah` int NOT NULL DEFAULT '1',
+  `Lokasi` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Balai RT',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`Inventaris_ID`),
+  UNIQUE KEY `inventaris_kode_barang_unique` (`Kode_Barang`),
+  KEY `inventaris_id_rt_foreign` (`ID_RT`),
+  CONSTRAINT `inventaris_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventaris`
+--
+
+LOCK TABLES `inventaris` WRITE;
+/*!40000 ALTER TABLE `inventaris` DISABLE KEYS */;
+INSERT INTO `inventaris` VALUES (1,1,'Tenda Lipat (3x6 Meter)','AST-TND-01',2,'Gudang Balai RT 05','2026-09-22 00:26:51','2026-09-22 00:26:51'),(2,1,'Set Kursi Lipat Warga (50 Unit)','AST-KRS-01',101,'Gudang Balai RT 05','2026-09-22 00:26:51','2026-10-02 07:30:57'),(3,1,'Wireless Portable Sound System + 2 Mic','AST-SND-01',1,'Ruang Sekretariat Balai RT','2026-09-22 00:26:51','2026-09-22 00:26:51'),(4,1,'Proyektor Epson & Layar Tripod 84 Inch','AST-PRJ-01',1,'Ruang Sekretariat Balai RT','2026-09-22 00:26:51','2026-09-22 00:26:51'),(5,1,'Mesin Pemotong Rumput Dorong Honda','AST-RMPT-01',2,'Gudang Samping Pos Ronda','2026-09-22 00:26:51','2026-09-22 00:26:51'),(6,1,'Paket Rompi & Senter Ronda Keamanan (6 Set)','AST-RND-01',6,'Pos Ronda Utama RT 05','2026-09-22 00:26:51','2026-09-22 00:26:51');
+/*!40000 ALTER TABLE `inventaris` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `pembelian_inventaris`
+--
+
+DROP TABLE IF EXISTS `pembelian_inventaris`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pembelian_inventaris` (
+  `Pembelian_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `inventaris_id` bigint unsigned DEFAULT NULL,
+  `Pengeluaran_id` bigint unsigned DEFAULT NULL,
+  `tgl_pembelian` date NOT NULL,
+  `total_biaya` decimal(15,2) NOT NULL,
+  `jumlah_pembelian` int NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`Pembelian_id`),
+  KEY `pembelian_inventaris_inventaris_id_foreign` (`inventaris_id`),
+  KEY `pembelian_inventaris_pengeluaran_id_foreign` (`Pengeluaran_id`),
+  CONSTRAINT `pembelian_inventaris_inventaris_id_foreign` FOREIGN KEY (`inventaris_id`) REFERENCES `inventaris` (`Inventaris_ID`) ON DELETE SET NULL,
+  CONSTRAINT `pembelian_inventaris_pengeluaran_id_foreign` FOREIGN KEY (`Pengeluaran_id`) REFERENCES `pengeluaran` (`Pengeluaran_id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pembelian_inventaris`
+--
+
+LOCK TABLES `pembelian_inventaris` WRITE;
+/*!40000 ALTER TABLE `pembelian_inventaris` DISABLE KEYS */;
+INSERT INTO `pembelian_inventaris` VALUES (1,3,3,'2026-08-15',2450000.00,1,'2026-09-22 00:26:51','2026-09-22 00:26:51'),(2,5,3,'2026-07-20',3200000.00,1,'2026-09-22 00:26:51','2026-09-22 00:26:51');
+/*!40000 ALTER TABLE `pembelian_inventaris` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `kontak_rt`
+--
+
+DROP TABLE IF EXISTS `kontak_rt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `kontak_rt` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `ID_RT` bigint unsigned DEFAULT NULL,
+  `role` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_kontak` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nomor_telepon` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_whatsapp` tinyint(1) NOT NULL DEFAULT '1',
+  `pesan_wa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lokasi_tampilan` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'footer_darurat',
+  `urutan` int NOT NULL DEFAULT '0',
+  `is_aktif` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `kontak_rt_id_rt_foreign` (`ID_RT`),
+  CONSTRAINT `kontak_rt_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `kontak_rt`
+--
+
+LOCK TABLES `kontak_rt` WRITE;
+/*!40000 ALTER TABLE `kontak_rt` DISABLE KEYS */;
+INSERT INTO `kontak_rt` VALUES (1,1,'Ketua RT 05','Bpk. Sukardi Hartono','0812-3456-7890',1,'Halo Ketua RT 05, saya warga Harmoni Residence','footer_darurat',1,1,'2026-10-05 00:58:06','2026-10-05 00:58:06'),(2,1,'Pos Ronda & Keamanan','Piket Regu Sekuriti','0821-9876-5432',1,'Halo Pos Ronda RT 05, saya warga ingin melapor keadaan keamanan','footer_darurat',2,1,'2026-10-05 00:58:06','2026-10-05 00:58:06'),(3,1,'Bhabinkamtibmas Polsek','Aiptu Hendro Wibowo','0813-8822-1100',1,'Halo Bhabinkamtibmas Polsek, saya warga RT 05 Harmoni Residence','footer_darurat',3,1,'2026-10-05 00:58:06','2026-10-05 00:58:06'),(4,1,'Ambulans & Damkar','Posko Siaga Darurat','112',0,NULL,'footer_darurat',4,0,'2026-10-05 00:58:06','2026-10-05 01:14:19'),(5,1,'Sekretariat Lingkungan','Balai Warga RT 05 / RW 01','0812-3456-7890',1,'Halo Pengurus RT 05, saya warga Harmoni Residence','sekretariat',5,1,'2026-10-05 00:58:06','2026-10-05 00:58:06');
+/*!40000 ALTER TABLE `kontak_rt` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `google_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` text COLLATE utf8mb4_unicode_ci,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  KEY `users_google_id_index` (`google_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Bima Perkasa (Super Admin)','superadmin@ruangwarga.id',NULL,NULL,NULL,'$2y$12$kxBR6pNCQJf4mO6JxpmFmeUGyolJgOztnOd.JtadbQVtGMSzFGIra',NULL,'2026-09-20 20:36:13','2026-09-20 21:46:18'),(2,'Bpk. Sukardi Hartono (Ketua RT 05)','ketua@ruangwarga.id',NULL,NULL,NULL,'$2y$12$WpKlYTaFAWajnsONQP49iOAtGF.Fix4vUnP4O9lNpAUK2byI69cnG',NULL,'2026-09-20 20:36:13','2026-09-20 21:46:18'),(3,'Bpk. Rahmat Hendrawan (Bendahara)','bendahara@ruangwarga.id',NULL,NULL,NULL,'$2y$12$qmApdzCxiYplC6oZqp7Q6Oou3JXDxuhlOJq20knm3qt9YIoXesqdm',NULL,'2026-09-20 20:36:13','2026-09-20 21:46:18'),(4,'Ibu Ratna Paramitha (Sekretaris)','sekretaris@ruangwarga.id',NULL,NULL,NULL,'$2y$12$rs17P3kdy5/0Pg.vCELAA.UsJKhmxKvujhkJwGQUfFvGXB0/yl6wC',NULL,'2026-09-20 20:36:13','2026-09-20 21:46:18'),(5,'Bpk. Hendra Wijaya (Warga)','hendra@ruangwarga.id',NULL,NULL,NULL,'$2y$12$N9xHXomLnxPh04rX3c1.Ju5opvUN9ghL7YDy0WIoO4XzCzsw0HcWO',NULL,'2026-09-20 20:36:13','2026-09-20 21:46:18');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `sessions`
+--
+
+DROP TABLE IF EXISTS `sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sessions` (
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint unsigned DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_activity` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sessions_user_id_index` (`user_id`),
+  KEY `sessions_last_activity_index` (`last_activity`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sessions`
+--
+
+LOCK TABLES `sessions` WRITE;
+/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+INSERT INTO `sessions` VALUES ('aF4zbzJDdye7CC2HApF2nfZl7RyqLkFilSqzlXkH',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','eyJfdG9rZW4iOiI2ZmhzUkl4ajdRVHh5bjFVUlNnTFhpbjFaSlhoRHNqaldDQXFIUDMzIiwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwXC9hdXRoXC9nb29nbGVcL3JlZGlyZWN0P2ludGVudD1yZWdpc3RlciIsInJvdXRlIjoiYXV0aC5nb29nbGUucmVkaXJlY3QifSwiX2ZsYXNoIjp7Im9sZCI6W10sIm5ldyI6W119LCJzdGF0ZSI6ImhWd1VhSVR6SUNhaVpOc0dyRFFDeUNKbHo5UUtzcjVvcVNZM3BSNHoiLCJnb29nbGVfYXV0aF9pbnRlbnQiOiJyZWdpc3RlciJ9',1791291018),('ixQQ2gdTd8hJ4muRvch1YvtSKgQ6aiVsswJXlAOC',2,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJ1UlV5WlE0emcwUlNOUUJPT0lMdEtPZzNOMmllcmFaOHJydVRCTExlIiwiX2ZsYXNoIjp7Im5ldyI6W10sIm9sZCI6W119LCJfcHJldmlvdXMiOnsidXJsIjoiaHR0cDpcL1wvbG9jYWxob3N0OjgwMDBcL2FkbWluXC9wZW1hc3VrYW5zIiwicm91dGUiOiJmaWxhbWVudC5hZG1pbi5yZXNvdXJjZXMucGVtYXN1a2Fucy5pbmRleCJ9LCJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI6MiwiYWN0aXZlX3JvbGUiOiJhZG1pbl9ydCIsImF1dGhfdXNlciI6eyJ1c2VybmFtZSI6ImtldHVhX3J0MDUiLCJyb2xlIjoiYWRtaW5fcnQiLCJBZG1pbl9JRCI6MiwiSURfUlQiOjF9LCJ0YWJsZXMiOnsiNjRlZTJhZDhkNmMwYjg4ZDE1YTQwNmFmMGU2Y2ZkMzBfY29sdW1ucyI6W3sidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJpZF9hcHByb3ZhbCIsImxhYmVsIjoiSUQgVGlrZXQiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoidGFiZWxfc3VtYmVyIiwibGFiZWwiOiJLYXRlZ29yaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJzb3VyY2VfZGV0YWlsIiwibGFiZWwiOiJVcmFpYW4gUGVuZ2FqdWFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNhdGF0YW4iLCJsYWJlbCI6IktldGVyYW5nYW4gXC8gS2VwZXJsdWFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNyZWF0ZWRfYXQiLCJsYWJlbCI6Ildha3R1IE1hc3VrIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InN0YXR1cyIsImxhYmVsIjoiU3RhdHVzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJkZjZmN2RlZjU3NDlhNWFmNTBjYWI2ZTAzNGVjYjU5ZV9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Ik5JSyIsImxhYmVsIjoiTklLIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Ik5hbWFfTGVuZ2thcCIsImxhYmVsIjoiTmFtYSBMZW5na2FwIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5vX3RlbHAiLCJsYWJlbCI6Ik5vLiBXaGF0c0FwcCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJJRF9LSyIsImxhYmVsIjoiTm8uIEthcnR1IEtlbHVhcmdhIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6dHJ1ZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpmYWxzZX0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IklEX1JUIiwibGFiZWwiOiJSVCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJ0Z2xfbGFoaXIiLCJsYWJlbCI6IlRnbCBMYWhpciIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjpmYWxzZSwiaXNUb2dnbGVhYmxlIjp0cnVlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOnRydWV9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJjcmVhdGVkX2F0IiwibGFiZWwiOiJUZXJkYWZ0YXIiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6ZmFsc2UsImlzVG9nZ2xlYWJsZSI6dHJ1ZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0Ijp0cnVlfV0sIjBkOGU4ODAyMzE4ZTEwNGYwNmU1ZjAzNzkyNzc4MmVjX2NvbHVtbnMiOlt7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiaWRfYXNwaXJhc2kiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNyZWF0ZWRfYXQiLCJsYWJlbCI6IlRhbmdnYWwgTWFzdWsiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoid2FyZ2EuTmFtYV9MZW5na2FwIiwibGFiZWwiOiJQZW5naXJpbSBBc3BpcmFzaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJJc2lfQXNwaXJhc2kiLCJsYWJlbCI6IkN1cGxpa2FuIElzaSBBc3BpcmFzaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJyZXNwb25Bc3BpcmFzaS5pc2lfcmVzcG9uIiwibGFiZWwiOiJTdGF0dXMgUmVzcG9uIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJmYmQ1MGJiMjg5OTNjNjQ0NjUwZjE3M2YyNzg1MDlmNl9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IlRhZ2loYW5fSWQiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5hbWFfa2VwYWxhX2tlbHVhcmdhIiwibGFiZWwiOiJXYXJnYSBcLyBOby4gS0siLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibmFtYV90YWdpaGFuIiwibGFiZWwiOiJSaW5jaWFuIFRhZ2loYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibm9taW5hbCIsImxhYmVsIjoiTm9taW5hbCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJzdGF0dXNfdGFnaWhhbiIsImxhYmVsIjoiU3RhdHVzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImJ1a3RpX2JheWFyIiwibGFiZWwiOiJCdWt0aSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJtZXRvZGVfcGVtYmF5YXJhbiIsImxhYmVsIjoiTWV0b2RlIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJmYmQ1MGJiMjg5OTNjNjQ0NjUwZjE3M2YyNzg1MDlmNl9wZXJfcGFnZSI6IjI1In19',1791292097),('jn0XybP3eRvx1ysV6tdsLED4cTFrGHJ1UOv8v87H',3201987654320001,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJaUGE0Z2JwWm9NRmE2eFVvWTdHWFlWMU9DRDZkbkRndGJvV2RuYjdyIiwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwXC9wb3J0YWwiLCJyb3V0ZSI6InBvcnRhbC5ob21lIn0sIl9mbGFzaCI6eyJvbGQiOltdLCJuZXciOltdfSwibG9naW5fd2FyZ2FfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI6IjMyMDE5ODc2NTQzMjAwMDEiLCJhY3RpdmVfcm9sZSI6IndhcmdhIiwiY2l0aXplbl9uaWsiOiIzMjAxOTg3NjU0MzIwMDAxIiwiY2l0aXplbl9uYW1lIjoiSWJ1IERld2kgU2FydGlrYSIsImNpdGl6ZW5faWQiOiIzMjAxOTg3NjU0MzIwMDAxIiwiY2l0aXplbl9ob3VzZSI6Ikhhcm1vbmkgUmVzaWRlbmNlIEJsb2sgQyBOby4gMDQifQ==',1791794140),('rtmEQyBAS6vWY83MldFauF6q24wuWWtBT6p8GgQ5',2,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJnR1dSdXlMbGNQcjRCM1cwRlVLTDdLQjhGaUowcGtNQWNqNmZRSzdHIiwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwXC9hZG1pbiIsInJvdXRlIjoiZmlsYW1lbnQuYWRtaW4ucGFnZXMuZGFzaGJvYXJkIn0sIl9mbGFzaCI6eyJvbGQiOltdLCJuZXciOltdfSwibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiOjIsImFjdGl2ZV9yb2xlIjoiYWRtaW5fcnQiLCJhdXRoX3VzZXIiOnsidXNlcm5hbWUiOiJrZXR1YV9ydDA1Iiwicm9sZSI6ImFkbWluX3J0IiwiQWRtaW5fSUQiOjIsIklEX1JUIjoxfX0=',1791336179),('zgUzcg6aZtQmTg8BCo2FIdRNGYufzWKURrw3v9WB',2,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJXOWxSWGlpRU1HdHhoaUJBeEtMQjI3dVJ0OHJxM3o0Q3lxNjlhRVJCIiwiX2ZsYXNoIjp7Im5ldyI6W10sIm9sZCI6W119LCJfcHJldmlvdXMiOnsidXJsIjoiaHR0cDpcL1wvMTI3LjAuMC4xOjgwMDBcL2FkbWluXC9rb250YWstcnRzIiwicm91dGUiOiJmaWxhbWVudC5hZG1pbi5yZXNvdXJjZXMua29udGFrLXJ0cy5pbmRleCJ9LCJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI6MiwiYWN0aXZlX3JvbGUiOiJhZG1pbl9ydCIsImF1dGhfdXNlciI6eyJ1c2VybmFtZSI6ImtldHVhX3J0MDUiLCJyb2xlIjoiYWRtaW5fcnQiLCJBZG1pbl9JRCI6MiwiSURfUlQiOjF9LCJ0YWJsZXMiOnsiNjRlZTJhZDhkNmMwYjg4ZDE1YTQwNmFmMGU2Y2ZkMzBfY29sdW1ucyI6W3sidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJpZF9hcHByb3ZhbCIsImxhYmVsIjoiSUQgVGlrZXQiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoidGFiZWxfc3VtYmVyIiwibGFiZWwiOiJLYXRlZ29yaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJzb3VyY2VfZGV0YWlsIiwibGFiZWwiOiJVcmFpYW4gUGVuZ2FqdWFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNhdGF0YW4iLCJsYWJlbCI6IktldGVyYW5nYW4gXC8gS2VwZXJsdWFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNyZWF0ZWRfYXQiLCJsYWJlbCI6Ildha3R1IE1hc3VrIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InN0YXR1cyIsImxhYmVsIjoiU3RhdHVzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJmYmQ1MGJiMjg5OTNjNjQ0NjUwZjE3M2YyNzg1MDlmNl9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IlRhZ2loYW5fSWQiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5hbWFfa2VwYWxhX2tlbHVhcmdhIiwibGFiZWwiOiJXYXJnYSBcLyBOby4gS0siLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibmFtYV90YWdpaGFuIiwibGFiZWwiOiJSaW5jaWFuIFRhZ2loYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibm9taW5hbCIsImxhYmVsIjoiTm9taW5hbCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJzdGF0dXNfdGFnaWhhbiIsImxhYmVsIjoiU3RhdHVzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImJ1a3RpX2JheWFyIiwibGFiZWwiOiJCdWt0aSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJtZXRvZGVfcGVtYmF5YXJhbiIsImxhYmVsIjoiTWV0b2RlIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJkYmVmMjk1YmI4ZjYyZDE0NDU1ZTVmMTM1ODM4YTU1Y19jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImlkX2FwcHJvdmFsIiwibGFiZWwiOiJJRCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJ0YWJlbF9zdW1iZXIiLCJsYWJlbCI6IkthdGVnb3JpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InNvdXJjZV9kZXRhaWwiLCJsYWJlbCI6IlVyYWlhbiBQZW5nYWp1YW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiY2F0YXRhbiIsImxhYmVsIjoiQ2F0YXRhbiBWZXJpZmlrYXNpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InN0YXR1cyIsImxhYmVsIjoiU3RhdHVzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InRnbF9hcHByb3ZhbCIsImxhYmVsIjoiV2FrdHUgUHJvc2VzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJkZjZmN2RlZjU3NDlhNWFmNTBjYWI2ZTAzNGVjYjU5ZV9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Ik5JSyIsImxhYmVsIjoiTklLIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Ik5hbWFfTGVuZ2thcCIsImxhYmVsIjoiTmFtYSBMZW5na2FwIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5vX3RlbHAiLCJsYWJlbCI6Ik5vLiBXaGF0c0FwcCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJJRF9LSyIsImxhYmVsIjoiTm8uIEthcnR1IEtlbHVhcmdhIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6dHJ1ZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpmYWxzZX0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IklEX1JUIiwibGFiZWwiOiJSVCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJ0Z2xfbGFoaXIiLCJsYWJlbCI6IlRnbCBMYWhpciIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjpmYWxzZSwiaXNUb2dnbGVhYmxlIjp0cnVlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOnRydWV9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJjcmVhdGVkX2F0IiwibGFiZWwiOiJUZXJkYWZ0YXIiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6ZmFsc2UsImlzVG9nZ2xlYWJsZSI6dHJ1ZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0Ijp0cnVlfV0sIjhiNzMxYTViZWM4YzY0YmU0MmMzOGEyYzk3MjFhYmMxX2NvbHVtbnMiOlt7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiSURfS0siLCJsYWJlbCI6Ik5vbW9yIEtLIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IkFsYW1hdCIsImxhYmVsIjoiQWxhbWF0IERvbWlzaWxpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IndhcmdhX2NvdW50IiwibGFiZWwiOiJKdW1sYWggQW5nZ290YSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJjcmVhdGVkX2F0IiwibGFiZWwiOiJUZXJkYWZ0YXIgU2VqYWsiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfV0sImFiYjkxODQxNzc0ZjFhZmYwMDc3MzNhZjhjNGVkYTk2X2NvbHVtbnMiOlt7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiUGVuZ2VsdWFyYW5faWQiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IkthdGVnb3JpIiwibGFiZWwiOiJLYXRlZ29yaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJLZXRlcmFuZ2FuIiwibGFiZWwiOiJLZXRlcmFuZ2FuIFwvIEtlcGVybHVhbiIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJKdW1sYWhfQmF5YXIiLCJsYWJlbCI6Ik5vbWluYWwgS2VsdWFyIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IlRnbF9CYXlhciIsImxhYmVsIjoiVGFuZ2dhbCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJNZXRvZGVfQmF5YXIiLCJsYWJlbCI6Ik1ldG9kZSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9XSwiMTIzZGJlODUwMjMyNzg0YTU2YjZhM2EwNjY3ZTRiM2VfY29sdW1ucyI6W3sidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJzdXJhdF9pZCIsImxhYmVsIjoiTm8uIFJlZiIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOnRydWUsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6ZmFsc2V9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJ3YXJnYS5OYW1hX0xlbmdrYXAiLCJsYWJlbCI6IlBlbW9ob24iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiSmVuaXNfc3VyYXQiLCJsYWJlbCI6IkxheWFuYW4gJmFtcDsgS2VwZXJsdWFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5vbW9yX3N1cmF0IiwibGFiZWwiOiJOb21vciBSZWdpc3RyYXNpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InRnbF9wZW5nYWp1YW4iLCJsYWJlbCI6IlRhbmdnYWwgTWFzdWsiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoic3RhdHVzIiwibGFiZWwiOiJTdGF0dXMiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfV0sIjI0MmJmOWU4NjE0YTAyZWJhOWMwNzVlOGNjZGJjNGVjX2NvbHVtbnMiOlt7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoia2VnaWF0YW5faWQiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5hbWFfa2VnaWF0YW4iLCJsYWJlbCI6Ik5hbWEgQWdlbmRhICZhbXA7IFJpbmNpYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoidGdsX2tlZ2lhdGFuIiwibGFiZWwiOiJKYWR3YWwgUGVsYWtzYW5hYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibG9rYXNpIiwibGFiZWwiOiJMb2thc2kiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoic3RhdHVzIiwibGFiZWwiOiJTdGF0dXMiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiZGF0YVJ0Lm5vbW9yX3J0IiwibGFiZWwiOiJVbml0IFJUIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOmZhbHNlLCJpc1RvZ2dsZWFibGUiOnRydWUsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6dHJ1ZX1dLCI2NTYyMGEzODk1MTQxMWU4NDAyNTAwMmUyMmQ4ZTJiZF9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IktvZGVfQmFyYW5nIiwibGFiZWwiOiJLb2RlIEFzZXQiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiTmFtYV9CYXJhbmciLCJsYWJlbCI6Ik5hbWEgQXNldCAmYW1wOyBMb2thc2kiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiSnVtbGFoIiwibGFiZWwiOiJLZXRlcnNlZGlhYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoicGVtaW5qYW1fYWt0aWYiLCJsYWJlbCI6IlBlbWluamFtIEFrdGlmIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Ikxva2FzaSIsImxhYmVsIjoiTG9rYXNpIFBlbnlpbXBhbmFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOmZhbHNlLCJpc1RvZ2dsZWFibGUiOnRydWUsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6dHJ1ZX0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImRhdGFSdC5ub21vcl9ydCIsImxhYmVsIjoiVW5pdCBSVCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjpmYWxzZSwiaXNUb2dnbGVhYmxlIjp0cnVlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOnRydWV9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJjcmVhdGVkX2F0IiwibGFiZWwiOiJUZ2wgUmVnaXN0cmFzaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjpmYWxzZSwiaXNUb2dnbGVhYmxlIjp0cnVlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOnRydWV9XSwiMGQ4ZTg4MDIzMThlMTA0ZjA2ZTVmMDM3OTI3NzgyZWNfY29sdW1ucyI6W3sidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJpZF9hc3BpcmFzaSIsImxhYmVsIjoiSUQiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiY3JlYXRlZF9hdCIsImxhYmVsIjoiVGFuZ2dhbCBNYXN1ayIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJ3YXJnYS5OYW1hX0xlbmdrYXAiLCJsYWJlbCI6IlBlbmdpcmltIEFzcGlyYXNpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IklzaV9Bc3BpcmFzaSIsImxhYmVsIjoiQ3VwbGlrYW4gSXNpIEFzcGlyYXNpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InJlc3BvbkFzcGlyYXNpLmlzaV9yZXNwb24iLCJsYWJlbCI6IlN0YXR1cyBSZXNwb24iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfV0sIjg5NTNmYzVmMGYyOGU0MzQzYzEzOTA2MmE3ZDc3NWUyX2NvbHVtbnMiOlt7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiQWRtaW5fSUQiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IlVzZXJuYW1lIiwibGFiZWwiOiJVc2VybmFtZSBcLyBBa3VuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImVtYWlsIiwibGFiZWwiOiJFbWFpbCBHb29nbGUgXC8gS29udGFrIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Imdvb2dsZV9zdGF0dXMiLCJsYWJlbCI6IkxvZ2luIEdvb2dsZSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJyb2xlIiwibGFiZWwiOiJQZXJhbiBcLyBKYWJhdGFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IklEX1JUIiwibGFiZWwiOiJXaWxheWFoIFJUIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNyZWF0ZWRfYXQiLCJsYWJlbCI6IkRpZGFmdGFya2FuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOmZhbHNlLCJpc1RvZ2dsZWFibGUiOnRydWUsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6dHJ1ZX1dLCJjOWZlOWRhZWM1MGYxM2UxMTJjMDc2MGIwMzdiMWFhYV9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InVydXRhbiIsImxhYmVsIjoiIyIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJyb2xlIiwibGFiZWwiOiJKYWJhdGFuIFwvIExheWFuYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibmFtYV9rb250YWsiLCJsYWJlbCI6Ik5hbWEgUGV0dWdhcyBcLyBQSUMiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibm9tb3JfdGVsZXBvbiIsImxhYmVsIjoiTm9tb3IgVGVsZXBvbiBcLyBXQSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJpc193aGF0c2FwcCIsImxhYmVsIjoiV2hhdHNBcHAiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibG9rYXNpX3RhbXBpbGFuIiwibGFiZWwiOiJQZW5lbXBhdGFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImlzX2FrdGlmIiwibGFiZWwiOiJBa3RpZiIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9XX19',1791338474);
+/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `cache`
+--
+
+DROP TABLE IF EXISTS `cache`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cache` (
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` bigint NOT NULL,
+  PRIMARY KEY (`key`),
+  KEY `cache_expiration_index` (`expiration`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache`
+--
+
+LOCK TABLES `cache` WRITE;
+/*!40000 ALTER TABLE `cache` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cache` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `cache_locks`
+--
+
+DROP TABLE IF EXISTS `cache_locks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cache_locks` (
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expiration` bigint NOT NULL,
+  PRIMARY KEY (`key`),
+  KEY `cache_locks_expiration_index` (`expiration`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cache_locks`
+--
+
+LOCK TABLES `cache_locks` WRITE;
+/*!40000 ALTER TABLE `cache_locks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cache_locks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `jobs`
+--
+
+DROP TABLE IF EXISTS `jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` smallint unsigned NOT NULL,
+  `reserved_at` int unsigned DEFAULT NULL,
+  `available_at` int unsigned NOT NULL,
+  `created_at` int unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jobs_queue_index` (`queue`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `jobs`
+--
+
+LOCK TABLES `jobs` WRITE;
+/*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `job_batches`
+--
+
+DROP TABLE IF EXISTS `job_batches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `job_batches` (
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total_jobs` int NOT NULL,
+  `pending_jobs` int NOT NULL,
+  `failed_jobs` int NOT NULL,
+  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `cancelled_at` int DEFAULT NULL,
+  `created_at` int NOT NULL,
+  `finished_at` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `job_batches`
+--
+
+LOCK TABLES `job_batches` WRITE;
+/*!40000 ALTER TABLE `job_batches` DISABLE KEYS */;
+/*!40000 ALTER TABLE `job_batches` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `failed_jobs`
+--
+
+DROP TABLE IF EXISTS `failed_jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `failed_jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`),
+  KEY `failed_jobs_connection_queue_failed_at_index` (`connection`,`queue`,`failed_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `failed_jobs`
+--
+
+LOCK TABLES `failed_jobs` WRITE;
+/*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `migrations`
+--
+
+LOCK TABLES `migrations` WRITE;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` VALUES (1,'0001_01_01_000000_create_users_table',1),(2,'0001_01_01_000001_create_cache_table',1),(3,'0001_01_01_000002_create_jobs_table',1),(4,'2026_09_21_000001_create_ruang_warga_tables',2),(5,'2026_09_21_000002_create_asset_inventory_tables',3),(6,'2026_09_22_000001_create_erd_ruang_warga_tables',4),(7,'2026_09_23_000002_create_sp_dashboard_summary_rt',5),(8,'2026_09_23_000003_create_sp_proses_approval',6),(9,'2026_09_23_000004_create_sp_ajukan_surat_warga',7),(10,'2026_09_23_000005_create_database_triggers',8),(11,'2026_09_23_000006_setup_dcl_user_security',8),(12,'2026_09_30_030851_add_remember_token_to_admin_and_warga_tables',9),(13,'2026_09_30_131949_add_bukti_bayar_to_pemasukan_and_id_rt_to_pengeluaran',10),(14,'2026_09_30_230000_add_nomor_surat_to_surat_and_status_to_kegiatan',11),(15,'2026_10_02_220000_add_payment_gateway_fields_to_pemasukan_table',12),(16,'2026_10_05_130000_add_google_auth_fields_to_users_warga_admin',13),(17,'2026_10_05_150000_create_kontak_rt_table',14);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+
 -- Table structure for table `approval_tickets`
 --
 
@@ -136,35 +789,7 @@ INSERT INTO `approval_tickets` VALUES (1,'#APP-2026-001',1,1,'Bpk. Hendra Wijaya
 UNLOCK TABLES;
 
 --
--- Table structure for table `aspirasi`
---
 
-DROP TABLE IF EXISTS `aspirasi`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `aspirasi` (
-  `id_aspirasi` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `NIK` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `Isi_Aspirasi` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_aspirasi`),
-  KEY `aspirasi_nik_foreign` (`NIK`),
-  CONSTRAINT `aspirasi_nik_foreign` FOREIGN KEY (`NIK`) REFERENCES `warga` (`NIK`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `aspirasi`
---
-
-LOCK TABLES `aspirasi` WRITE;
-/*!40000 ALTER TABLE `aspirasi` DISABLE KEYS */;
-INSERT INTO `aspirasi` VALUES (1,'3201556677880004','Mohon pertimbangan pengurus RT untuk menambahkan 1 lampu sorot di dekat pohon rindang taman Blok D karena jalan agak gelap saat ronda malam.','2026-09-22 00:26:50','2026-09-22 00:26:50'),(2,'3201889900110009','Saran agar di sekitar pendopo disediakan tempat sampah pilah organik dan anorganik agar warga dan anak-anak terbiasa memilah sampah sejak dini.','2026-09-22 00:26:50','2026-09-22 00:26:50'),(3,'3201051208940001','Mengingat sudah mulai masuk masa pancaroba, mohon saluran air utama dibersihkan kembali saat kerja bakti lingkungan akhir pekan ini.','2026-09-22 00:26:50','2026-09-22 00:26:50'),(4,'3201051208940001','[fasilitas] Perbaikan Lampu Jalan Blok B: Lampu penerangan jalan di depan Blok B No. 10 padam sejak kemarin malam. Mohon dapat diperbaiki.','2026-09-22 12:16:39','2026-09-22 12:16:39'),(5,'3201051234567891','[Fasilitas Umum] Perbaikan Lampu Taman Blok A: Mohon perbaikan penerangan di area taman Blok A demi keamanan warga di malam hari.','2026-09-30 09:30:32','2026-09-30 09:30:32'),(6,'3201051208940001','[keamanan] Pembanguna: fsuifiseufsiue','2026-10-01 20:13:51','2026-10-01 20:13:51'),(7,'3201987654320001','[kebersihan] Pembanguna: xzvcdszs','2026-10-02 22:00:00','2026-10-02 22:00:00'),(8,'3201889900110009','Uji coba aspirasi baru untuk respon.','2026-10-04 06:35:18','2026-10-04 06:35:18'),(9,'3201889900110009','Uji coba aspirasi baru untuk respon.','2026-10-04 06:35:46','2026-10-04 06:35:46'),(10,'3201889900110009','Uji coba aspirasi baru untuk respon.','2026-10-04 06:36:34','2026-10-04 06:36:34'),(11,'3201051208940001','[keamanan] xcxzc: dd','2026-10-06 05:54:28','2026-10-06 05:54:28');
-/*!40000 ALTER TABLE `aspirasi` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `aspirations`
 --
 
@@ -201,6 +826,7 @@ INSERT INTO `aspirations` VALUES (1,1,'Keamanan','Penambahan Lampu Sorot LED di 
 UNLOCK TABLES;
 
 --
+
 -- Table structure for table `asset_items`
 --
 
@@ -237,6 +863,7 @@ INSERT INTO `asset_items` VALUES (1,'AST-TND-01','Tenda Lipat (3x6 Meter)','Tend
 UNLOCK TABLES;
 
 --
+
 -- Table structure for table `asset_loans`
 --
 
@@ -283,56 +910,7 @@ INSERT INTO `asset_loans` VALUES (1,'#PINJAM-2026-001','#APP-2026-002',1,'Tenda 
 UNLOCK TABLES;
 
 --
--- Table structure for table `cache`
---
 
-DROP TABLE IF EXISTS `cache`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration` bigint NOT NULL,
-  PRIMARY KEY (`key`),
-  KEY `cache_expiration_index` (`expiration`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `cache`
---
-
-LOCK TABLES `cache` WRITE;
-/*!40000 ALTER TABLE `cache` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cache` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `cache_locks`
---
-
-DROP TABLE IF EXISTS `cache_locks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration` bigint NOT NULL,
-  PRIMARY KEY (`key`),
-  KEY `cache_locks_expiration_index` (`expiration`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `cache_locks`
---
-
-LOCK TABLES `cache_locks` WRITE;
-/*!40000 ALTER TABLE `cache_locks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cache_locks` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `cash_mutations`
 --
 
@@ -372,6 +950,7 @@ INSERT INTO `cash_mutations` VALUES (1,1,NULL,'pemasukan','Iuran Warga','Penerim
 UNLOCK TABLES;
 
 --
+
 -- Table structure for table `citizens`
 --
 
@@ -410,282 +989,7 @@ INSERT INTO `citizens` VALUES (1,1,'3201234567890123','3201230101900001','Bpk. H
 UNLOCK TABLES;
 
 --
--- Table structure for table `data_rt`
---
 
-DROP TABLE IF EXISTS `data_rt`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `data_rt` (
-  `ID_RT` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nomor_rt` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nomor_rw` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kelurahan` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kecamatan` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kota` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama_ketua_rt` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no_telp_ketua_rt` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `no_telp_sekretariat` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`ID_RT`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `data_rt`
---
-
-LOCK TABLES `data_rt` WRITE;
-/*!40000 ALTER TABLE `data_rt` DISABLE KEYS */;
-INSERT INTO `data_rt` VALUES (1,'05','01','Sukamaju','Cilodong','Kota Depok','Bpk. Sukardi Hartono','0812-3456-7890','0812-3456-7890','2026-09-22 00:26:48','2026-09-22 00:26:48'),(2,'01','02','Mekarjaya','Sukmajaya','Kota Depok','Bpk. Bambang Pamungkas',NULL,NULL,'2026-09-22 00:26:48','2026-09-22 00:26:48'),(3,'03','04','Baktijaya','Sukmajaya','Kota Depok','Ibu Sri Mulyani',NULL,NULL,'2026-09-22 00:26:48','2026-09-22 00:26:48'),(4,'07','01','UNTA','kuda','Kota Semarang','BUDI','0812345678','0812345678','2026-10-05 01:13:27','2026-10-05 01:13:27');
-/*!40000 ALTER TABLE `data_rt` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `failed_jobs`
---
-
-DROP TABLE IF EXISTS `failed_jobs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `failed_jobs` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`),
-  KEY `failed_jobs_connection_queue_failed_at_index` (`connection`,`queue`,`failed_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `failed_jobs`
---
-
-LOCK TABLES `failed_jobs` WRITE;
-/*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `inventaris`
---
-
-DROP TABLE IF EXISTS `inventaris`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `inventaris` (
-  `Inventaris_ID` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `ID_RT` bigint unsigned DEFAULT NULL,
-  `Nama_Barang` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Kode_Barang` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Jumlah` int NOT NULL DEFAULT '1',
-  `Lokasi` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Balai RT',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`Inventaris_ID`),
-  UNIQUE KEY `inventaris_kode_barang_unique` (`Kode_Barang`),
-  KEY `inventaris_id_rt_foreign` (`ID_RT`),
-  CONSTRAINT `inventaris_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `inventaris`
---
-
-LOCK TABLES `inventaris` WRITE;
-/*!40000 ALTER TABLE `inventaris` DISABLE KEYS */;
-INSERT INTO `inventaris` VALUES (1,1,'Tenda Lipat (3x6 Meter)','AST-TND-01',2,'Gudang Balai RT 05','2026-09-22 00:26:51','2026-09-22 00:26:51'),(2,1,'Set Kursi Lipat Warga (50 Unit)','AST-KRS-01',101,'Gudang Balai RT 05','2026-09-22 00:26:51','2026-10-02 07:30:57'),(3,1,'Wireless Portable Sound System + 2 Mic','AST-SND-01',1,'Ruang Sekretariat Balai RT','2026-09-22 00:26:51','2026-09-22 00:26:51'),(4,1,'Proyektor Epson & Layar Tripod 84 Inch','AST-PRJ-01',1,'Ruang Sekretariat Balai RT','2026-09-22 00:26:51','2026-09-22 00:26:51'),(5,1,'Mesin Pemotong Rumput Dorong Honda','AST-RMPT-01',2,'Gudang Samping Pos Ronda','2026-09-22 00:26:51','2026-09-22 00:26:51'),(6,1,'Paket Rompi & Senter Ronda Keamanan (6 Set)','AST-RND-01',6,'Pos Ronda Utama RT 05','2026-09-22 00:26:51','2026-09-22 00:26:51');
-/*!40000 ALTER TABLE `inventaris` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `job_batches`
---
-
-DROP TABLE IF EXISTS `job_batches`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `total_jobs` int NOT NULL,
-  `pending_jobs` int NOT NULL,
-  `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci,
-  `cancelled_at` int DEFAULT NULL,
-  `created_at` int NOT NULL,
-  `finished_at` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `job_batches`
---
-
-LOCK TABLES `job_batches` WRITE;
-/*!40000 ALTER TABLE `job_batches` DISABLE KEYS */;
-/*!40000 ALTER TABLE `job_batches` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `jobs`
---
-
-DROP TABLE IF EXISTS `jobs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `jobs` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `attempts` smallint unsigned NOT NULL,
-  `reserved_at` int unsigned DEFAULT NULL,
-  `available_at` int unsigned NOT NULL,
-  `created_at` int unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `jobs_queue_index` (`queue`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `jobs`
---
-
-LOCK TABLES `jobs` WRITE;
-/*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `kartu_keluarga`
---
-
-DROP TABLE IF EXISTS `kartu_keluarga`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `kartu_keluarga` (
-  `ID_KK` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Alamat` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`ID_KK`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `kartu_keluarga`
---
-
-LOCK TABLES `kartu_keluarga` WRITE;
-/*!40000 ALTER TABLE `kartu_keluarga` DISABLE KEYS */;
-INSERT INTO `kartu_keluarga` VALUES ('1231241242144444','Jl.Trengguli no 12','2026-10-06 05:53:07','2026-10-06 05:53:07'),('2362174678268345','fdsfsdg','2026-09-22 19:32:38','2026-09-22 19:32:38'),('3201051234567890','Jl. Melati No. 12','2026-09-30 09:25:32','2026-09-30 09:25:32'),('3201051909120002','Harmoni Residence Blok C No. 04','2026-09-22 00:26:49','2026-09-22 00:26:49'),('3201051909120003','Harmoni Residence Blok C No. 08','2026-09-22 00:26:49','2026-09-22 00:26:49'),('3201051909120004','Harmoni Residence Blok A No. 02','2026-09-22 00:26:49','2026-09-22 00:26:49'),('3201051909120005','Harmoni Residence Blok B No. 05','2026-09-22 00:26:49','2026-09-22 00:26:49'),('3201051909120006','Harmoni Residence Blok D No. 07','2026-09-22 00:26:49','2026-09-22 00:26:49'),('3201051909120008','Harmoni Residence Blok B No. 12','2026-09-22 00:26:49','2026-09-22 00:26:49');
-/*!40000 ALTER TABLE `kartu_keluarga` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `kegiatan`
---
-
-DROP TABLE IF EXISTS `kegiatan`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `kegiatan` (
-  `kegiatan_id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `ID_RT` bigint unsigned DEFAULT NULL,
-  `nama_kegiatan` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tgl_kegiatan` date NOT NULL,
-  `lokasi` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_unicode_ci,
-  `status` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Mendatang',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`kegiatan_id`),
-  KEY `kegiatan_id_rt_foreign` (`ID_RT`),
-  CONSTRAINT `kegiatan_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `kegiatan`
---
-
-LOCK TABLES `kegiatan` WRITE;
-/*!40000 ALTER TABLE `kegiatan` DISABLE KEYS */;
-INSERT INTO `kegiatan` VALUES (1,1,'Kerja Bakti Massal & Fogging Nyamuk DBD','2026-09-26','Balai Warga & Lingkungan RT 05','Pelaksanaan Sabtu pukul 07.00 WIB. Pembersihan saluran air dan fogging serentak.','Selesai','2026-09-22 00:26:50','2026-10-02 07:27:50'),(2,1,'Pelatihan Hidroponik PKK Mandiri Pangan','2026-10-04','Taman Samping Balai RT','Program pemberdayaan warga: budidaya sayur hidroponik pipa PVC dan nutrisi AB Mix.','Mendatang','2026-09-22 00:26:50','2026-09-22 00:26:50'),(3,1,'Senam Sehat Lansia & Cek Tensi Gratis','2026-09-27','Halaman Balai Warga','Senam kebugaran bersama dilanjutkan pemeriksaan tekanan darah dan gula darah berkala.','Mendatang','2026-09-22 00:26:50','2026-09-22 00:26:50'),(4,1,'MAKAN MAKAN','2026-10-02','GBK','dsfrsd','Mendatang','2026-10-02 07:27:24','2026-10-02 07:27:24');
-/*!40000 ALTER TABLE `kegiatan` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `kontak_rt`
---
-
-DROP TABLE IF EXISTS `kontak_rt`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `kontak_rt` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `ID_RT` bigint unsigned DEFAULT NULL,
-  `role` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama_kontak` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nomor_telepon` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_whatsapp` tinyint(1) NOT NULL DEFAULT '1',
-  `pesan_wa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lokasi_tampilan` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'footer_darurat',
-  `urutan` int NOT NULL DEFAULT '0',
-  `is_aktif` tinyint(1) NOT NULL DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `kontak_rt_id_rt_foreign` (`ID_RT`),
-  CONSTRAINT `kontak_rt_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `kontak_rt`
---
-
-LOCK TABLES `kontak_rt` WRITE;
-/*!40000 ALTER TABLE `kontak_rt` DISABLE KEYS */;
-INSERT INTO `kontak_rt` VALUES (1,1,'Ketua RT 05','Bpk. Sukardi Hartono','0812-3456-7890',1,'Halo Ketua RT 05, saya warga Harmoni Residence','footer_darurat',1,1,'2026-10-05 00:58:06','2026-10-05 00:58:06'),(2,1,'Pos Ronda & Keamanan','Piket Regu Sekuriti','0821-9876-5432',1,'Halo Pos Ronda RT 05, saya warga ingin melapor keadaan keamanan','footer_darurat',2,1,'2026-10-05 00:58:06','2026-10-05 00:58:06'),(3,1,'Bhabinkamtibmas Polsek','Aiptu Hendro Wibowo','0813-8822-1100',1,'Halo Bhabinkamtibmas Polsek, saya warga RT 05 Harmoni Residence','footer_darurat',3,1,'2026-10-05 00:58:06','2026-10-05 00:58:06'),(4,1,'Ambulans & Damkar','Posko Siaga Darurat','112',0,NULL,'footer_darurat',4,0,'2026-10-05 00:58:06','2026-10-05 01:14:19'),(5,1,'Sekretariat Lingkungan','Balai Warga RT 05 / RW 01','0812-3456-7890',1,'Halo Pengurus RT 05, saya warga Harmoni Residence','sekretariat',5,1,'2026-10-05 00:58:06','2026-10-05 00:58:06');
-/*!40000 ALTER TABLE `kontak_rt` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `migrations`
---
-
-DROP TABLE IF EXISTS `migrations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `migrations` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `migrations`
---
-
-LOCK TABLES `migrations` WRITE;
-/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'0001_01_01_000000_create_users_table',1),(2,'0001_01_01_000001_create_cache_table',1),(3,'0001_01_01_000002_create_jobs_table',1),(4,'2026_09_21_000001_create_ruang_warga_tables',2),(5,'2026_09_21_000002_create_asset_inventory_tables',3),(6,'2026_09_22_000001_create_erd_ruang_warga_tables',4),(7,'2026_09_23_000002_create_sp_dashboard_summary_rt',5),(8,'2026_09_23_000003_create_sp_proses_approval',6),(9,'2026_09_23_000004_create_sp_ajukan_surat_warga',7),(10,'2026_09_23_000005_create_database_triggers',8),(11,'2026_09_23_000006_setup_dcl_user_security',8),(12,'2026_09_30_030851_add_remember_token_to_admin_and_warga_tables',9),(13,'2026_09_30_131949_add_bukti_bayar_to_pemasukan_and_id_rt_to_pengeluaran',10),(14,'2026_09_30_230000_add_nomor_surat_to_surat_and_status_to_kegiatan',11),(15,'2026_10_02_220000_add_payment_gateway_fields_to_pemasukan_table',12),(16,'2026_10_05_130000_add_google_auth_fields_to_users_warga_admin',13),(17,'2026_10_05_150000_create_kontak_rt_table',14);
-/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `official_letters`
 --
 
@@ -728,6 +1032,7 @@ INSERT INTO `official_letters` VALUES (1,'470/05/IX/2026','#APP-2026-001',1,1,'B
 UNLOCK TABLES;
 
 --
+
 -- Table structure for table `password_reset_tokens`
 --
 
@@ -752,146 +1057,7 @@ LOCK TABLES `password_reset_tokens` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `pemasukan`
---
 
-DROP TABLE IF EXISTS `pemasukan`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pemasukan` (
-  `Tagihan_Id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `ID_KK` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `Kategori` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ID_RT` bigint unsigned DEFAULT NULL,
-  `nama_tagihan` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nominal` decimal(15,2) NOT NULL,
-  `tgl_jatuh_tmp` date NOT NULL,
-  `status_tagihan` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Belum Lunas',
-  `bukti_bayar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `snap_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `metode_pembayaran` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `paid_at` datetime DEFAULT NULL,
-  `payment_payload` json DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`Tagihan_Id`),
-  KEY `pemasukan_id_kk_foreign` (`ID_KK`),
-  KEY `pemasukan_id_rt_foreign` (`ID_RT`),
-  KEY `pemasukan_order_id_index` (`order_id`),
-  CONSTRAINT `pemasukan_id_kk_foreign` FOREIGN KEY (`ID_KK`) REFERENCES `kartu_keluarga` (`ID_KK`) ON DELETE SET NULL,
-  CONSTRAINT `pemasukan_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pemasukan`
---
-
-LOCK TABLES `pemasukan` WRITE;
-/*!40000 ALTER TABLE `pemasukan` DISABLE KEYS */;
-INSERT INTO `pemasukan` VALUES (1,'3201051909120008','Iuran Warga',1,'Iuran Keamanan & Kebersihan Juli 2026',75000.00,'2026-07-10','Belum Lunas',NULL,'snap-token-IURAN-RT1-TAG1-1791142891','IURAN-RT1-TAG1-1791142891','qris',NULL,'{\"issuer\": \"gopay\", \"acquirer\": \"gopay\", \"currency\": \"IDR\", \"order_id\": \"IURAN-RT1-TAG1-1791142891\", \"expiry_time\": \"2026-10-05 02:56:34\", \"merchant_id\": \"M350420938\", \"status_code\": \"200\", \"fraud_status\": \"accept\", \"gross_amount\": \"75000.00\", \"payment_type\": \"qris\", \"signature_key\": \"8bc05a19b5e57b63ad7274902325cdcdc29e227ec641cd2cb5155e5e0f7422e50b6a1c87c9ce8d54c50f9ba75da44daeec3a466c7d56a0bf8f56afbb8b34bab3\", \"status_message\": \"Success, transaction is found\", \"transaction_id\": \"70d38407-f97d-4529-9dca-f3cd488cbfc2\", \"settlement_time\": \"2026-10-05 02:41:45\", \"transaction_time\": \"2026-10-05 02:41:34\", \"transaction_type\": \"on-us\", \"transaction_status\": \"settlement\", \"merchant_cross_reference_id\": \"1b066ec0-c89a-425d-b1b2-59350a379d99\"}','2026-09-22 00:26:50','2026-10-06 18:24:57'),(2,'3201051909120008','Iuran Warga',1,'Iuran Keamanan & Kebersihan Agustus 2026',75000.00,'2026-08-10','Lunas','uploads/bukti/bukti_iuran_1790129399_6ab334f77bb78.jpg',NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),(3,'3201051909120008','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Lunas','uploads/bukti/bukti_iuran_1790129427_6ab335133cbfc.jpg',NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),(4,'3201051909120002','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Lunas','uploads/bukti/bukti_iuran_1790129459_6ab3353352069.jpg',NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-30 09:05:29'),(5,'3201051909120003','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Lunas',NULL,NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-22 01:41:39'),(6,'3201051909120004','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Lunas',NULL,NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-22 01:41:39'),(7,'3201051909120005','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Belum Lunas',NULL,NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-22 10:55:46'),(8,'3201051909120006','Iuran Warga',1,'Iuran Keamanan & Kebersihan September 2026',75000.00,'2026-09-10','Belum Lunas',NULL,NULL,NULL,NULL,NULL,NULL,'2026-09-22 00:26:50','2026-09-22 10:55:46'),(9,'3201051909120008','Iuran Warga',1,'Iuran Keamanan & Kebersihan Oktober 2026',75000.00,'2026-10-31','Lunas',NULL,'snap-token-demo-9-87930fd478d661c7','IURAN-RT1-TAG9-1790954659','qris','2026-10-02 15:25:21','{\"order_id\": \"IURAN-RT1-TAG9-1790954659\", \"status_code\": \"200\", \"fraud_status\": \"accept\", \"gross_amount\": \"75000\", \"payment_type\": \"qris\", \"transaction_status\": \"settlement\"}','2026-10-02 08:15:10','2026-10-02 08:25:21'),(10,'3201051909120002','Iuran Warga',1,'Iuran Keamanan & Kebersihan Oktober 2026',75000.00,'2026-10-31','Belum Lunas',NULL,'snap-token-IURAN-RT1-TAG10-1791252284','IURAN-RT1-TAG10-1791252284','qris',NULL,'{\"issuer\": \"airpay shopee\", \"acquirer\": \"gopay\", \"currency\": \"IDR\", \"order_id\": \"IURAN-RT1-TAG10-1791252284\", \"expiry_time\": \"2026-10-06 09:19:51\", \"merchant_id\": \"M350420938\", \"status_code\": \"200\", \"fraud_status\": \"accept\", \"gross_amount\": \"75000.00\", \"payment_type\": \"qris\", \"signature_key\": \"b5b23360069f05d59563a4699e1eee203432b29cc2a40c7255a956d2576d16bff05ad6f04d22e6e3130eb0ebf665adef72b6d19675c810eccfedbf9e90d62d25\", \"status_message\": \"Success, transaction is found\", \"transaction_id\": \"e2c29448-9885-42da-9fcf-4ea71535e5eb\", \"settlement_time\": \"2026-10-06 09:06:23\", \"transaction_time\": \"2026-10-06 09:04:51\", \"transaction_type\": \"off-us\", \"transaction_status\": \"settlement\"}','2026-10-02 21:59:07','2026-10-06 18:24:37'),(11,'1231241242144444','Iuran Warga',1,'Iuran Keamanan & Kebersihan Oktober 2026',75000.00,'2026-10-31','Lunas',NULL,NULL,'SIMULATE-IURAN-TAG11-1791292051','qris','2026-10-06 13:07:31','{\"order_id\": \"SIMULATE-IURAN-TAG11-1791292051\", \"status_code\": \"200\", \"fraud_status\": \"accept\", \"gross_amount\": \"75000\", \"payment_type\": \"qris\", \"transaction_status\": \"settlement\"}','2026-10-06 05:53:08','2026-10-06 06:07:31');
-/*!40000 ALTER TABLE `pemasukan` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pembelian_inventaris`
---
-
-DROP TABLE IF EXISTS `pembelian_inventaris`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pembelian_inventaris` (
-  `Pembelian_id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `inventaris_id` bigint unsigned DEFAULT NULL,
-  `Pengeluaran_id` bigint unsigned DEFAULT NULL,
-  `tgl_pembelian` date NOT NULL,
-  `total_biaya` decimal(15,2) NOT NULL,
-  `jumlah_pembelian` int NOT NULL DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`Pembelian_id`),
-  KEY `pembelian_inventaris_inventaris_id_foreign` (`inventaris_id`),
-  KEY `pembelian_inventaris_pengeluaran_id_foreign` (`Pengeluaran_id`),
-  CONSTRAINT `pembelian_inventaris_inventaris_id_foreign` FOREIGN KEY (`inventaris_id`) REFERENCES `inventaris` (`Inventaris_ID`) ON DELETE SET NULL,
-  CONSTRAINT `pembelian_inventaris_pengeluaran_id_foreign` FOREIGN KEY (`Pengeluaran_id`) REFERENCES `pengeluaran` (`Pengeluaran_id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pembelian_inventaris`
---
-
-LOCK TABLES `pembelian_inventaris` WRITE;
-/*!40000 ALTER TABLE `pembelian_inventaris` DISABLE KEYS */;
-INSERT INTO `pembelian_inventaris` VALUES (1,3,3,'2026-08-15',2450000.00,1,'2026-09-22 00:26:51','2026-09-22 00:26:51'),(2,5,3,'2026-07-20',3200000.00,1,'2026-09-22 00:26:51','2026-09-22 00:26:51');
-/*!40000 ALTER TABLE `pembelian_inventaris` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pengeluaran`
---
-
-DROP TABLE IF EXISTS `pengeluaran`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pengeluaran` (
-  `Pengeluaran_id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `ID_RT` bigint unsigned DEFAULT '1',
-  `Kategori` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Keterangan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Jumlah_Bayar` decimal(15,2) NOT NULL,
-  `Tgl_Bayar` date NOT NULL,
-  `Metode_Bayar` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Kas Tunai',
-  `Bukti_Path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`Pengeluaran_id`),
-  KEY `pengeluaran_id_rt_foreign` (`ID_RT`),
-  CONSTRAINT `pengeluaran_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pengeluaran`
---
-
-LOCK TABLES `pengeluaran` WRITE;
-/*!40000 ALTER TABLE `pengeluaran` DISABLE KEYS */;
-INSERT INTO `pengeluaran` VALUES (1,1,'Keamanan','Honor Petugas Keamanan (3 Sekuriti Pos Ronda)',4162500.00,'2026-09-02','Transfer Bank','bukti/nota_lampu_philips.jpg','2026-09-22 00:26:50','2026-09-30 06:21:40'),(2,1,'Kebersihan','Retribusi Angkut Sampah DLH & Kebersihan Selokan',2775000.00,'2026-09-04','Kas Tunai','bukti/nota_lampu_philips.jpg','2026-09-22 00:26:51','2026-09-30 06:21:40'),(3,1,'Fasilitas & Aset','Pembelian Lampu Sorot LED & Kabel Ekstensi Balai',450000.00,'2026-09-10','Kas Tunai','bukti/nota_lampu_philips.jpg','2026-09-22 00:26:51','2026-09-22 00:26:51');
-/*!40000 ALTER TABLE `pengeluaran` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `respon_aspirasi`
---
-
-DROP TABLE IF EXISTS `respon_aspirasi`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `respon_aspirasi` (
-  `id_aspirasi` bigint unsigned NOT NULL,
-  `nama_responden` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `isi_respon` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tanggal_respon` datetime NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_aspirasi`),
-  CONSTRAINT `respon_aspirasi_id_aspirasi_foreign` FOREIGN KEY (`id_aspirasi`) REFERENCES `aspirasi` (`id_aspirasi`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `respon_aspirasi`
---
-
-LOCK TABLES `respon_aspirasi` WRITE;
-/*!40000 ALTER TABLE `respon_aspirasi` DISABLE KEYS */;
-INSERT INTO `respon_aspirasi` VALUES (1,'Pengurus RT 05','Tanggapan uji coba fitur aspirasi','2026-10-04 13:17:06','2026-09-22 00:26:50','2026-10-04 06:17:06'),(3,'Ibu Ratna Paramitha (Sekretaris)','Sudah diagendakan dalam jadwal kerja bakti serentak Sabtu pagi ini.','2026-09-21 08:45:00','2026-09-22 00:26:50','2026-09-22 00:26:50'),(7,'Pengurus RT (ketua_rt05)','oke\n','2026-10-04 13:43:43','2026-10-04 06:43:43','2026-10-04 06:43:43'),(10,'Pengurus RT (superadmin)','Terima kasih atas aspirasinya, akan segera kami tindak lanjuti.','2026-10-04 13:46:23','2026-10-04 06:46:23','2026-10-04 06:46:23');
-/*!40000 ALTER TABLE `respon_aspirasi` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `rt_units`
 --
 
@@ -926,152 +1092,12 @@ INSERT INTO `rt_units` VALUES (1,'RT 05 / RW 01','Harmoni Residence','Sukamaju',
 UNLOCK TABLES;
 
 --
--- Table structure for table `sessions`
---
 
-DROP TABLE IF EXISTS `sessions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint unsigned DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_activity` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sessions_user_id_index` (`user_id`),
-  KEY `sessions_last_activity_index` (`last_activity`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT;
+SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS;
+SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION;
+SET SQL_MODE=@OLD_SQL_MODE;
 
---
--- Dumping data for table `sessions`
---
-
-LOCK TABLES `sessions` WRITE;
-/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('aF4zbzJDdye7CC2HApF2nfZl7RyqLkFilSqzlXkH',NULL,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','eyJfdG9rZW4iOiI2ZmhzUkl4ajdRVHh5bjFVUlNnTFhpbjFaSlhoRHNqaldDQXFIUDMzIiwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwXC9hdXRoXC9nb29nbGVcL3JlZGlyZWN0P2ludGVudD1yZWdpc3RlciIsInJvdXRlIjoiYXV0aC5nb29nbGUucmVkaXJlY3QifSwiX2ZsYXNoIjp7Im9sZCI6W10sIm5ldyI6W119LCJzdGF0ZSI6ImhWd1VhSVR6SUNhaVpOc0dyRFFDeUNKbHo5UUtzcjVvcVNZM3BSNHoiLCJnb29nbGVfYXV0aF9pbnRlbnQiOiJyZWdpc3RlciJ9',1791291018),('ixQQ2gdTd8hJ4muRvch1YvtSKgQ6aiVsswJXlAOC',2,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJ1UlV5WlE0emcwUlNOUUJPT0lMdEtPZzNOMmllcmFaOHJydVRCTExlIiwiX2ZsYXNoIjp7Im5ldyI6W10sIm9sZCI6W119LCJfcHJldmlvdXMiOnsidXJsIjoiaHR0cDpcL1wvbG9jYWxob3N0OjgwMDBcL2FkbWluXC9wZW1hc3VrYW5zIiwicm91dGUiOiJmaWxhbWVudC5hZG1pbi5yZXNvdXJjZXMucGVtYXN1a2Fucy5pbmRleCJ9LCJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI6MiwiYWN0aXZlX3JvbGUiOiJhZG1pbl9ydCIsImF1dGhfdXNlciI6eyJ1c2VybmFtZSI6ImtldHVhX3J0MDUiLCJyb2xlIjoiYWRtaW5fcnQiLCJBZG1pbl9JRCI6MiwiSURfUlQiOjF9LCJ0YWJsZXMiOnsiNjRlZTJhZDhkNmMwYjg4ZDE1YTQwNmFmMGU2Y2ZkMzBfY29sdW1ucyI6W3sidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJpZF9hcHByb3ZhbCIsImxhYmVsIjoiSUQgVGlrZXQiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoidGFiZWxfc3VtYmVyIiwibGFiZWwiOiJLYXRlZ29yaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJzb3VyY2VfZGV0YWlsIiwibGFiZWwiOiJVcmFpYW4gUGVuZ2FqdWFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNhdGF0YW4iLCJsYWJlbCI6IktldGVyYW5nYW4gXC8gS2VwZXJsdWFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNyZWF0ZWRfYXQiLCJsYWJlbCI6Ildha3R1IE1hc3VrIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InN0YXR1cyIsImxhYmVsIjoiU3RhdHVzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJkZjZmN2RlZjU3NDlhNWFmNTBjYWI2ZTAzNGVjYjU5ZV9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Ik5JSyIsImxhYmVsIjoiTklLIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Ik5hbWFfTGVuZ2thcCIsImxhYmVsIjoiTmFtYSBMZW5na2FwIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5vX3RlbHAiLCJsYWJlbCI6Ik5vLiBXaGF0c0FwcCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJJRF9LSyIsImxhYmVsIjoiTm8uIEthcnR1IEtlbHVhcmdhIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6dHJ1ZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpmYWxzZX0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IklEX1JUIiwibGFiZWwiOiJSVCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJ0Z2xfbGFoaXIiLCJsYWJlbCI6IlRnbCBMYWhpciIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjpmYWxzZSwiaXNUb2dnbGVhYmxlIjp0cnVlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOnRydWV9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJjcmVhdGVkX2F0IiwibGFiZWwiOiJUZXJkYWZ0YXIiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6ZmFsc2UsImlzVG9nZ2xlYWJsZSI6dHJ1ZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0Ijp0cnVlfV0sIjBkOGU4ODAyMzE4ZTEwNGYwNmU1ZjAzNzkyNzc4MmVjX2NvbHVtbnMiOlt7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiaWRfYXNwaXJhc2kiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNyZWF0ZWRfYXQiLCJsYWJlbCI6IlRhbmdnYWwgTWFzdWsiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoid2FyZ2EuTmFtYV9MZW5na2FwIiwibGFiZWwiOiJQZW5naXJpbSBBc3BpcmFzaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJJc2lfQXNwaXJhc2kiLCJsYWJlbCI6IkN1cGxpa2FuIElzaSBBc3BpcmFzaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJyZXNwb25Bc3BpcmFzaS5pc2lfcmVzcG9uIiwibGFiZWwiOiJTdGF0dXMgUmVzcG9uIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJmYmQ1MGJiMjg5OTNjNjQ0NjUwZjE3M2YyNzg1MDlmNl9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IlRhZ2loYW5fSWQiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5hbWFfa2VwYWxhX2tlbHVhcmdhIiwibGFiZWwiOiJXYXJnYSBcLyBOby4gS0siLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibmFtYV90YWdpaGFuIiwibGFiZWwiOiJSaW5jaWFuIFRhZ2loYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibm9taW5hbCIsImxhYmVsIjoiTm9taW5hbCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJzdGF0dXNfdGFnaWhhbiIsImxhYmVsIjoiU3RhdHVzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImJ1a3RpX2JheWFyIiwibGFiZWwiOiJCdWt0aSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJtZXRvZGVfcGVtYmF5YXJhbiIsImxhYmVsIjoiTWV0b2RlIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJmYmQ1MGJiMjg5OTNjNjQ0NjUwZjE3M2YyNzg1MDlmNl9wZXJfcGFnZSI6IjI1In19',1791292097),('jn0XybP3eRvx1ysV6tdsLED4cTFrGHJ1UOv8v87H',3201987654320001,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJaUGE0Z2JwWm9NRmE2eFVvWTdHWFlWMU9DRDZkbkRndGJvV2RuYjdyIiwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwXC9wb3J0YWwiLCJyb3V0ZSI6InBvcnRhbC5ob21lIn0sIl9mbGFzaCI6eyJvbGQiOltdLCJuZXciOltdfSwibG9naW5fd2FyZ2FfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI6IjMyMDE5ODc2NTQzMjAwMDEiLCJhY3RpdmVfcm9sZSI6IndhcmdhIiwiY2l0aXplbl9uaWsiOiIzMjAxOTg3NjU0MzIwMDAxIiwiY2l0aXplbl9uYW1lIjoiSWJ1IERld2kgU2FydGlrYSIsImNpdGl6ZW5faWQiOiIzMjAxOTg3NjU0MzIwMDAxIiwiY2l0aXplbl9ob3VzZSI6Ikhhcm1vbmkgUmVzaWRlbmNlIEJsb2sgQyBOby4gMDQifQ==',1791794140),('rtmEQyBAS6vWY83MldFauF6q24wuWWtBT6p8GgQ5',2,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJnR1dSdXlMbGNQcjRCM1cwRlVLTDdLQjhGaUowcGtNQWNqNmZRSzdHIiwiX3ByZXZpb3VzIjp7InVybCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwXC9hZG1pbiIsInJvdXRlIjoiZmlsYW1lbnQuYWRtaW4ucGFnZXMuZGFzaGJvYXJkIn0sIl9mbGFzaCI6eyJvbGQiOltdLCJuZXciOltdfSwibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiOjIsImFjdGl2ZV9yb2xlIjoiYWRtaW5fcnQiLCJhdXRoX3VzZXIiOnsidXNlcm5hbWUiOiJrZXR1YV9ydDA1Iiwicm9sZSI6ImFkbWluX3J0IiwiQWRtaW5fSUQiOjIsIklEX1JUIjoxfX0=',1791336179),('zgUzcg6aZtQmTg8BCo2FIdRNGYufzWKURrw3v9WB',2,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','eyJfdG9rZW4iOiJXOWxSWGlpRU1HdHhoaUJBeEtMQjI3dVJ0OHJxM3o0Q3lxNjlhRVJCIiwiX2ZsYXNoIjp7Im5ldyI6W10sIm9sZCI6W119LCJfcHJldmlvdXMiOnsidXJsIjoiaHR0cDpcL1wvMTI3LjAuMC4xOjgwMDBcL2FkbWluXC9rb250YWstcnRzIiwicm91dGUiOiJmaWxhbWVudC5hZG1pbi5yZXNvdXJjZXMua29udGFrLXJ0cy5pbmRleCJ9LCJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI6MiwiYWN0aXZlX3JvbGUiOiJhZG1pbl9ydCIsImF1dGhfdXNlciI6eyJ1c2VybmFtZSI6ImtldHVhX3J0MDUiLCJyb2xlIjoiYWRtaW5fcnQiLCJBZG1pbl9JRCI6MiwiSURfUlQiOjF9LCJ0YWJsZXMiOnsiNjRlZTJhZDhkNmMwYjg4ZDE1YTQwNmFmMGU2Y2ZkMzBfY29sdW1ucyI6W3sidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJpZF9hcHByb3ZhbCIsImxhYmVsIjoiSUQgVGlrZXQiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoidGFiZWxfc3VtYmVyIiwibGFiZWwiOiJLYXRlZ29yaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJzb3VyY2VfZGV0YWlsIiwibGFiZWwiOiJVcmFpYW4gUGVuZ2FqdWFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNhdGF0YW4iLCJsYWJlbCI6IktldGVyYW5nYW4gXC8gS2VwZXJsdWFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNyZWF0ZWRfYXQiLCJsYWJlbCI6Ildha3R1IE1hc3VrIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InN0YXR1cyIsImxhYmVsIjoiU3RhdHVzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJmYmQ1MGJiMjg5OTNjNjQ0NjUwZjE3M2YyNzg1MDlmNl9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IlRhZ2loYW5fSWQiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5hbWFfa2VwYWxhX2tlbHVhcmdhIiwibGFiZWwiOiJXYXJnYSBcLyBOby4gS0siLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibmFtYV90YWdpaGFuIiwibGFiZWwiOiJSaW5jaWFuIFRhZ2loYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibm9taW5hbCIsImxhYmVsIjoiTm9taW5hbCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJzdGF0dXNfdGFnaWhhbiIsImxhYmVsIjoiU3RhdHVzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImJ1a3RpX2JheWFyIiwibGFiZWwiOiJCdWt0aSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJtZXRvZGVfcGVtYmF5YXJhbiIsImxhYmVsIjoiTWV0b2RlIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJkYmVmMjk1YmI4ZjYyZDE0NDU1ZTVmMTM1ODM4YTU1Y19jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImlkX2FwcHJvdmFsIiwibGFiZWwiOiJJRCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJ0YWJlbF9zdW1iZXIiLCJsYWJlbCI6IkthdGVnb3JpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InNvdXJjZV9kZXRhaWwiLCJsYWJlbCI6IlVyYWlhbiBQZW5nYWp1YW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiY2F0YXRhbiIsImxhYmVsIjoiQ2F0YXRhbiBWZXJpZmlrYXNpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InN0YXR1cyIsImxhYmVsIjoiU3RhdHVzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InRnbF9hcHByb3ZhbCIsImxhYmVsIjoiV2FrdHUgUHJvc2VzIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH1dLCJkZjZmN2RlZjU3NDlhNWFmNTBjYWI2ZTAzNGVjYjU5ZV9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Ik5JSyIsImxhYmVsIjoiTklLIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Ik5hbWFfTGVuZ2thcCIsImxhYmVsIjoiTmFtYSBMZW5na2FwIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5vX3RlbHAiLCJsYWJlbCI6Ik5vLiBXaGF0c0FwcCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJJRF9LSyIsImxhYmVsIjoiTm8uIEthcnR1IEtlbHVhcmdhIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6dHJ1ZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpmYWxzZX0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IklEX1JUIiwibGFiZWwiOiJSVCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJ0Z2xfbGFoaXIiLCJsYWJlbCI6IlRnbCBMYWhpciIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjpmYWxzZSwiaXNUb2dnbGVhYmxlIjp0cnVlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOnRydWV9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJjcmVhdGVkX2F0IiwibGFiZWwiOiJUZXJkYWZ0YXIiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6ZmFsc2UsImlzVG9nZ2xlYWJsZSI6dHJ1ZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0Ijp0cnVlfV0sIjhiNzMxYTViZWM4YzY0YmU0MmMzOGEyYzk3MjFhYmMxX2NvbHVtbnMiOlt7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiSURfS0siLCJsYWJlbCI6Ik5vbW9yIEtLIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IkFsYW1hdCIsImxhYmVsIjoiQWxhbWF0IERvbWlzaWxpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IndhcmdhX2NvdW50IiwibGFiZWwiOiJKdW1sYWggQW5nZ290YSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJjcmVhdGVkX2F0IiwibGFiZWwiOiJUZXJkYWZ0YXIgU2VqYWsiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfV0sImFiYjkxODQxNzc0ZjFhZmYwMDc3MzNhZjhjNGVkYTk2X2NvbHVtbnMiOlt7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiUGVuZ2VsdWFyYW5faWQiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IkthdGVnb3JpIiwibGFiZWwiOiJLYXRlZ29yaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJLZXRlcmFuZ2FuIiwibGFiZWwiOiJLZXRlcmFuZ2FuIFwvIEtlcGVybHVhbiIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJKdW1sYWhfQmF5YXIiLCJsYWJlbCI6Ik5vbWluYWwgS2VsdWFyIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IlRnbF9CYXlhciIsImxhYmVsIjoiVGFuZ2dhbCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJNZXRvZGVfQmF5YXIiLCJsYWJlbCI6Ik1ldG9kZSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9XSwiMTIzZGJlODUwMjMyNzg0YTU2YjZhM2EwNjY3ZTRiM2VfY29sdW1ucyI6W3sidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJzdXJhdF9pZCIsImxhYmVsIjoiTm8uIFJlZiIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOnRydWUsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6ZmFsc2V9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJ3YXJnYS5OYW1hX0xlbmdrYXAiLCJsYWJlbCI6IlBlbW9ob24iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiSmVuaXNfc3VyYXQiLCJsYWJlbCI6IkxheWFuYW4gJmFtcDsgS2VwZXJsdWFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5vbW9yX3N1cmF0IiwibGFiZWwiOiJOb21vciBSZWdpc3RyYXNpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InRnbF9wZW5nYWp1YW4iLCJsYWJlbCI6IlRhbmdnYWwgTWFzdWsiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoic3RhdHVzIiwibGFiZWwiOiJTdGF0dXMiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfV0sIjI0MmJmOWU4NjE0YTAyZWJhOWMwNzVlOGNjZGJjNGVjX2NvbHVtbnMiOlt7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoia2VnaWF0YW5faWQiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Im5hbWFfa2VnaWF0YW4iLCJsYWJlbCI6Ik5hbWEgQWdlbmRhICZhbXA7IFJpbmNpYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoidGdsX2tlZ2lhdGFuIiwibGFiZWwiOiJKYWR3YWwgUGVsYWtzYW5hYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibG9rYXNpIiwibGFiZWwiOiJMb2thc2kiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoic3RhdHVzIiwibGFiZWwiOiJTdGF0dXMiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiZGF0YVJ0Lm5vbW9yX3J0IiwibGFiZWwiOiJVbml0IFJUIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOmZhbHNlLCJpc1RvZ2dsZWFibGUiOnRydWUsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6dHJ1ZX1dLCI2NTYyMGEzODk1MTQxMWU4NDAyNTAwMmUyMmQ4ZTJiZF9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IktvZGVfQmFyYW5nIiwibGFiZWwiOiJLb2RlIEFzZXQiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiTmFtYV9CYXJhbmciLCJsYWJlbCI6Ik5hbWEgQXNldCAmYW1wOyBMb2thc2kiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiSnVtbGFoIiwibGFiZWwiOiJLZXRlcnNlZGlhYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoicGVtaW5qYW1fYWt0aWYiLCJsYWJlbCI6IlBlbWluamFtIEFrdGlmIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Ikxva2FzaSIsImxhYmVsIjoiTG9rYXNpIFBlbnlpbXBhbmFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOmZhbHNlLCJpc1RvZ2dsZWFibGUiOnRydWUsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6dHJ1ZX0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImRhdGFSdC5ub21vcl9ydCIsImxhYmVsIjoiVW5pdCBSVCIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjpmYWxzZSwiaXNUb2dnbGVhYmxlIjp0cnVlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOnRydWV9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJjcmVhdGVkX2F0IiwibGFiZWwiOiJUZ2wgUmVnaXN0cmFzaSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjpmYWxzZSwiaXNUb2dnbGVhYmxlIjp0cnVlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOnRydWV9XSwiMGQ4ZTg4MDIzMThlMTA0ZjA2ZTVmMDM3OTI3NzgyZWNfY29sdW1ucyI6W3sidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJpZF9hc3BpcmFzaSIsImxhYmVsIjoiSUQiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiY3JlYXRlZF9hdCIsImxhYmVsIjoiVGFuZ2dhbCBNYXN1ayIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJ3YXJnYS5OYW1hX0xlbmdrYXAiLCJsYWJlbCI6IlBlbmdpcmltIEFzcGlyYXNpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IklzaV9Bc3BpcmFzaSIsImxhYmVsIjoiQ3VwbGlrYW4gSXNpIEFzcGlyYXNpIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InJlc3BvbkFzcGlyYXNpLmlzaV9yZXNwb24iLCJsYWJlbCI6IlN0YXR1cyBSZXNwb24iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfV0sIjg5NTNmYzVmMGYyOGU0MzQzYzEzOTA2MmE3ZDc3NWUyX2NvbHVtbnMiOlt7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoiQWRtaW5fSUQiLCJsYWJlbCI6IklEIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IlVzZXJuYW1lIiwibGFiZWwiOiJVc2VybmFtZSBcLyBBa3VuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImVtYWlsIiwibGFiZWwiOiJFbWFpbCBHb29nbGUgXC8gS29udGFrIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6Imdvb2dsZV9zdGF0dXMiLCJsYWJlbCI6IkxvZ2luIEdvb2dsZSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJyb2xlIiwibGFiZWwiOiJQZXJhbiBcLyBKYWJhdGFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6IklEX1JUIiwibGFiZWwiOiJXaWxheWFoIFJUIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImNyZWF0ZWRfYXQiLCJsYWJlbCI6IkRpZGFmdGFya2FuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOmZhbHNlLCJpc1RvZ2dsZWFibGUiOnRydWUsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6dHJ1ZX1dLCJjOWZlOWRhZWM1MGYxM2UxMTJjMDc2MGIwMzdiMWFhYV9jb2x1bW5zIjpbeyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6InVydXRhbiIsImxhYmVsIjoiIyIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJyb2xlIiwibGFiZWwiOiJKYWJhdGFuIFwvIExheWFuYW4iLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibmFtYV9rb250YWsiLCJsYWJlbCI6Ik5hbWEgUGV0dWdhcyBcLyBQSUMiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibm9tb3JfdGVsZXBvbiIsImxhYmVsIjoiTm9tb3IgVGVsZXBvbiBcLyBXQSIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9LHsidHlwZSI6ImNvbHVtbiIsIm5hbWUiOiJpc193aGF0c2FwcCIsImxhYmVsIjoiV2hhdHNBcHAiLCJpc0hpZGRlbiI6ZmFsc2UsImlzVG9nZ2xlZCI6dHJ1ZSwiaXNUb2dnbGVhYmxlIjpmYWxzZSwiaXNUb2dnbGVkSGlkZGVuQnlEZWZhdWx0IjpudWxsfSx7InR5cGUiOiJjb2x1bW4iLCJuYW1lIjoibG9rYXNpX3RhbXBpbGFuIiwibGFiZWwiOiJQZW5lbXBhdGFuIiwiaXNIaWRkZW4iOmZhbHNlLCJpc1RvZ2dsZWQiOnRydWUsImlzVG9nZ2xlYWJsZSI6ZmFsc2UsImlzVG9nZ2xlZEhpZGRlbkJ5RGVmYXVsdCI6bnVsbH0seyJ0eXBlIjoiY29sdW1uIiwibmFtZSI6ImlzX2FrdGlmIiwibGFiZWwiOiJBa3RpZiIsImlzSGlkZGVuIjpmYWxzZSwiaXNUb2dnbGVkIjp0cnVlLCJpc1RvZ2dsZWFibGUiOmZhbHNlLCJpc1RvZ2dsZWRIaWRkZW5CeURlZmF1bHQiOm51bGx9XX19',1791338474);
-/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `surat`
---
-
-DROP TABLE IF EXISTS `surat`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `surat` (
-  `surat_id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `NIK` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Jenis_surat` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `perihal` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nomor_surat` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tgl_pengajuan` date NOT NULL,
-  `status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Menunggu',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`surat_id`),
-  KEY `surat_nik_foreign` (`NIK`),
-  CONSTRAINT `surat_nik_foreign` FOREIGN KEY (`NIK`) REFERENCES `warga` (`NIK`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `surat`
---
-
-LOCK TABLES `surat` WRITE;
-/*!40000 ALTER TABLE `surat` DISABLE KEYS */;
-INSERT INTO `surat` VALUES (1,'3201051208940001','Surat Pengantar Pembuatan KTP & KK Baru','Permohonan surat pengantar untuk pemutakhiran kartu keluarga dan KTP-el ke Kantor Kelurahan Sukamaju.',NULL,'2026-09-20','Disetujui','2026-09-22 00:26:50','2026-09-22 00:26:50'),(2,'3201051208940001','Surat Pengantar SKCK Kepolisian','Kelengkapan administrasi perpanjangan SKCK untuk melamar pekerjaan.',NULL,'2026-09-19','Disetujui','2026-09-22 00:26:50','2026-09-22 00:26:50'),(3,'3201987654320001','Surat Keterangan Domisili Tempat Tinggal','Kelengkapan administrasi pendaftaran sekolah anak dan perbankan.',NULL,'2026-09-18','Disetujui','2026-09-22 00:26:50','2026-09-28 05:30:09'),(4,'3201556677880004','Surat Keterangan Usaha (SKU) Mikro Lingkungan','Pengajuan KUR Mikro Usaha Kuliner Rumahan.',NULL,'2026-09-15','Disetujui','2026-09-22 00:26:50','2026-09-22 00:26:50'),(5,'3201223344550005','Surat Keterangan Izin Keramaian Lingkungan','Izin mengadakan syukuran aqiqah di halaman rumah pada Sabtu mendatang.',NULL,'2026-09-21','Menunggu','2026-09-22 00:26:50','2026-09-22 00:26:50'),(6,'3201051208940001','Surat Keterangan Domisili Warga','Permohonan surat keterangan domisili untuk perbankan.',NULL,'2026-09-22','Menunggu','2026-09-22 12:12:22','2026-09-22 12:12:22'),(7,'3201051208940001','Surat Keterangan Domisili Usaha','Pengajuan untuk izin usaha mikro kuliner balai RT.',NULL,'2026-09-23','Menunggu','2026-09-23 01:59:56','2026-09-23 01:59:56'),(8,'3201051234567891','Surat Keterangan Domisili Warga','Persyaratan pembuatan rekening bank baru',NULL,'2026-09-30','Menunggu','2026-09-30 16:27:44','2026-09-30 16:27:44'),(9,'3201987654320001','Surat Keterangan Domisili Warga','SKSCK',NULL,'2026-10-02','Menunggu','2026-10-01 17:48:22','2026-10-01 10:58:11'),(10,'3201051208940001','Surat Pengantar SKCK Kepolisian','SKCK',NULL,'2026-10-02','rejected','2026-10-01 18:59:53','2026-10-05 00:40:57'),(11,'3201987654320001','Surat Pengantar Pembuatan / Perubahan KTP & KK','KTP','011/SP-RT05/RW01/X/2026','2026-10-02','approved','2026-10-02 03:08:49','2026-10-01 20:09:05'),(12,'3201987654320001','Surat Keterangan Kurang Mampu (Beasiswa/Bansos)','Buat beasiswa','012/SP-RT05/RW01/X/2026','2026-10-05','approved','2026-10-05 06:49:53','2026-10-05 00:12:32');
-/*!40000 ALTER TABLE `surat` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `users`
---
-
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `google_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `avatar` text COLLATE utf8mb4_unicode_ci,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `users_email_unique` (`email`),
-  KEY `users_google_id_index` (`google_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Bima Perkasa (Super Admin)','superadmin@ruangwarga.id',NULL,NULL,NULL,'$2y$12$kxBR6pNCQJf4mO6JxpmFmeUGyolJgOztnOd.JtadbQVtGMSzFGIra',NULL,'2026-09-20 20:36:13','2026-09-20 21:46:18'),(2,'Bpk. Sukardi Hartono (Ketua RT 05)','ketua@ruangwarga.id',NULL,NULL,NULL,'$2y$12$WpKlYTaFAWajnsONQP49iOAtGF.Fix4vUnP4O9lNpAUK2byI69cnG',NULL,'2026-09-20 20:36:13','2026-09-20 21:46:18'),(3,'Bpk. Rahmat Hendrawan (Bendahara)','bendahara@ruangwarga.id',NULL,NULL,NULL,'$2y$12$qmApdzCxiYplC6oZqp7Q6Oou3JXDxuhlOJq20knm3qt9YIoXesqdm',NULL,'2026-09-20 20:36:13','2026-09-20 21:46:18'),(4,'Ibu Ratna Paramitha (Sekretaris)','sekretaris@ruangwarga.id',NULL,NULL,NULL,'$2y$12$rs17P3kdy5/0Pg.vCELAA.UsJKhmxKvujhkJwGQUfFvGXB0/yl6wC',NULL,'2026-09-20 20:36:13','2026-09-20 21:46:18'),(5,'Bpk. Hendra Wijaya (Warga)','hendra@ruangwarga.id',NULL,NULL,NULL,'$2y$12$N9xHXomLnxPh04rX3c1.Ju5opvUN9ghL7YDy0WIoO4XzCzsw0HcWO',NULL,'2026-09-20 20:36:13','2026-09-20 21:46:18');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `warga`
---
-
-DROP TABLE IF EXISTS `warga`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `warga` (
-  `NIK` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ID_KK` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ID_RT` bigint unsigned DEFAULT NULL,
-  `Nama_Lengkap` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no_telp` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `google_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `avatar` text COLLATE utf8mb4_unicode_ci,
-  `Username` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `Password_hash` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tgl_lahir` date DEFAULT NULL,
-  `role` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'warga',
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`NIK`),
-  UNIQUE KEY `warga_email_unique` (`email`),
-  KEY `warga_id_kk_foreign` (`ID_KK`),
-  KEY `warga_id_rt_foreign` (`ID_RT`),
-  KEY `warga_google_id_index` (`google_id`),
-  CONSTRAINT `warga_id_kk_foreign` FOREIGN KEY (`ID_KK`) REFERENCES `kartu_keluarga` (`ID_KK`) ON DELETE SET NULL,
-  CONSTRAINT `warga_id_rt_foreign` FOREIGN KEY (`ID_RT`) REFERENCES `data_rt` (`ID_RT`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `warga`
---
-
-LOCK TABLES `warga` WRITE;
-/*!40000 ALTER TABLE `warga` DISABLE KEYS */;
-INSERT INTO `warga` VALUES ('3201051208940001','3201051909120008',1,'Bpk. Hendra Wijaya','0812-3456-7890',NULL,NULL,NULL,'hendra_w','$2y$12$bIQ0O5FxaojRDDzt.ZU/vO9c3Kxo0X0CB6hiL/HAr9ayLjxbwQA4.','1994-08-12','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3201051234567891','3201051234567890',1,'Budi Santoso','081234567890',NULL,NULL,NULL,'budi_santoso','$2y$12$XMzp5eZLjNMK5fVKZlxkC.4Ex7MjAzxrBld.K/ExZzIIenm2ODL4q','1990-01-01','warga',NULL,'2026-09-30 09:25:32','2026-09-30 09:25:32'),('3201223344550005','3201051909120004',1,'Bpk. Agus Santoso','0812-3344-5566',NULL,NULL,NULL,'agus_s','$2y$12$RS010C3NzzmtJ6kdy.Vsa.cmshA/FkY9YLUpmgc1Adc/nPgcvLZpW','1988-06-10','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3201556677880004','3201051909120003',1,'Bpk. Denny Pratama','0813-9988-7766',NULL,NULL,NULL,'denny_p','$2y$12$7XpCWMXFNC3ivHyyQAQ9LOBnPr8ZmVD9OcRkSAAJp1mjfuGAwhpbK','1990-11-15','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3201778899000007','3201051909120005',1,'Ibu Siti Rahma','0857-1122-3344',NULL,NULL,NULL,'siti_r','$2y$12$edS0GLGjSyMKLJs85l.gDuS2TelM4HnPfNkh9Ljdp4F1Fu/jOWD4G','1992-09-02','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3201889900110009','3201051909120006',1,'Ibu Nurhayati','0819-2233-4455',NULL,NULL,NULL,'nurhayati','$2y$12$v0neWBBOy7ibw4ZaQPqUeuUNq77wmkU72W/VXJw3Q1TAXFgzgn5Im','1985-12-19','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3201987654320001','3201051909120002',1,'Ibu Dewi Sartika','0856-1122-3344',NULL,NULL,NULL,'dewi_s','$2y$12$Wu46qwVZkJ4M/TcDTBDUde2B4iPF1BN/vWxuf5sr3U3o2Bz.NWE.S','1996-03-24','warga',NULL,'2026-09-22 00:26:50','2026-09-30 06:21:40'),('3242342342342434','1231241242144444',1,'Heskia Candra Adinata','081225804124','heskia2007@gmail.com','113518852588396851838','https://lh3.googleusercontent.com/a/ACg8ocL7fZJ52PakFuIfg8Emp9c5cW-uD0Z5RYveV2VC37tP7rI9i7PH=s96-c','heskia2007','$2y$12$ulXYUca3tRIpGNz2shIEvun.guylG6d.HGhPxPegfB6G88qhPnHY6','2007-03-16','warga','W9UX9i3cnwASjxIMy3hWaJzhoey74lTNUUEtW8hSkylWvb5QqOr2obKGZtAw','2026-10-06 05:53:07','2026-10-06 05:53:07'),('3646372463222334','2362174678268345',1,'suie','4325353565',NULL,NULL,NULL,'kia','$2y$12$hr/VspS99s4iSeeAQLwzc.IZwoPGmtbK.tQMgeZXVuoDfZTfp9tUW','2026-08-23','warga',NULL,'2026-09-22 19:32:38','2026-09-22 19:32:38');
-/*!40000 ALTER TABLE `warga` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2026-10-12 15:57:41
+-- Dump completed successfully
